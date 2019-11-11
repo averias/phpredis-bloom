@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  php:
+    container_name: phpredis-bloom
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - .:/app
+  redisjson:
+    container_name: redislab-rebloom
+    image: redislabs/rebloom:2.0.3

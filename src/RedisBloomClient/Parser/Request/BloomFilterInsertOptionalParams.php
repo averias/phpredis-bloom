@@ -23,6 +23,7 @@ class BloomFilterInsertOptionalParams implements ParserInterface
     /**
      * @param $optionalParams
      * @return array
+     * @throws ResponseException
      */
     public function parse($optionalParams)
     {

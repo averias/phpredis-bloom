@@ -16,6 +16,10 @@ use Averias\RedisBloom\Parser\ParserInterface;
 
 class ArrayOfIntegerToBool extends BaseResponseParser implements ParserInterface
 {
+    /**
+     * @param $response
+     * @return mixed
+     */
     public function parse($response)
     {
         foreach ($response as $key => $item) {

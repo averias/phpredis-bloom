@@ -14,6 +14,10 @@ namespace Averias\RedisBloom\Parser\Response;
 
 class BaseResponseParser
 {
+    /**
+     * @param int $data
+     * @return bool
+     */
     public function convertIntegerToBool(int $data)
     {
         return (bool) $data;

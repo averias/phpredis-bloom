@@ -23,7 +23,7 @@ class BloomFilterMultiAddCommandTest extends BaseTestIntegration
      * @param array $items
      * @param array $expectedResult
      */
-    public function testMultiAddItemSuccessfully(string $key, array $items, array $expectedResult)
+    public function testMultiAddItemSuccessfully(string $key, array $items, array $expectedResult): void
     {
         $result = static::$reBloomClient->bloomFilterMultiAdd($key, ...$items);
         $this->assertSame($expectedResult, $result);
@@ -34,13 +34,13 @@ class BloomFilterMultiAddCommandTest extends BaseTestIntegration
      * @param string $key
      * @param array $items
      */
-    public function testMultiAddItemException(string $key, array $items)
+    public function testMultiAddItemException(string $key, array $items): void
     {
         $this->expectException(ResponseException::class);
         static::$reBloomClient->bloomFilterMultiAdd($key, ...$items);
     }
 
-    public function getSuccessDataProvider()
+    public function getSuccessDataProvider(): array
     {
         return [
             ['key-multi-add1', [12, 'bar'], [true, true]],
@@ -52,7 +52,7 @@ class BloomFilterMultiAddCommandTest extends BaseTestIntegration
         ];
     }
 
-    public function getDataProviderForException()
+    public function getDataProviderForException(): array
     {
         return [
             ['key-multi-add1', [[1, 2]]],

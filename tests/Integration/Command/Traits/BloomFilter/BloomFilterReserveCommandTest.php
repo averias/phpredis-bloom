@@ -23,19 +23,19 @@ class BloomFilterReserveCommandTest extends BaseTestIntegration
      * @param float $errorRate
      * @param int $capacity
      */
-    public function testSuccessReservation(string $key, float $errorRate, int $capacity)
+    public function testSuccessReservation(string $key, float $errorRate, int $capacity): void
     {
         $result = static::$reBloomClient->bloomFilterReserve($key, $errorRate, $capacity);
         $this->assertTrue($result);
     }
 
-    public function testReservationException()
+    public function testReservationException(): void
     {
         $this->expectException(ResponseException::class);
         static::$reBloomClient->bloomFilterReserve('key-reserve1', 0.1, 1000);
     }
 
-    public function getDataProvider()
+    public function getDataProvider(): array
     {
         return [
             ['key-reserve1', 0.1, 10000],

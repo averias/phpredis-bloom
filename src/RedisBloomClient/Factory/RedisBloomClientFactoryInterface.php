@@ -12,9 +12,13 @@
 
 namespace Averias\RedisBloom\Factory;
 
+use Averias\RedisBloom\Adapter\RedisClientAdapterInterface;
 use Averias\RedisBloom\Client\RedisBloomClientInterface;
+use Averias\RedisBloom\DataTypes\BloomFilter;
 
 interface RedisBloomClientFactoryInterface
 {
+    public function getAdapter(array $config = []): RedisClientAdapterInterface;
     public function createClient(array $config): RedisBloomClientInterface;
+    public function createBloomFilter(string $filterName, array $config = []): BloomFilter;
 }

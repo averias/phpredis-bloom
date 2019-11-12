@@ -16,6 +16,10 @@ use Averias\RedisBloom\Parser\ParserInterface;
 
 class IntegerToBool extends BaseResponseParser implements ParserInterface
 {
+    /**
+     * @param $response
+     * @return bool
+     */
     public function parse($response)
     {
         return $this->convertIntegerToBool($response);

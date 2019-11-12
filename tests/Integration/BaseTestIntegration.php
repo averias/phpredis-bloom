@@ -39,7 +39,10 @@ class BaseTestIntegration extends TestCase
         }
     }
 
-    protected static function getReBloomClientConfig()
+    /**
+     * @return array
+     */
+    protected static function getReBloomClientConfig(): array
     {
         return [
             Connection::HOST => REDIS_TEST_SERVER,

@@ -29,19 +29,19 @@ class BloomFilterExistsCommandTest extends BaseTestIntegration
      * @param string $key
      * @param $item
      */
-    public function testExistsItem(string $key, $item)
+    public function testExistsItem(string $key, $item): void
     {
         $result = static::$reBloomClient->bloomFilterExists($key, $item);
         $this->assertTrue($result);
     }
 
-    public function testDoesntExistItem()
+    public function testDoesntExistItem(): void
     {
         $result = static::$reBloomClient->bloomFilterExists(Keys::DEFAULT_KEY, 'bar');
         $this->assertFalse($result);
     }
 
-    public function testNonExistentKey()
+    public function testNonExistentKey(): void
     {
         $result = static::$reBloomClient->bloomFilterExists('nonexistent-key', 'bar');
         $this->assertFalse($result);
@@ -52,13 +52,13 @@ class BloomFilterExistsCommandTest extends BaseTestIntegration
      * @param string $key
      * @param $item
      */
-    public function testExistsItemException(string $key, $item)
+    public function testExistsItemException(string $key, $item): void
     {
         $this->expectException(ResponseException::class);
         static::$reBloomClient->bloomFilterExists($key, $item);
     }
 
-    public function getExistsDataProvider()
+    public function getExistsDataProvider(): array
     {
         return [
             [Keys::DEFAULT_KEY, 'foo'],
@@ -69,7 +69,7 @@ class BloomFilterExistsCommandTest extends BaseTestIntegration
         ];
     }
 
-    public function getDataProviderForException()
+    public function getDataProviderForException(): array
     {
         return [
             [Keys::DEFAULT_KEY, [[1, 2]]],

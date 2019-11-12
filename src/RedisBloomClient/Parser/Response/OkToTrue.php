@@ -17,6 +17,11 @@ use Averias\RedisBloom\Parser\ParserInterface;
 
 class OkToTrue implements ParserInterface
 {
+    /**
+     * @param $response
+     * @return bool
+     * @throws ResponseException
+     */
     public function parse($response): bool
     {
         if (!is_string($response)) {

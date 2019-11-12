@@ -23,7 +23,7 @@ class BloomFilterAddCommandTest extends BaseTestIntegration
      * @param $item
      * @param bool $expectedResult
      */
-    public function testAddItemSuccessfully(string $key, $item, bool $expectedResult)
+    public function testAddItemSuccessfully(string $key, $item, bool $expectedResult): void
     {
         $result = static::$reBloomClient->bloomFilterAdd($key, $item);
         $this->assertSame($expectedResult, $result);
@@ -34,13 +34,13 @@ class BloomFilterAddCommandTest extends BaseTestIntegration
      * @param string $key
      * @param $item
      */
-    public function testAddItemException(string $key, $item)
+    public function testAddItemException(string $key, $item): void
     {
         $this->expectException(ResponseException::class);
         static::$reBloomClient->bloomFilterAdd($key, $item);
     }
 
-    public function getSuccessDataProvider()
+    public function getSuccessDataProvider(): array
     {
         return [
             ['key-add1', 12, true],

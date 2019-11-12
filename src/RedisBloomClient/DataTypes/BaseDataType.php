@@ -13,11 +13,11 @@
 namespace Averias\RedisBloom\DataTypes;
 
 use Averias\RedisBloom\Adapter\RedisClientAdapterInterface;
-use Averias\RedisBloom\Exception\ResponseException;
+use Averias\RedisBloom\Client\BaseRedisBloomClient;
 use Averias\RedisBloom\Parser\ParserTrait;
 use Averias\RedisBloom\Validator\InputValidatorTrait;
 
-class BaseDataType
+class BaseDataType extends BaseRedisBloomClient
 {
     use InputValidatorTrait;
     use ParserTrait;
@@ -25,25 +25,9 @@ class BaseDataType
     /** @var string */
     protected $name;
 
-    /** @var RedisClientAdapterInterface */
-    protected $redisClientAdapter;
-
     public function __construct(string $filterName, RedisClientAdapterInterface $redisClientAdapter)
     {
+        parent::__construct($redisClientAdapter);
         $this->name = $filterName;
-        $this->redisClientAdapter = $redisClientAdapter;
-    }
-
-    /**
-     * @param string $command
-     * @param string $key
-     * @param array $params
-     * @return mixed
-     * @throws ResponseException
-     */
-    protected function executeBloomCommand(string $command, string $key, array $params = [])
-    {
-        $response = $this->redisClientAdapter->executeBloomCommand($command, $key, $params);
-        return $this->parseResponse($command, $response);
     }
 }

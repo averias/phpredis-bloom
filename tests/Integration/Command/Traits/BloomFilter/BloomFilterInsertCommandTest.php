@@ -25,8 +25,12 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
      * @param array $options
      * @param array $expectedResult
      */
-    public function testInsertSuccessfullyWithNoOptions(string $key, array $items, array $options, array $expectedResult)
-    {
+    public function testInsertSuccessfullyWithNoOptions(
+        string $key,
+        array $items,
+        array $options,
+        array $expectedResult
+    ): void {
         $result = static::$reBloomClient->bloomFilterInsert($key, $items, $options);
         $this->assertSame($expectedResult, $result);
     }
@@ -38,8 +42,12 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
      * @param array $options
      * @param array $expectedResult
      */
-    public function testInsertSuccessfullyWithOptions(string $key, array $items, array $options, array $expectedResult)
-    {
+    public function testInsertSuccessfullyWithOptions(
+        string $key,
+        array $items,
+        array $options,
+        array $expectedResult
+    ): void {
         $result = static::$reBloomClient->bloomFilterInsert($key, $items, $options);
         $this->assertSame($expectedResult, $result);
     }
@@ -50,7 +58,7 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
      * @param array $items
      * @param array $options
      */
-    public function testInsertException(string $key, array $items, array $options)
+    public function testInsertException(string $key, array $items, array $options): void
     {
         $this->expectException(ResponseException::class);
         static::$reBloomClient->bloomFilterInsert($key, $items, $options);
@@ -112,7 +120,7 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
         ];
     }
 
-    public function getDataProviderForException()
+    public function getDataProviderForException(): array
     {
         return [
             [ // fails cause with NOCREATE filter must exist

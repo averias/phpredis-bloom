@@ -30,13 +30,13 @@ class BloomFilterMultiExistsCommandTest extends BaseTestIntegration
      * @param array $items
      * @param array $expectedResult
      */
-    public function testMultiExists(string $key, array $items, array $expectedResult)
+    public function testMultiExists(string $key, array $items, array $expectedResult): void
     {
         $result = static::$reBloomClient->bloomFilterMultiExists($key, ...$items);
         $this->assertSame($expectedResult, $result);
     }
 
-    public function testNonExistentKey()
+    public function testNonExistentKey(): void
     {
         $result = static::$reBloomClient->bloomFilterMultiExists('nonexistent-key', 'bar', 'foo');
         $this->assertSame([false, false], $result);
@@ -47,13 +47,13 @@ class BloomFilterMultiExistsCommandTest extends BaseTestIntegration
      * @param string $key
      * @param array $items
      */
-    public function testMultiExistsException(string $key, array $items)
+    public function testMultiExistsException(string $key, array $items): void
     {
         $this->expectException(ResponseException::class);
         static::$reBloomClient->bloomFilterMultiExists($key, ...$items);
     }
 
-    public function getExistsDataProvider()
+    public function getExistsDataProvider(): array
     {
         return [
             [Keys::DEFAULT_KEY, [12, 'bar'], [true, false]],
@@ -65,7 +65,7 @@ class BloomFilterMultiExistsCommandTest extends BaseTestIntegration
         ];
     }
 
-    public function getDataProviderForException()
+    public function getDataProviderForException(): array
     {
         return [
             [Keys::DEFAULT_KEY, [[1, 2]]],

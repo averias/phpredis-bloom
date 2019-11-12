@@ -12,31 +12,20 @@
 
 namespace Averias\RedisBloom\Adapter;
 
-use Averias\RedisBloom\Connection\ConnectionOptions;
-use Averias\RedisBloom\Enum\ResponseParser;
-use Averias\RedisBloom\Exception\ConnectionException;
 use Averias\RedisBloom\Exception\ResponseException;
-use Redis;
 use Exception;
 
 class RedisClientAdapter implements RedisClientAdapterInterface
 {
-    /** @var Redis */
-    protected $redis;
-
-    /** @var ConnectionOptions */
-    protected $connectionOptions;
+    /** @var RedisAdapter */
+    protected $redisAdapter;
 
     /**
-     * @param Redis $redis
-     * @param ConnectionOptions $connectionOptions
-     * @throws ConnectionException
+     * @param RedisAdapterInterface $redisAdapter
      */
-    public function __construct(Redis $redis, ConnectionOptions $connectionOptions)
+    public function __construct(RedisAdapterInterface $redisAdapter)
     {
-        $this->redis = $redis;
-        $this->connectionOptions = $connectionOptions;
-        $this->setConnection();
+        $this->redisAdapter = $redisAdapter;
     }
 
     /**
@@ -51,13 +40,13 @@ class RedisClientAdapter implements RedisClientAdapterInterface
         $response = $this->executeRawCommand($command, $key, ...$params);
 
         if ($response === false) {
-            $error = $this->redis->getLastError() ?? 'unknown';
+            $error = $this->redisAdapter->getLastError() ?? 'unknown';
             throw new ResponseException(
                 sprintf("something was wrong when executing %s command, possible reasons: %s", $command, $error)
             );
         }
 
-        return $this->parseResponse($command, $response);
+        return $response;
     }
 
     /**
@@ -69,8 +58,7 @@ class RedisClientAdapter implements RedisClientAdapterInterface
     public function executeRawCommand(string $commandName, ...$arguments)
     {
         try {
-            $this->checkConnection();
-            return $this->redis->rawCommand($commandName, ...$arguments);
+            return $this->redisAdapter->rawCommand($commandName, ...$arguments);
         } catch (Exception $e) {
             throw new ResponseException(
                 sprintf(
@@ -91,8 +79,7 @@ class RedisClientAdapter implements RedisClientAdapterInterface
     public function executeCommandByName(string $methodName, array $arguments = [])
     {
         try {
-            $this->checkConnection();
-            return call_user_func_array([$this->redis, $methodName], $arguments);
+            return $this->redisAdapter->executeCommandByName($methodName, $arguments);
         } catch (Exception $e) {
             throw new ResponseException(
                 sprintf(
@@ -103,58 +90,5 @@ class RedisClientAdapter implements RedisClientAdapterInterface
                 )
             );
         }
-    }
-
-    /**
-     * @throws ConnectionException
-     */
-    protected function setConnection(): void
-    {
-        if (!$this->connect()) {
-            throw new ConnectionException(
-                sprintf("connection to Redis server failed, reason: %s", $this->redis->getLastError())
-            );
-        }
-
-        if ($this->connectionOptions->getDatabase() != 0) {
-            $this->redis->select($this->connectionOptions->getDatabase());
-        }
-
-        $this->redis->setOption(Redis::OPT_REPLY_LITERAL, 1);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function connect(): bool
-    {
-        $connectionValues = $this->connectionOptions->getConnectionValues();
-        if ($this->connectionOptions->isPersistent()) {
-            return  $this->redis->pconnect(...$connectionValues);
-        }
-
-        return $this->redis->connect(...$connectionValues);
-    }
-
-    /**
-     * @throws ConnectionException
-     */
-    protected function checkConnection(): void
-    {
-        if (!$this->redis->isConnected()) {
-            $this->setConnection();
-        }
-    }
-
-    protected function parseResponse(string $command, $response)
-    {
-        $responseParsers = ResponseParser::RESPONSE_PARSER;
-        if (isset($responseParsers[$command])) {
-            $className = $responseParsers[$command];
-            $parser = new $className();
-            return $parser->parse($response);
-        }
-
-        return $response;
     }
 }

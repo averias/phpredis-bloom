@@ -37,6 +37,7 @@ interface RedisClientAdapterInterface
      * @param string $commandName
      * @param array $arguments
      * @return mixed
+     * @throws ResponseException
      */
     public function executeRawCommand(string $commandName, ...$arguments);
 }

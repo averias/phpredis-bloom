@@ -19,12 +19,13 @@ use MyCLabs\Enum\Enum;
 
 class ResponseParser extends Enum
 {
-    const RESPONSE_PARSER = [
+    const COMMAND_PARSERS = [
         BloomCommands::BF_RESERVE => OkToTrue::class,
         BloomCommands::BF_ADD => IntegerToBool::class,
         BloomCommands::BF_MADD => ArrayOfIntegerToBool::class,
         BloomCommands::BF_INSERT => ArrayOfIntegerToBool::class,
         BloomCommands::BF_EXISTS => IntegerToBool::class,
         BloomCommands::BF_MEXISTS => ArrayOfIntegerToBool::class,
+        BloomCommands::BF_LOADCHUNK => OkToTrue::class
     ];
 }

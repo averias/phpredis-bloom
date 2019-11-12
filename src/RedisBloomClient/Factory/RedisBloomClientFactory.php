@@ -12,10 +12,11 @@
 
 namespace Averias\RedisBloom\Factory;
 
+use Averias\RedisBloom\Adapter\RedisClientAdapterInterface;
 use Averias\RedisBloom\Client\RedisBloomClient;
 use Averias\RedisBloom\Client\RedisBloomClientInterface;
+use Averias\RedisBloom\DataTypes\BloomFilter;
 use Averias\RedisBloom\Exception\RedisClientException;
-use Averias\RedisBloom\Validator\InputValidator;
 use Averias\RedisBloom\Validator\RedisClientValidator;
 use Averias\RedisBloom\Adapter\AdapterProvider;
 use Exception;
@@ -31,18 +32,39 @@ class RedisBloomClientFactory implements RedisBloomClientFactoryInterface
     }
 
     /**
+     * @param array $config
+     * @return RedisClientAdapterInterface
+     * @throws RedisClientException
+     */
+    public function getAdapter(array $config = []): RedisClientAdapterInterface
+    {
+        try {
+            $adapter = $this->adapterProvider->getRedisClientAdapter($config);
+        } catch (Exception $e) {
+            throw new RedisClientException($e->getMessage());
+        }
+
+        return $adapter;
+    }
+
+    /**
      * @param array|null $config
      * @return RedisBloomClientInterface
      * @throws RedisClientException
      */
     public function createClient(array $config = []): RedisBloomClientInterface
     {
-        try {
-            $adapter = $this->adapterProvider->get($config);
-        } catch (Exception $e) {
-            throw new RedisClientException($e->getMessage());
-        }
+        return new RedisBloomClient($this->getAdapter($config));
+    }
 
-        return new RedisBloomClient($adapter, new InputValidator(), new RequestParserFactory());
+    /**
+     * @param string $filterName
+     * @param array $config
+     * @return BloomFilter
+     * @throws RedisClientException
+     */
+    public function createBloomFilter(string $filterName, array $config = []): BloomFilter
+    {
+        return new BloomFilter($filterName, $this->getAdapter($config));
     }
 }

@@ -10,15 +10,14 @@
  * the LICENSE file that is distributed with this source code.
  */
 
-namespace Averias\RedisBloom\Validator;
+namespace Averias\RedisBloom\Enum;
 
-use Averias\RedisBloom\Exception\ResponseException;
+use Averias\RedisBloom\Parser\Request\BloomFilterInsertOptionalParams;
+use MyCLabs\Enum\Enum;
 
-interface InputValidatorInterface
+class RequestParser extends Enum
 {
-    /**
-     * @param $value
-     * @throws ResponseException
-     */
-    public function validateScalar($value): void;
+    const COMMAND_PARSERS = [
+        BloomCommands::BF_INSERT => BloomFilterInsertOptionalParams::class,
+    ];
 }

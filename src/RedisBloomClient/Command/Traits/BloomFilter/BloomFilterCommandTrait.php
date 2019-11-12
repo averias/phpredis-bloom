@@ -30,23 +30,14 @@ trait BloomFilterCommandTrait
 
     public function bloomFilterMultiAdd(string $key, ...$items): array
     {
-        foreach ($items as $item) {
-            $this->validateScalar($item);
-        }
-
+        $this->validateArrayOfScalars($items);
         return $this->executeBloomCommand(BloomCommands::BF_MADD, $key, $items);
     }
 
     public function bloomFilterInsert(string $key, array $items, array $options = []): array
     {
-        foreach ($items as $item) {
-            $this->validateScalar($item);
-        }
-
-        $parserFactory = $this->getRequestParserFactory();
-        $requestParser = $parserFactory->getBloomFilterInsertOptionalParams();
-        $parsedOptions = $requestParser->parse($options);
-
+        $this->validateArrayOfScalars($items);
+        $parsedOptions = $this->parseRequest(BloomCommands::BF_INSERT, $options);
         $items = array_merge([OptionalParams::ITEMS], $items);
         $arguments = array_merge($parsedOptions, $items);
 
@@ -61,20 +52,17 @@ trait BloomFilterCommandTrait
 
     public function bloomFilterMultiExists(string $key, ...$items): array
     {
-        foreach ($items as $item) {
-            $this->validateScalar($item);
-        }
-
+        $this->validateArrayOfScalars($items);
         return $this->executeBloomCommand(BloomCommands::BF_MEXISTS, $key, $items);
     }
 
-    public function bloomFilterScanDump(string $key, $iterator)
+    public function bloomFilterScanDump(string $key, int $iterator): array
     {
-
+        return $this->executeBloomCommand(BloomCommands::BF_SCANDUMP, $key, [$iterator]);
     }
 
-    public function bloomFilterLoadChunk(string $key, $iterator, $data)
+    public function bloomFilterLoadChunk(string $key, int $iterator, $data): bool
     {
-
+        return $this->executeBloomCommand(BloomCommands::BF_LOADCHUNK, $key, [$iterator, $data]);
     }
 }

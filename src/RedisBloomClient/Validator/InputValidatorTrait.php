@@ -15,7 +15,7 @@ namespace Averias\RedisBloom\Validator;
 use Averias\RedisBloom\Enum\BloomCommands;
 use Averias\RedisBloom\Exception\ResponseException;
 
-class InputValidator implements InputValidatorInterface
+trait InputValidatorTrait
 {
     /**
      * @param $value
@@ -27,6 +27,17 @@ class InputValidator implements InputValidatorInterface
             throw new ResponseException(
                 sprintf("value for parameter item in command %s must be string or number", BloomCommands::BF_MADD)
             );
+        }
+    }
+
+    /**
+     * @param array $elements
+     * @throws ResponseException
+     */
+    public function validateArrayOfScalars(array $elements): void
+    {
+        foreach ($elements as $element) {
+            $this->validateScalar($element);
         }
     }
 }

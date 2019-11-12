@@ -17,7 +17,6 @@ use Averias\RedisBloom\Exception\ConnectionException;
 use Averias\RedisBloom\Exception\RedisBloomModuleNotInstalledException;
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Validator\RedisClientValidatorInterface;
-use Redis;
 
 class AdapterProvider
 {
@@ -36,26 +35,35 @@ class AdapterProvider
      * @throws RedisBloomModuleNotInstalledException
      * @throws ResponseException
      */
-    public function get(array $config = []): RedisClientAdapterInterface
+    public function getRedisClientAdapter(array $config = []): RedisClientAdapterInterface
     {
-        $redisClient = $this->getRedisClient($config);
+        $redisClientAdapter = new RedisClientAdapter($this->getRedisAdapter($config));
+        $this->validateRedisBloomModuleInstalled($redisClientAdapter);
 
-        $modules = $redisClient->executeRawCommand('MODULE', 'list');
-        if (!$this->validator->isRedisBloomModuleInstalled($modules)) {
-            throw new RedisBloomModuleNotInstalledException('RedisBloom module not installed in Redis server.');
-        }
-
-        return $redisClient;
+        return $redisClientAdapter;
     }
 
     /**
      * @param array $config
-     * @return RedisClientAdapter
+     * @return RedisAdapterInterface
      * @throws ConnectionException
      */
-    protected function getRedisClient(array $config = []): RedisClientAdapter
+    protected function getRedisAdapter(array $config = []): RedisAdapterInterface
     {
         $connectionOptions = new ConnectionOptions($config);
-        return new RedisClientAdapter(new Redis(), $connectionOptions);
+        return new RedisAdapter($connectionOptions);
+    }
+
+    /**
+     * @param RedisClientAdapterInterface $redisClientAdapter
+     * @throws RedisBloomModuleNotInstalledException
+     * @throws ResponseException
+     */
+    protected function validateRedisBloomModuleInstalled(RedisClientAdapterInterface $redisClientAdapter): void
+    {
+        $modules = $redisClientAdapter->executeRawCommand('MODULE', 'list');
+        if (!$this->validator->isRedisBloomModuleInstalled($modules)) {
+            throw new RedisBloomModuleNotInstalledException('RedisBloom module not installed in Redis server.');
+        }
     }
 }

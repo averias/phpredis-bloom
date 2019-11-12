@@ -26,7 +26,7 @@ interface BloomFilterCommandTraitInterface
 
     public function bloomFilterMultiExists(string $key, ...$items): array;
 
-    public function bloomFilterScanDump(string $key, $iterator);
+    public function bloomFilterScanDump(string $key, int $iterator): array;
 
-    public function bloomFilterLoadChunk(string $key, $iterator, $data);
+    public function bloomFilterLoadChunk(string $key, int $iterator, $data): bool;
 }

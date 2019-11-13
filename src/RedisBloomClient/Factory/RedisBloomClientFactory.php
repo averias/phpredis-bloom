@@ -16,6 +16,7 @@ use Averias\RedisBloom\Adapter\RedisClientAdapterInterface;
 use Averias\RedisBloom\Client\RedisBloomClient;
 use Averias\RedisBloom\Client\RedisBloomClientInterface;
 use Averias\RedisBloom\DataTypes\BloomFilter;
+use Averias\RedisBloom\DataTypes\DataTypeInterface;
 use Averias\RedisBloom\Exception\RedisClientException;
 use Averias\RedisBloom\Validator\RedisClientValidator;
 use Averias\RedisBloom\Adapter\AdapterProvider;
@@ -63,7 +64,7 @@ class RedisBloomClientFactory implements RedisBloomClientFactoryInterface
      * @return BloomFilter
      * @throws RedisClientException
      */
-    public function createBloomFilter(string $filterName, array $config = []): BloomFilter
+    public function createBloomFilter(string $filterName, array $config = []): DataTypeInterface
     {
         return new BloomFilter($filterName, $this->getAdapter($config));
     }

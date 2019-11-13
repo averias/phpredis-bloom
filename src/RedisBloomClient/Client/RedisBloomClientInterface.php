@@ -12,7 +12,8 @@
 
 namespace Averias\RedisBloom\Client;
 
-use Averias\RedisBloom\Command\Traits\BloomCommandTraitInterface;
+
+use Averias\RedisBloom\Command\BloomCommandTraitInterface;
 
 interface RedisBloomClientInterface extends RedisClientInterface, BloomCommandTraitInterface
 {

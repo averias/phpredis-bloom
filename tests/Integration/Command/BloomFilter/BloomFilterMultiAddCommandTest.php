@@ -10,7 +10,7 @@
  * the LICENSE file that is distributed with this source code.
  */
 
-namespace Averias\RedisBloom\Tests\Integration\Command\Traits\BloomFilter;
+namespace Averias\RedisBloom\Tests\Integration\Command\BloomFilter;
 
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Tests\BaseTestIntegration;

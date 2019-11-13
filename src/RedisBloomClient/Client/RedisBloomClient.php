@@ -12,7 +12,7 @@
 
 namespace Averias\RedisBloom\Client;
 
-use Averias\RedisBloom\Command\Traits\BloomCommandTrait;
+use Averias\RedisBloom\Command\BloomCommandTrait;
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Validator\InputValidatorTrait;
 

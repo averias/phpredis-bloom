@@ -10,7 +10,7 @@
  * the LICENSE file that is distributed with this source code.
  */
 
-namespace Averias\RedisBloom\Command\Traits\BloomFilter;
+namespace Averias\RedisBloom\Command\BloomFilter;
 
 use Averias\RedisBloom\Enum\BloomCommands;
 use Averias\RedisBloom\Enum\OptionalParams;

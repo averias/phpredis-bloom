@@ -12,11 +12,11 @@
 
 namespace Averias\RedisBloom\DataTypes;
 
-use Averias\RedisBloom\Command\Traits\BloomFilter\BloomFilterCommandTrait;
+use Averias\RedisBloom\Command\BloomFilter\BloomFilterCommandTrait;
 use Averias\RedisBloom\Exception\ResponseException;
 use Exception;
 
-class BloomFilter extends BaseDataType
+class BloomFilter extends BaseDataType implements DataTypeInterface
 {
     use BloomFilterCommandTrait;
 

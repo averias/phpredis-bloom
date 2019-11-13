@@ -15,10 +15,30 @@ namespace Averias\RedisBloom\Factory;
 use Averias\RedisBloom\Adapter\RedisClientAdapterInterface;
 use Averias\RedisBloom\Client\RedisBloomClientInterface;
 use Averias\RedisBloom\DataTypes\BloomFilter;
+use Averias\RedisBloom\DataTypes\DataTypeInterface;
+use Averias\RedisBloom\Exception\RedisClientException;
 
 interface RedisBloomClientFactoryInterface
 {
+    /**
+     * @param array $config
+     * @return RedisClientAdapterInterface
+     * @throws RedisClientException
+     */
     public function getAdapter(array $config = []): RedisClientAdapterInterface;
+
+    /**
+     * @param array|null $config
+     * @return RedisBloomClientInterface
+     * @throws RedisClientException
+     */
     public function createClient(array $config): RedisBloomClientInterface;
-    public function createBloomFilter(string $filterName, array $config = []): BloomFilter;
+
+    /**
+     * @param string $filterName
+     * @param array $config
+     * @return BloomFilter
+     * @throws RedisClientException
+     */
+    public function createBloomFilter(string $filterName, array $config = []): DataTypeInterface;
 }

@@ -41,3 +41,4 @@ interface RedisClientAdapterInterface
      */
     public function executeRawCommand(string $commandName, ...$arguments);
 }
+

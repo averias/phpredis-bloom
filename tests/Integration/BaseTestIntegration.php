@@ -16,12 +16,22 @@ use Averias\RedisBloom\Client\RedisBloomClientInterface;
 use Averias\RedisBloom\Enum\Connection;
 use Averias\RedisBloom\Exception\RedisClientException;
 use Averias\RedisBloom\Factory\RedisBloomClientFactory;
+use Averias\RedisBloom\Factory\RedisBloomClientFactoryInterface;
 use PHPUnit\Framework\TestCase;
 
 class BaseTestIntegration extends TestCase
 {
     /** @var RedisBloomClientInterface */
     protected static $reBloomClient;
+
+    /** @var RedisBloomClientFactoryInterface */
+    protected static $factory;
+
+    public function __construct($name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        static::$factory = new RedisBloomClientFactory();
+    }
 
     /**
      * @throws RedisClientException
@@ -34,8 +44,8 @@ class BaseTestIntegration extends TestCase
     public static function tearDownAfterClass(): void
     {
         if (static::$reBloomClient) {
-            static::$reBloomClient->select(0);
-            static::$reBloomClient->flushall();
+            static::$reBloomClient->select(15);
+            static::$reBloomClient->flushDb();
         }
     }
 
@@ -61,6 +71,6 @@ class BaseTestIntegration extends TestCase
         $config = static::getReBloomClientConfig();
         $factory =  new RedisBloomClientFactory();
 
-        return $factory->createClient($config);
+        return static::$factory->createClient(static::getReBloomClientConfig());
     }
 }

@@ -10,21 +10,23 @@
  * the LICENSE file that is distributed with this source code.
  */
 
-namespace Averias\RedisBloom\Tests\Integration\Command\Traits\BloomFilter;
+namespace Averias\RedisBloom\Tests\Integration\Command\BloomFilter;
 
 use Averias\RedisBloom\Enum\Keys;
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Tests\BaseTestIntegration;
 
-class BloomFilterScanDumpTest extends BaseTestIntegration
+class BloomFilterLoadChunkTest extends BaseTestIntegration
 {
+    protected static $data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
     public static function setUpBeforeClass():void
     {
         parent::setUpBeforeClass();
-        static::$reBloomClient->bloomFilterMultiAdd(Keys::DEFAULT_KEY, 'foo', 12, 9, 1337, 'bar', 'baz');
+        static::$reBloomClient->bloomFilterMultiAdd(Keys::DEFAULT_KEY, ...self::$data);
     }
 
-    public function testScanDump(): void
+    public function testLoadChunk(): void
     {
         $iterator = 0;
         while (true) {
@@ -35,15 +37,19 @@ class BloomFilterScanDumpTest extends BaseTestIntegration
             if ($iterator == 0) {
                 break;
             }
-            $this->assertNotNull($iterator);
-            $this->assertNotEquals(0, $iterator);
-            $this->assertNotEmpty($data);
+            $result = static::$reBloomClient->bloomFilterLoadChunk('copy-filter', $iterator, $data);
+            $this->assertTrue($result);
+        }
+
+        $copiedData = static::$reBloomClient->bloomFilterMultiExists('copy-filter', ...self::$data);
+        foreach ($copiedData as $item) {
+            $this->assertTrue($item);
         }
     }
 
-    public function testNonExistentKeyException(): void
+    public function testLoadChunkException(): void
     {
         $this->expectException(ResponseException::class);
-        static::$reBloomClient->bloomFilterScanDump('nonexistent', 0);
+        static::$reBloomClient->bloomFilterLoadChunk('nonexistent', 556, 1);
     }
 }

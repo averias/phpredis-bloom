@@ -31,3 +31,4 @@ class RedisClientValidator implements RedisClientValidatorInterface
         return false;
     }
 }
+

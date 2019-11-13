@@ -10,14 +10,11 @@
  * the LICENSE file that is distributed with this source code.
  */
 
-namespace Averias\RedisBloom\Validator;
+namespace Averias\RedisBloom\Command;
 
-interface RedisClientValidatorInterface
+use Averias\RedisBloom\Command\BloomFilter\BloomFilterCommandTrait;
+
+trait BloomCommandTrait
 {
-    /**
-     * @param array $moduleListCommandResponse
-     * @return bool
-     */
-    public function isRedisBloomModuleInstalled(array $moduleListCommandResponse): bool;
+    use BloomFilterCommandTrait;
 }
-

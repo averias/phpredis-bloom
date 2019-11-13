@@ -10,11 +10,11 @@
  * the LICENSE file that is distributed with this source code.
  */
 
-namespace Averias\RedisBloom\Command\Traits;
+namespace Averias\RedisBloom\Command;
 
-use Averias\RedisBloom\Command\Traits\BloomFilter\BloomFilterCommandTrait;
+use Averias\RedisBloom\Command\BloomFilter\BloomFilterCommandTraitInterface;
 
-trait BloomCommandTrait
+interface BloomCommandTraitInterface extends BloomFilterCommandTraitInterface
 {
-    use BloomFilterCommandTrait;
+
 }

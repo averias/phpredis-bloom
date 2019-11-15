@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -18,27 +18,27 @@ use Averias\RedisBloom\DataTypes\BloomFilter;
 use Averias\RedisBloom\DataTypes\DataTypeInterface;
 use Averias\RedisBloom\Exception\RedisClientException;
 
-interface RedisBloomClientFactoryInterface
+interface RedisBloomFactoryInterface
 {
     /**
-     * @param array $config
+     * @param array|null $config
      * @return RedisClientAdapterInterface
      * @throws RedisClientException
      */
-    public function getAdapter(array $config = []): RedisClientAdapterInterface;
+    public function getAdapter(?array $config = null): RedisClientAdapterInterface;
 
     /**
      * @param array|null $config
      * @return RedisBloomClientInterface
      * @throws RedisClientException
      */
-    public function createClient(array $config): RedisBloomClientInterface;
+    public function createClient(?array $config = null): RedisBloomClientInterface;
 
     /**
      * @param string $filterName
-     * @param array $config
+     * @param array|null $config
      * @return BloomFilter
      * @throws RedisClientException
      */
-    public function createBloomFilter(string $filterName, array $config = []): DataTypeInterface;
+    public function createBloomFilter(string $filterName, ?array $config = null): DataTypeInterface;
 }

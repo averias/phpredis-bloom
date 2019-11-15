@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -15,12 +15,12 @@ namespace Example;
 require(dirname(__DIR__).'/vendor/autoload.php');
 
 use Averias\RedisBloom\Enum\OptionalParams;
-use Averias\RedisBloom\Factory\RedisBloomClientFactory;
+use Averias\RedisBloom\Factory\RedisBloomFactory;
 
 const SCAN_KEY = 'scan-key';
 const TARGET_SCAN_KEY = 'target-scan-key';
 
-$factory = new RedisBloomClientFactory();
+$factory = new RedisBloomFactory();
 $client = $factory->createClient();
 
 $capacity = 10000;

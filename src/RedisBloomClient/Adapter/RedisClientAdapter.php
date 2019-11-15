@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -90,5 +90,13 @@ class RedisClientAdapter implements RedisClientAdapterInterface
                 )
             );
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function disconnect(): bool
+    {
+        return $this->redisAdapter->closeConnection();
     }
 }

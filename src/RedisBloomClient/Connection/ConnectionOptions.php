@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -41,9 +41,9 @@ class ConnectionOptions
     private $database;
 
     /**
-     * @param array $config
+     * @param array|null $config
      */
-    public function __construct(array $config = [])
+    public function __construct(?array $config = null)
     {
         $host = $config[Connection::HOST] ?? Connection::DEFAULT[Connection::HOST];
         $this->setHost($host);

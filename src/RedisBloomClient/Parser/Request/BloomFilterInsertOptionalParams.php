@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -37,20 +37,25 @@ class BloomFilterInsertOptionalParams implements ParserInterface
 
             $capacity = $options[OptionalParams::CAPACITY];
             if (!is_null($capacity)) {
+                if (!is_int($capacity)) {
+                    throw new InvalidArgumentException(sprintf("option %s must be integer", OptionalParams::CAPACITY));
+                }
                 $result[] = OptionalParams::CAPACITY;
-                $result[] = (int)$capacity;
+                $result[] = $capacity;
             }
 
             $error = $options[OptionalParams::ERROR];
             if (!is_null($error)) {
-                $error = (float)$error;
+                if (!is_float($error)) {
+                    throw new InvalidArgumentException(sprintf("option %s must be float", OptionalParams::ERROR));
+                }
                 if ($error <= 0.0 || $error > 1.0) {
                     throw new InvalidArgumentException(
                         sprintf("option %s must be >= 0.0 and >= 1.0, provided value %f", OptionalParams::ERROR, $error)
                     );
                 }
                 $result[] = OptionalParams::ERROR;
-                $result[] = (float)$error;
+                $result[] = $error;
             }
 
             $noCreate = $options[OptionalParams::NOCREATE];

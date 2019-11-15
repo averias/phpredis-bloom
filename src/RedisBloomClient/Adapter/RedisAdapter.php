@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -25,13 +25,14 @@ class RedisAdapter implements RedisAdapterInterface
     protected $redis;
 
     /**
+     * @param Redis $redis
      * @param ConnectionOptions $connectionOptions
      * @throws ConnectionException
      */
-    public function __construct(ConnectionOptions $connectionOptions)
+    public function __construct(Redis $redis, ConnectionOptions $connectionOptions)
     {
         $this->connectionOptions = $connectionOptions;
-        $this->redis = new Redis();
+        $this->redis = $redis;
         $this->setConnection();
     }
 
@@ -69,7 +70,7 @@ class RedisAdapter implements RedisAdapterInterface
      */
     public function checkConnection(): void
     {
-        if (!$this->redis->isConnected()) {
+        if (!$this->isConnected()) {
             $this->setConnection();
         }
     }
@@ -81,7 +82,7 @@ class RedisAdapter implements RedisAdapterInterface
     {
         if (!$this->connect()) {
             throw new ConnectionException(
-                sprintf("connection to Redis server failed, reason: %s", $this->redis->getLastError())
+                sprintf("connection to Redis server failed, reason: %s", $this->getLastError())
             );
         }
 
@@ -111,5 +112,37 @@ class RedisAdapter implements RedisAdapterInterface
     public function closeConnection(): bool
     {
         return $this->redis->close();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isConnected(): bool
+    {
+        return $this->redis->isConnected();
+    }
+
+    /**
+     * @return string
+     */
+    public function getConnectionHost(): string
+    {
+        return $this->connectionOptions->getHost();
+    }
+
+    /**
+     * @return int
+     */
+    public function getConnectionPort(): int
+    {
+        return $this->connectionOptions->getPort();
+    }
+
+    /**
+     * @return int
+     */
+    public function getConnectionDatabase(): int
+    {
+        return $this->connectionOptions->getDatabase();
     }
 }

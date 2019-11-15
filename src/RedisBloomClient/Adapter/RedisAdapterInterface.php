@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -12,17 +12,10 @@
 
 namespace Averias\RedisBloom\Adapter;
 
-use Averias\RedisBloom\Connection\ConnectionOptions;
 use Averias\RedisBloom\Exception\ConnectionException;
 
 interface RedisAdapterInterface
 {
-    /**
-     * @param ConnectionOptions $connectionOptions
-     * @throws ConnectionException
-     */
-    public function __construct(ConnectionOptions $connectionOptions);
-
     /**
      * @return string|null
      */
@@ -63,4 +56,24 @@ interface RedisAdapterInterface
      * @return bool
      */
     public function closeConnection(): bool;
+
+    /**
+     * @return bool
+     */
+    public function isConnected(): bool;
+
+    /**
+     * @return string
+     */
+    public function getConnectionHost(): string;
+
+    /**
+     * @return int
+     */
+    public function getConnectionPort(): int;
+
+    /**
+     * @return int
+     */
+    public function getConnectionDatabase(): int;
 }

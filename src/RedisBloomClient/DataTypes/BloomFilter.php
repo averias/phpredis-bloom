@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -55,10 +55,9 @@ class BloomFilter extends BaseDataType implements DataTypeInterface
         return $this->bloomFilterScanDump($this->name, $iterator);
     }
 
-    public function loadChunk(int $iterator, $data, string $targetFilter = null): bool
+    public function loadChunk(int $iterator, $data): bool
     {
-        $filterKey = $targetFilter ?? $this->name;
-        return $this->bloomFilterLoadChunk($filterKey, $iterator, $data);
+        return $this->bloomFilterLoadChunk($this->name, $iterator, $data);
     }
 
     /**
@@ -77,7 +76,7 @@ class BloomFilter extends BaseDataType implements DataTypeInterface
                 if ($iterator == 0) {
                     break;
                 }
-                $this->loadChunk($iterator, $data, $targetFilter);
+                $this->bloomFilterLoadChunk($targetFilter, $iterator, $data);
             }
             $success = true;
         } catch (Exception $e) {

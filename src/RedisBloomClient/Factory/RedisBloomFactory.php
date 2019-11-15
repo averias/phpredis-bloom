@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -22,25 +22,26 @@ use Averias\RedisBloom\Validator\RedisClientValidator;
 use Averias\RedisBloom\Adapter\AdapterProvider;
 use Exception;
 
-class RedisBloomClientFactory implements RedisBloomClientFactoryInterface
+class RedisBloomFactory implements RedisBloomFactoryInterface
 {
-    /** @var AdapterProvider */
-    protected $adapterProvider;
+    /** @var array */
+    protected $config;
 
-    public function __construct()
+    public function __construct(?array $config = null)
     {
-        $this->adapterProvider = new AdapterProvider(new RedisClientValidator());
+        $this->config = $config;
     }
 
     /**
-     * @param array $config
+     * @param array|null $config
      * @return RedisClientAdapterInterface
      * @throws RedisClientException
      */
-    public function getAdapter(array $config = []): RedisClientAdapterInterface
+    public function getAdapter(?array $config = null): RedisClientAdapterInterface
     {
         try {
-            $adapter = $this->adapterProvider->getRedisClientAdapter($config);
+            $config = $config ?? $this->config;
+            $adapter = $this->getAdapterProvider()->get($config);
         } catch (Exception $e) {
             throw new RedisClientException($e->getMessage());
         }
@@ -53,19 +54,27 @@ class RedisBloomClientFactory implements RedisBloomClientFactoryInterface
      * @return RedisBloomClientInterface
      * @throws RedisClientException
      */
-    public function createClient(array $config = []): RedisBloomClientInterface
+    public function createClient(?array $config = null): RedisBloomClientInterface
     {
         return new RedisBloomClient($this->getAdapter($config));
     }
 
     /**
      * @param string $filterName
-     * @param array $config
+     * @param array|null $config
      * @return BloomFilter
      * @throws RedisClientException
      */
-    public function createBloomFilter(string $filterName, array $config = []): DataTypeInterface
+    public function createBloomFilter(string $filterName, ?array $config = null): DataTypeInterface
     {
         return new BloomFilter($filterName, $this->getAdapter($config));
+    }
+
+    /**
+     * @return AdapterProvider
+     */
+    protected function getAdapterProvider(): AdapterProvider
+    {
+        return new AdapterProvider(new RedisClientValidator());
     }
 }

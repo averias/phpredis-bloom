@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -109,13 +109,6 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
                 ['foo', 9],
                 [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 0.01, OptionalParams::NOCREATE => false],
                 [true, true]
-            ],
-            // doesn't fail BUT if ERROR is maximum (1.0) nothing is inserted
-            [
-                'key-insert6',
-                ['bar', 19],
-                [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 1],
-                [false, false]
             ]
         ];
     }
@@ -157,6 +150,12 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
                 'key-insert7',
                 [22, 33],
                 [OptionalParams::ERROR => 'foo'],
+            ]
+            ,
+            [ // fails ERROR is not float
+                'key-insert7',
+                [22, 33],
+                [OptionalParams::ERROR => 1],
             ]
         ];
     }

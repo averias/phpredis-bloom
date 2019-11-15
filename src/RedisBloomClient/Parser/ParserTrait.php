@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -22,7 +22,7 @@ trait ParserTrait
      * @param mixed $input
      * @return mixed
      */
-    protected function parseRequest(string $command, $input)
+    public function parseRequest(string $command, $input)
     {
         return $this->baseParse(RequestParser::COMMAND_PARSERS, $command, $input);
     }
@@ -32,7 +32,7 @@ trait ParserTrait
      * @param mixed $response
      * @return mixed
      */
-    protected function parseResponse(string $command, $response)
+    public function parseResponse(string $command, $response)
     {
         return $this->baseParse(ResponseParser::COMMAND_PARSERS, $command, $response);
     }

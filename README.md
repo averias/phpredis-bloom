@@ -13,6 +13,7 @@ so you can also take advantage of some of the features included in `phpredis` as
 
 ## Usage
 
+### Clients
 There are 2 ways to execute Phpredis-bloom commands:
 
 `Executing commands by using RedisBloomClient`
@@ -28,7 +29,7 @@ $result = $client->bloomFilterAdd('filter-key', 'item-15');
 
 ```
 
-`Executing Bloom Filter commands by using BloomFilter datatype`
+`Executing Bloom Filter commands by using BloomFilter data types`
 
 ```
 use Averias\RedisBloom\Factory\RedisBloomFactory;
@@ -53,6 +54,21 @@ $result = $bloomFilter->add(17.2); // returns true
 // checking if a list items exist in 'filter-key' Bloom Filter
 $result = $bloomFilter->multiExists('item1', 15, 'foo'); // returns and array [true, true, false] since 'foo' doesn't exists 
 ```
+### Automatic connection, disconnection and reconnection
+
+RedisBloomClient and Redis Bloom data types automatically connect Redis after creation, you can disconnect them from the 
+Redis instance by calling its `disconnect` method:
+
+`$client->disconnect()`
+
+or 
+
+`$bloomFilter->disconnect()`
+
+which will return true or false depending on the disconnection was possible.
+
+After one successful disconnection the client or data type object will reconnect automatically if you reuse the object 
+for sending more commands (see example below) 
 
 ### Example
 
@@ -100,6 +116,9 @@ $clientDB15->bloomFilterAdd(EXAMPLE_FILTER, 'item-15');
 // add 'item-14' to 'example-filter' bloom filter on database 14
 $bloomFilterDB14->add('item-14');
 
+// disconnect
+$bloomFilterDB14->disconnect();
+
 // create another RedisBloomClient pointing to database 14
 $clientDB14 = $factoryDB15->createClient([Connection::DATABASE => 14]);
 
@@ -114,6 +133,16 @@ $clientDB15->executeRawCommand('DEL', EXAMPLE_FILTER);
 
 // delete bloom filter on database 14
 $clientDB14->del(EXAMPLE_FILTER);
+
+// disconnect
+
+$clientDB15->disconnect();
+$clientDB14->disconnect();
+
+// automatic reconnection
+$bloomFilterDB14->add('reconnected');
+$exist = $bloomFilterDB14->exists('reconnected'); //true
+$bloomFilterDB14->disconnect();
 
 ```
 

@@ -15,6 +15,7 @@ namespace Averias\RedisBloom\Adapter;
 use Averias\RedisBloom\Connection\ConnectionOptions;
 use Averias\RedisBloom\Exception\ConnectionException;
 use Redis;
+use Exception;
 
 class RedisAdapter implements RedisAdapterInterface
 {
@@ -106,12 +107,20 @@ class RedisAdapter implements RedisAdapterInterface
         return $this->redis->connect(...$connectionValues);
     }
 
-    /**
+    /** Close a persistent connection. If connection is not persistent, it is not connected or there is an error closing
+     * the persistence connection, returns false, true if persistent connection was closed successfully
+     *
      * @return bool
      */
     public function closeConnection(): bool
     {
-        return $this->redis->close();
+        try {
+            $disconnected =  $this->redis->close();
+        } catch (Exception $exception) {
+            return false;
+        }
+
+        return $disconnected;
     }
 
     /**

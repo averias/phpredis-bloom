@@ -50,6 +50,9 @@ $clientDB15->bloomFilterAdd(EXAMPLE_FILTER, 'item-15');
 // add 'item-14' to 'example-filter' bloom filter on database 14
 $bloomFilterDB14->add('item-14');
 
+// disconnect
+$bloomFilterDB14->disconnect();
+
 // create another RedisBloomClient pointing to database 14
 $clientDB14 = $factoryDB15->createClient([Connection::DATABASE => 14]);
 
@@ -64,3 +67,13 @@ $clientDB15->executeRawCommand('DEL', EXAMPLE_FILTER);
 
 // delete bloom filter on database 14
 $clientDB14->del(EXAMPLE_FILTER);
+
+// disconnect
+
+$clientDB15->disconnect();
+$clientDB14->disconnect();
+
+// automatic reconnection
+$bloomFilterDB14->add('reconnected');
+$exist = $bloomFilterDB14->exists('reconnected'); //true
+$bloomFilterDB14->disconnect();

@@ -97,4 +97,18 @@ class BloomFilterTest extends BaseTestIntegration
         $newBloomFilter = static::$factory->createBloomFilter('new-bloom-filter', static::getReBloomClientConfig());
         $newBloomFilter->copy('other-bloom-filter');
     }
+
+    public function testDisconnection()
+    {
+        $clientsInfo = static::$reBloomClient->info('clients');
+        $connectedClientsBefore = $clientsInfo['connected_clients'];
+
+        $disconnected = static::$bloomFilter->disconnect();
+        $this->assertTrue($disconnected);
+
+        $clientsInfo = static::$reBloomClient->info('clients');
+        $connectedClientsAfter = $clientsInfo['connected_clients'];
+
+        $this->assertEquals(1, $connectedClientsBefore - $connectedClientsAfter);
+    }
 }

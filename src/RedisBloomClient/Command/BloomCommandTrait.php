@@ -13,8 +13,10 @@
 namespace Averias\RedisBloom\Command;
 
 use Averias\RedisBloom\Command\BloomFilter\BloomFilterCommandTrait;
+use Averias\RedisBloom\Command\CuckooFilter\CuckooFilterCommandTrait;
 
 trait BloomCommandTrait
 {
     use BloomFilterCommandTrait;
+    use CuckooFilterCommandTrait;
 }

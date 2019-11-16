@@ -26,6 +26,14 @@ class ResponseParser extends Enum
         BloomCommands::BF_INSERT => ArrayOfIntegerToBool::class,
         BloomCommands::BF_EXISTS => IntegerToBool::class,
         BloomCommands::BF_MEXISTS => ArrayOfIntegerToBool::class,
-        BloomCommands::BF_LOADCHUNK => OkToTrue::class
+        BloomCommands::BF_LOADCHUNK => OkToTrue::class,
+        BloomCommands::CF_RESERVE => OkToTrue::class,
+        BloomCommands::CF_ADD => IntegerToBool::class,
+        BloomCommands::CF_ADDNX => IntegerToBool::class,
+        BloomCommands::CF_INSERT => ArrayOfIntegerToBool::class,
+        BloomCommands::CF_INSERTNX => ArrayOfIntegerToBool::class,
+        BloomCommands::CF_EXISTS => IntegerToBool::class,
+        BloomCommands::CF_DEL => IntegerToBool::class,
+        BloomCommands::CF_LOADCHUNK => OkToTrue::class,
     ];
 }

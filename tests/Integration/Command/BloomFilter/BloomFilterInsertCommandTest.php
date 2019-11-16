@@ -94,20 +94,20 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
             [ // CAPACITY and ERROR are no changed since the filter already exists
                 'key-insert3',
                 ['foo', 9],
-                [OptionalParams::CAPACITY => 10000, OptionalParams::ERROR => 0.1, OptionalParams::NOCREATE => true],
+                [OptionalParams::CAPACITY => 10000, OptionalParams::ERROR => 0.1, OptionalParams::NO_CREATE => true],
                 [true, false]
             ],
             [
                 'key-insert4',
                 ['foo', 9],
-                [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 0.01, OptionalParams::NOCREATE => false],
+                [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 0.01, OptionalParams::NO_CREATE => false],
                 [true, true]
             ],
-            // doesn't fail cause NOCREATE is ignored if not true, so 'key-insert5' is created since it doesn't exist
+            // doesn't fail cause NO_CREATE is ignored if not true, so 'key-insert5' is created since it doesn't exist
             [
                 'key-insert5',
                 ['foo', 9],
-                [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 0.01, OptionalParams::NOCREATE => false],
+                [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 0.01, OptionalParams::NO_CREATE => false],
                 [true, true]
             ]
         ];
@@ -116,10 +116,10 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
     public function getDataProviderForException(): array
     {
         return [
-            [ // fails cause with NOCREATE filter must exist
+            [ // fails cause with NO_CREATE filter must exist
                 'key-insert51',
                 [1, 2],
-                [OptionalParams::NOCREATE => true]
+                [OptionalParams::NO_CREATE => true]
             ],
             [ // fails cause wrong items to insert
                 'key-insert7',

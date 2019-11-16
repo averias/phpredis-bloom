@@ -16,7 +16,7 @@ use Averias\RedisBloom\Enum\Keys;
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Tests\BaseTestIntegration;
 
-class BloomFilterScanDumpTest extends BaseTestIntegration
+class BloomFilterScanDumpCommandTest extends BaseTestIntegration
 {
     public static function setUpBeforeClass():void
     {

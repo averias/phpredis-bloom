@@ -41,4 +41,12 @@ interface RedisBloomFactoryInterface
      * @throws RedisClientException
      */
     public function createBloomFilter(string $filterName, ?array $config = null): DataTypeInterface;
+
+    /**
+     * @param string $filterName
+     * @param array|null $config
+     * @return DataTypeInterface
+     * @throws RedisClientException
+     */
+    public function createCuckooFilter(string $filterName, ?array $config = null): DataTypeInterface;
 }

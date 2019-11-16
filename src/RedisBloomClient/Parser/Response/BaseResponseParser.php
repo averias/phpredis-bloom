@@ -20,6 +20,6 @@ class BaseResponseParser
      */
     public function convertIntegerToBool(int $data)
     {
-        return (bool) $data;
+        return $data > 0 ? true : false;
     }
 }

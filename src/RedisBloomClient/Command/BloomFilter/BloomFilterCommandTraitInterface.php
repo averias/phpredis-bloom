@@ -14,19 +14,62 @@ namespace Averias\RedisBloom\Command\BloomFilter;
 
 interface BloomFilterCommandTraitInterface
 {
+    /**
+     * @param string $key
+     * @param float $errorRate
+     * @param int $capacity
+     * @return bool
+     */
     public function bloomFilterReserve(string $key, float $errorRate, int $capacity): bool;
 
+    /**
+     * @param string $key
+     * @param $item
+     * @return bool
+     */
     public function bloomFilterAdd(string $key, $item): bool;
 
+    /**
+     * @param string $key
+     * @param mixed ...$items
+     * @return array
+     */
     public function bloomFilterMultiAdd(string $key, ...$items): array;
 
+    /**
+     * @param string $key
+     * @param array $items
+     * @param array $options
+     * @return array
+     */
     public function bloomFilterInsert(string $key, array $items, array $options = []): array;
 
+    /**
+     * @param string $key
+     * @param $item
+     * @return bool
+     */
     public function bloomFilterExists(string $key, $item): bool;
 
+    /**
+     * @param string $key
+     * @param mixed ...$items
+     * @return array
+     */
     public function bloomFilterMultiExists(string $key, ...$items): array;
 
+    /**
+     * @param string $key
+     * @param int $iterator
+     * @return array
+     */
     public function bloomFilterScanDump(string $key, int $iterator): array;
 
+    /**
+     * @param string $key
+     * @param int $iterator
+     * @param $data
+     * @return bool
+     */
     public function bloomFilterLoadChunk(string $key, int $iterator, $data): bool;
 }

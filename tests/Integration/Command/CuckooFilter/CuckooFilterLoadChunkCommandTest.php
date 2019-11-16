@@ -16,40 +16,41 @@ use Averias\RedisBloom\Enum\Keys;
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Tests\BaseTestIntegration;
 
-class BloomFilterLoadChunkTest extends BaseTestIntegration
+class CuckooFilterLoadChunkCommandTest extends BaseTestIntegration
 {
     protected static $data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     public static function setUpBeforeClass():void
     {
         parent::setUpBeforeClass();
-        static::$reBloomClient->bloomFilterMultiAdd(Keys::DEFAULT_KEY, ...self::$data);
+        static::$reBloomClient->cuckooFilterInsert(Keys::DEFAULT_KEY, self::$data);
     }
 
     public function testLoadChunk(): void
     {
         $iterator = 0;
         while (true) {
-            list ($iterator, $data) = $result = static::$reBloomClient->bloomFilterScanDump(
+            list ($iterator, $data) = $result = static::$reBloomClient->cuckooFilterScanDump(
                 Keys::DEFAULT_KEY,
                 $iterator
             );
             if ($iterator == 0) {
                 break;
             }
-            $result = static::$reBloomClient->bloomFilterLoadChunk('copy-filter', $iterator, $data);
+            $result = static::$reBloomClient->cuckooFilterLoadChunk('copy-filter', $iterator, $data);
             $this->assertTrue($result);
         }
 
-        $copiedData = static::$reBloomClient->bloomFilterMultiExists('copy-filter', ...self::$data);
-        foreach ($copiedData as $item) {
-            $this->assertTrue($item);
+
+        foreach (self::$data as $item) {
+            $exists = static::$reBloomClient->cuckooFilterExists('copy-filter', $item);
+            $this->assertTrue($exists);
         }
     }
 
     public function testLoadChunkException(): void
     {
         $this->expectException(ResponseException::class);
-        static::$reBloomClient->bloomFilterLoadChunk('nonexistent', 556, 1);
+        static::$reBloomClient->cuckooFilterLoadChunk('nonexistent', 556, 1);
     }
 }

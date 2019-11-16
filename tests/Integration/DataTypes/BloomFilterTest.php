@@ -21,8 +21,6 @@ use Averias\RedisBloom\Tests\BaseTestIntegration;
 
 class BloomFilterTest extends BaseTestIntegration
 {
-    const DATA_TYPE_NAME = 'boom-filter-key';
-
     /** @var BloomFilter */
     protected static $bloomFilter;
 
@@ -82,7 +80,7 @@ class BloomFilterTest extends BaseTestIntegration
         $result = static::$bloomFilter->copy('other-bloom-filter');
         $this->assertTrue($result);
 
-        $otherBloomFilter = static::$factory->createBloomFilter(Keys::BLOOM_FILTER, static::getReBloomClientConfig());
+        $otherBloomFilter = static::$factory->createBloomFilter('other-bloom-filter', static::getReBloomClientConfig());
 
         $values = range(1, 20);
         $exists = $otherBloomFilter->multiExists(...$values);

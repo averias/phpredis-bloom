@@ -29,9 +29,10 @@ $result = $client->bloomFilterAdd('filter-key', 'item-15');
 
 ```
 
-`Executing Bloom Filter commands by using BloomFilter data types`
+`Executing commands by using RedisBloom data types classes (Bloom Filter, Cuckoo Filter, Mins-Sketch and Top-K)`
 
 ```
+// example for BloomFilter data types class
 use Averias\RedisBloom\Factory\RedisBloomFactory;
 
 // instantiate a BloomFilter class from RedisBloomFactory with default connection options
@@ -54,6 +55,16 @@ $result = $bloomFilter->add(17.2); // returns true
 // checking if a list items exist in 'filter-key' Bloom Filter
 $result = $bloomFilter->multiExists('item1', 15, 'foo'); // returns and array [true, true, false] since 'foo' doesn't exists 
 ```
+
+### Why having a RedisBloomClient and classes for each RedisBloom data types?**
+
+- RedisBloomClient allows you execute whatever RedisBloom command (Bloom Filter, Cuckoo Filter, Mins-Sketch and Top-K 
+commands) over different filters and also to execute Redis commands and raw Redis commands. So it is a client for general 
+purposes and it is recommended when you need to manage different filters and keys or even when you want to execute 
+normal Redis commands
+- RedisBloom data types classes (Bloom Filter, Cuckoo Filter, Mins-Sketch and Top-K classes) just execute commands 
+that belongs to that data type and over just one filter. They are useful when you need to manage just one filter. 
+
 ### Automatic connection, disconnection and reconnection
 
 RedisBloomClient and Redis Bloom data types automatically connect Redis after creation, you can disconnect them from the 

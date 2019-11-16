@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/phpredis-bloom
+ * @link      https://github.com/averias/php-rejson
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -17,7 +17,7 @@ use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Parser\ParserInterface;
 use Throwable;
 
-class BloomFilterInsertOptionalParams extends BaseRequestOptionalParams implements ParserInterface
+class CuckooFilterInsertOptionalParams extends BaseRequestOptionalParams implements ParserInterface
 {
     /**
      * @param $optionalParams
@@ -32,10 +32,9 @@ class BloomFilterInsertOptionalParams extends BaseRequestOptionalParams implemen
         }
 
         try {
-            $options = $this->getMergedOptionalParams(OptionalParams::OPTIONAL_PARAMS_BF_INSERT, $optionalParams);
+            $options = $this->getMergedOptionalParams(OptionalParams::OPTIONAL_PARAMS_CF_INSERT, $optionalParams);
 
             $result = $this->appendCapacity($result, $options);
-            $result = $this->appendErrorRate($result, $options);
             $result = $this->appendNoCreate($result, $options);
         } catch (Throwable $err) {
             throw new ResponseException($err->getMessage() . ', parsing optional params');

@@ -17,6 +17,7 @@ use Averias\RedisBloom\Adapter\RedisClientAdapter;
 use Averias\RedisBloom\Adapter\RedisClientAdapterInterface;
 use Averias\RedisBloom\Client\RedisBloomClientInterface;
 use Averias\RedisBloom\DataTypes\BloomFilter;
+use Averias\RedisBloom\DataTypes\CuckooFilter;
 use Averias\RedisBloom\DataTypes\DataTypeInterface;
 use Averias\RedisBloom\Exception\RedisClientException;
 use Averias\RedisBloom\Factory\RedisBloomFactory;
@@ -55,6 +56,11 @@ class RedisBloomFactoryTest extends TestCase
 
         $this->assertInstanceOf(DataTypeInterface::class, $client);
         $this->assertInstanceOf(BloomFilter::class, $client);
+
+        $client = $factoryMock->createCuckooFilter('cuckoo-filter-test');
+
+        $this->assertInstanceOf(DataTypeInterface::class, $client);
+        $this->assertInstanceOf(CuckooFilter::class, $client);
     }
 
     protected function getRedisBloomFactoryMock(): MockObject

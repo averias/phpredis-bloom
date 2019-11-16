@@ -59,19 +59,19 @@ class BloomFilterInsertOptionalParamsTest extends TestCase
                 [OptionalParams::ERROR, 0.1]
             ],
             [
-                [OptionalParams::NOCREATE => true],
-                [OptionalParams::NOCREATE]
+                [OptionalParams::NO_CREATE => true],
+                [OptionalParams::NO_CREATE]
             ],
             [
-                [OptionalParams::NOCREATE => false],
+                [OptionalParams::NO_CREATE => false],
                 []
             ],
             [
-                [OptionalParams::NOCREATE => null],
+                [OptionalParams::NO_CREATE => null],
                 []
             ],
             [
-                [OptionalParams::NOCREATE => 23],
+                [OptionalParams::NO_CREATE => 23],
                 []
             ],
             [
@@ -79,11 +79,11 @@ class BloomFilterInsertOptionalParamsTest extends TestCase
                 [OptionalParams::CAPACITY, 100, OptionalParams::ERROR, 0.1]
             ],
             [
-                [OptionalParams::CAPACITY => 100, OptionalParams::ERROR => 0.1, OptionalParams::NOCREATE => true],
-                [OptionalParams::CAPACITY, 100, OptionalParams::ERROR, 0.1, OptionalParams::NOCREATE]
+                [OptionalParams::CAPACITY => 100, OptionalParams::ERROR => 0.1, OptionalParams::NO_CREATE => true],
+                [OptionalParams::CAPACITY, 100, OptionalParams::ERROR, 0.1, OptionalParams::NO_CREATE]
             ],
             [
-                [OptionalParams::CAPACITY => 100, OptionalParams::ERROR => 0.1, OptionalParams::NOCREATE => false],
+                [OptionalParams::CAPACITY => 100, OptionalParams::ERROR => 0.1, OptionalParams::NO_CREATE => false],
                 [OptionalParams::CAPACITY, 100, OptionalParams::ERROR, 0.1]
             ]
         ];

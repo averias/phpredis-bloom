@@ -25,4 +25,17 @@ class BloomCommands extends Enum
     const BF_MEXISTS = 'BF.MEXISTS';
     const BF_SCANDUMP = 'BF.SCANDUMP';
     const BF_LOADCHUNK = 'BF.LOADCHUNK';
+
+    /** Cuckoo Filter Commands */
+    const CF_RESERVE = 'CF.RESERVE';
+    const CF_ADD = 'CF.ADD';
+    const CF_ADDNX = 'CF.ADDNX';
+    const CF_INSERT = 'CF.INSERT';
+    const CF_INSERTNX = 'CF.INSERTNX';
+    const CF_EXISTS = 'CF.EXISTS';
+    const CF_DEL = 'CF.DEL';
+    const CF_COUNT = 'CF.COUNT';
+    const CF_SCANDUMP = 'CF.SCANDUMP';
+    const CF_LOADCHUNK = 'CF.LOADCHUNK';
+
 }

@@ -31,12 +31,6 @@ a configuration array to `RedisBloomFactory::createClient(array $config)` or
 RedisBloomFactory, `RedisBloomFactory(array $config)`, and all clients and BloomFilter object created by the factory 
 will be using that configuration. Please take a look at `examples/factory.php` to know how to provide configuration options.
 
-**Why having a RedisBloomClient and a BloomFilter class?**
-
-- RedisBloomClient allows you execute whatever RedisBloom command (Bloom Filter, Cuckoo Filter, Mins-Sketch and Top-K 
-commands) over different filters and also to execute Redis commands and raw Redis commands
-- BloomFilter class just execute commands over one Bloom Filter commands and over just one filter
-
 ## Commands
 You can find a detailed description of each command in [RedisBloom - Bloom Filter Command Documentation](https://oss.redislabs.com/redisbloom/Bloom_Commands/).
 
@@ -110,16 +104,16 @@ or
 ```
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
-$options = [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 0.01, OptionalParams::NOCREATE => true];
+$options = [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 0.01, OptionalParams::NO_CREATE => true];
 
-// it will insert 'foo', 'bar', 18 values to filter 'test-filter' in case it already exists since NOCREATE = true,
+// it will insert 'foo', 'bar' and 18 values to filter 'test-filter' in case it already exists since NO_CREATE = true,
 // otherwise it will send and ResponseException
-$client->bloomFilterInsert('test-filter', ['foo', 'bar', 18], $options;
+$client->bloomFilterInsert('test-filter', ['foo', 'bar', 18], $options);
 ```
 
 **Returns:** (array) of true/false values, indicating if each item (in the position which was inserted) was added to 
 the filter or may have existed previously.`ResponseException` if some of the items are not string or number or in case 
-we specify `NOCREATE` and the filter already exists.
+we specify `NO_CREATE` = true and the filter does not exists.
 
 ### `Exists`
 Determines whether an item may exist in the Bloom Filter or not.
@@ -193,7 +187,7 @@ or
 ### `Copy`
 Currently, this command is only available in `BloomFilter` class, not in `RedisBloomClient`.
 
-It copies all data sored in the key specified in the `BloomFilter` class into `key` target, basically it combines 
+It copies all data stored in the key specified in the `BloomFilter` class into `key` target, basically it combines 
 one `scanDump` with a `loadChunk` on the fly in each iteration until all data are consumed from the BloomFilter object 
 `key` source and inserted in the target `key`. 
 
@@ -203,4 +197,4 @@ one `scanDump` with a `loadChunk` on the fly in each iteration until all data ar
 - targetFilter: (string) destination filter name
 
 **Returns:** (bool) true on success. It throws a `ResponseException` in case of target `key` doesn't exist or an error or 
-failure happens. In case of error, the command will try to delete the target `key` before throwing the exception.
+a failure happens. In case of error, the command will try to delete the target `key` before throwing the exception.

@@ -17,23 +17,35 @@ use Averias\RedisBloom\Enum\OptionalParams;
 
 trait BloomFilterCommandTrait
 {
+    /**
+     * @inheritDoc
+     */
     public function bloomFilterReserve(string $key, float $errorRate, int $capacity): bool
     {
         return $this->executeBloomCommand(BloomCommands::BF_RESERVE, $key, [$errorRate, $capacity]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function bloomFilterAdd(string $key, $item): bool
     {
         $this->validateScalar($item);
         return $this->executeBloomCommand(BloomCommands::BF_ADD, $key, [$item]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function bloomFilterMultiAdd(string $key, ...$items): array
     {
         $this->validateArrayOfScalars($items);
         return $this->executeBloomCommand(BloomCommands::BF_MADD, $key, $items);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function bloomFilterInsert(string $key, array $items, array $options = []): array
     {
         $this->validateArrayOfScalars($items);
@@ -44,23 +56,35 @@ trait BloomFilterCommandTrait
         return $this->executeBloomCommand(BloomCommands::BF_INSERT, $key, $arguments);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function bloomFilterExists(string $key, $item): bool
     {
         $this->validateScalar($item);
         return $this->executeBloomCommand(BloomCommands::BF_EXISTS, $key, [$item]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function bloomFilterMultiExists(string $key, ...$items): array
     {
         $this->validateArrayOfScalars($items);
         return $this->executeBloomCommand(BloomCommands::BF_MEXISTS, $key, $items);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function bloomFilterScanDump(string $key, int $iterator): array
     {
         return $this->executeBloomCommand(BloomCommands::BF_SCANDUMP, $key, [$iterator]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function bloomFilterLoadChunk(string $key, int $iterator, $data): bool
     {
         return $this->executeBloomCommand(BloomCommands::BF_LOADCHUNK, $key, [$iterator, $data]);

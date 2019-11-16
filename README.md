@@ -164,7 +164,7 @@ Phpredis-bloom provides all the commands for the four RedisBloom data types, ple
 detailed info for each one:
 
 - [Bloom Filter](https://github.com/averias/phpredis-bloom/blob/master/docs/BLOOM-FILTER-COMMANDS.md)
-- Cuckoo Filter (still under development)
+- [Cuckoo Filter](https://github.com/averias/phpredis-bloom/blob/master/docs/CUCKOO-FILTER-COMMANDS.md)
 - Mins-Sketch (still under development)
 - Top-K (still under development)
 

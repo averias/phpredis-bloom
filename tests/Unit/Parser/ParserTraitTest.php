@@ -10,7 +10,7 @@
  * the LICENSE file that is distributed with this source code.
  */
 
-namespace Averias\RedisBloom\Tests\Parser;
+namespace Averias\RedisBloom\Tests\Unit\Parser;
 
 use Averias\RedisBloom\Enum\BloomCommands;
 use Averias\RedisBloom\Parser\ParserTrait;

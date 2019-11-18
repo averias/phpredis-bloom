@@ -10,7 +10,7 @@
  * the LICENSE file that is distributed with this source code.
  */
 
-namespace Averias\RedisBloom\Tests\Parser\Request;
+namespace Averias\RedisBloom\Tests\Unit\Parser\Request;
 
 use Averias\RedisBloom\Enum\OptionalParams;
 use Averias\RedisBloom\Exception\ResponseException;

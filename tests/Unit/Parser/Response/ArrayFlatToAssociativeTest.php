@@ -10,7 +10,7 @@
  * the LICENSE file that is distributed with this source code.
  */
 
-namespace Averias\RedisBloom\Tests\Parser\Response;
+namespace Averias\RedisBloom\Tests\Unit\Parser\Response;
 
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Parser\Response\ArrayFlatToAssociative;

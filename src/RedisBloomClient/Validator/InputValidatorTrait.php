@@ -43,17 +43,47 @@ trait InputValidatorTrait
     /**
      * @param $value
      * @param string $valueName
+     * @param float $minValue
+     * @param float $maxValue
+     * @param bool $isExclusiveMin
+     * @param bool $isExclusiveMax
      * @throws ResponseException
      */
-    public function validatePercentRate($value, string $valueName)
+    public function validateFloatRange(
+        $value,
+        string $valueName,
+        $minValue = 0.0,
+        $isExclusiveMin = false,
+        $maxValue = 1.0,
+        $isExclusiveMax = false
+    ): void {
+        $this->validateFloat($value, $valueName);
+
+        $minCondition = $isExclusiveMin ? ($value <= $minValue) : ($value < $minValue);
+        $minConditionOperator = $isExclusiveMin ? '>' : '>=';
+
+        $maxCondition = $isExclusiveMax ? ($value >= $maxValue) : ($value > $maxValue);
+        $maxConditionOperator = $isExclusiveMax ? '<' : '<=';
+
+        if ($minCondition || $maxCondition) {
+            throw new ResponseException(
+                sprintf(
+                    "%s value must be %s %.1f and %s %.1f, provided value %f",
+                    $valueName,
+                    $minConditionOperator,
+                    $minValue,
+                    $maxConditionOperator,
+                    $maxValue,
+                    $value
+                )
+            );
+        }
+    }
+
+    public function validateFloat($value, string $valueName)
     {
         if (!is_float($value)) {
             throw new ResponseException(sprintf("%s value must be float", $valueName));
-        }
-        if ($value <= 0.0 || $value > 1.0) {
-            throw new ResponseException(
-                sprintf("%s value must be > 0.0 and <= 1.0, provided value %f", $valueName, $value)
-            );
         }
     }
 

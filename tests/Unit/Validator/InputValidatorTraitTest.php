@@ -68,29 +68,48 @@ class InputValidatorTraitTest extends TestCase
     }
 
     /**
-     * @dataProvider getValidatePercentRateDataProvider
+     * @dataProvider getValidateFloatRangeDataProvider
      * @param $value
+     * @param float $minValue
+     * @param bool $isExclusiveMin
+     * @param float $maxValue
+     * @param bool $isExclusiveMax
      * @throws ResponseException
      */
-    public function testValidatePercentRate($value): void
-    {
+    public function testValidateFloatRange(
+        $value,
+        $minValue = 0.0,
+        $isExclusiveMin = false,
+        $maxValue = 1.0,
+        $isExclusiveMax = false
+    ): void {
         $mock = $this->getInputValidatorTraitMock();
-        $mock->validatePercentRate($value, 'test param');
+        $mock->validateFloatRange($value, 'test param', $minValue, $isExclusiveMin, $maxValue, $isExclusiveMax);
         $this->assertTrue(true);
     }
 
     /**
-     * @dataProvider getValidatePercentRateExceptionDataProvider
+     * @dataProvider getValidateFloatRangeExceptionDataProvider
      * @param $value
-     * @package sting $errorMessage
+     * @param string $errorMessage
+     * @param float $minValue
+     * @param bool $isExclusiveMin
+     * @param float $maxValue
+     * @param bool $isExclusiveMax
      * @throws ResponseException
      */
-    public function testValidatePercentRateException($value, string $errorMessage): void
-    {
+    public function testValidateFloatRangeException(
+        $value,
+        string $errorMessage,
+        $minValue = 0.0,
+        $isExclusiveMin = false,
+        $maxValue = 1.0,
+        $isExclusiveMax = false
+    ): void {
         $this->expectException(ResponseException::class);
         $this->expectExceptionMessage($errorMessage);
         $mock = $this->getInputValidatorTraitMock();
-        $mock->validatePercentRate($value, 'test param');
+        $mock->validateFloatRange($value, 'test param', $minValue, $isExclusiveMin, $maxValue, $isExclusiveMax);
     }
 
     /**
@@ -129,23 +148,23 @@ class InputValidatorTraitTest extends TestCase
         ];
     }
 
-    public function getValidatePercentRateDataProvider(): array
+    public function getValidateFloatRangeDataProvider(): array
     {
         return [
             [0.0001],
-            [1.0],
-            [0.235698]
+            [1.0, 0.9, true, 1.0, false],
+            [1.235698, 1.235698, false, 7.23, true]
         ];
     }
 
-    public function getValidatePercentRateExceptionDataProvider(): array
+    public function getValidateFloatRangeExceptionDataProvider(): array
     {
         return [
             [[13, 12], "test param value must be float"],
             [true, "test param value must be float"],
             ['foo', "test param value must be float"],
-            [12.3, "test param value must be > 0.0 and <= 1.0, provided value 12.3"],
-            [0.0, "test param value must be > 0.0 and <= 1.0, provided value 0.0"]
+            [12.3, "test param value must be >= 0.0 and <= 1.0, provided value 12.3"],
+            [0.0, "test param value must be > 0.0 and <= 1.0, provided value 0.000000", 0.0, true]
         ];
     }
 }

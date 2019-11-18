@@ -36,11 +36,11 @@ trait CountMinSketchCommandTrait
      */
     public function countMinSketchInitByProb(string $key, float $errorRate, float $probability): bool
     {
-        $this->validatePercentRate(
+        $this->validateFloatRange(
             $errorRate,
             sprintf("error param for %s command", BloomCommands::CMS_INITBYPROB)
         );
-        $this->validatePercentRate(
+        $this->validateFloatRange(
             $probability,
             sprintf("probability param for %s command", BloomCommands::CMS_INITBYPROB)
         );

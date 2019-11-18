@@ -40,10 +40,12 @@ class CountMinSketchInitByProbCommandTest extends BaseTestIntegration
     public function getExceptionDataProvider(): array
     {
         return [
-            ['key-init2', 'foo', 44, TypeError::class],
-            ['key-init2', 4, 'bar', TypeError::class],
-            ['key-init2', 4, 0.4, ResponseException::class],
-            ['key-init2', 0.4, 4, ResponseException::class],
+            ['key-init2', 'foo', 44, TypeError::class], // 'foo' is not float
+            ['key-init2', 4, 'bar', TypeError::class], // 'bar' is not float
+            ['key-init2', 4, 0.4, ResponseException::class], // 'foo' is not float
+            ['key-init2', 0.4, 4, ResponseException::class], // 'foo' is not float
+            ['key-init2', 0.0, 0.4, ResponseException::class],  // 0.0 is not a valid value
+            ['key-init2', 0.1, 1.0, ResponseException::class],  // 1.0 is not a valid value
             ['key-init1', 0.4, 0.4, ResponseException::class]  // existent key
         ];
     }

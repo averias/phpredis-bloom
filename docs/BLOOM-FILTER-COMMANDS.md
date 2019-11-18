@@ -28,7 +28,7 @@ $bloomFilter->add('item');
 Both RedisBloomClient and BloomFilter object can be configured with a specific connection to Redis when they are created by providing
 a configuration array to `RedisBloomFactory::createClient(array $config)` or 
 `RedisBloomFactory::createBloomFilter(string $filterName, array $config)`, even you can provide a configuration array to
-RedisBloomFactory, `RedisBloomFactory(array $config)`, and all clients and BloomFilter object created by the factory 
+RedisBloomFactory, `RedisBloomFactory(array $config)`, and all clients and BloomFilter objects created by the factory 
 will be using that configuration. Please take a look at `examples/factory.php` to know how to provide configuration options.
 
 ## Commands

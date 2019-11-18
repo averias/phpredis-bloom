@@ -165,8 +165,8 @@ detailed info for each one:
 
 - [Bloom Filter](https://github.com/averias/phpredis-bloom/blob/master/docs/BLOOM-FILTER-COMMANDS.md)
 - [Cuckoo Filter](https://github.com/averias/phpredis-bloom/blob/master/docs/CUCKOO-FILTER-COMMANDS.md)
-- Mins-Sketch (still under development)
-- Top-K (still under development)
+- [Mins-Sketch](https://github.com/averias/phpredis-bloom/blob/master/docs/MINS-SKETCH-COMMANDS.md)
+- [Top-K](https://github.com/averias/phpredis-bloom/blob/master/docs/TOP-K-COMMANDS.md) (still under development)
 
 #### Phpredis commands
 

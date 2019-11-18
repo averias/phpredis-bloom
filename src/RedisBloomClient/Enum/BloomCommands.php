@@ -45,4 +45,15 @@ class BloomCommands extends Enum
     const CMS_QUERY = 'CMS.QUERY';
     const CMS_MERGE = 'CMS.MERGE';
     const CMS_INFO = 'CMS.INFO';
+
+    /** Top-K Commands */
+    const TOPK_RESERVE = 'TOPK.RESERVE';
+    const TOPK_ADD = 'TOPK.ADD';
+    const TOPK_INCRBY = 'TOPK.INCRBY';
+    const TOPK_QUERY = 'TOPK.QUERY';
+    const TOPK_COUNT = 'TOPK.COUNT';
+    const TOPK_LIST = 'TOPK.LIST';
+    const TOPK_INFO = 'TOPK.INFO';
+
+
 }

@@ -203,7 +203,9 @@ Then the tests will run inside `phpredis-bloom` docker service container and fin
 
 ## Examples
 - [Factory](https://github.com/averias/phpredis-bloom/blob/master/examples/factory.php)
-- [Scan](https://github.com/averias/phpredis-bloom/blob/master/examples/scan.php)
+- [BF copy](https://github.com/averias/phpredis-bloom/blob/master/examples/bloom-filter-copy.php)
+- [CMS increment](https://github.com/averias/phpredis-bloom/blob/master/examples/count-min-sketch-increment-by.php)
+- [CMS Merge](https://github.com/averias/phpredis-bloom/blob/master/examples/count-min-sketch-merge.php)
 
 ## License
 Phpredis-Bloom code is distributed under MIT license, see [LICENSE](https://github.com/averias/phpredis-bloom/blob/master/LICENSE) 

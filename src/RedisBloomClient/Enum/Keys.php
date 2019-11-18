@@ -20,4 +20,5 @@ class Keys extends Enum
     const BLOOM_FILTER = 'boom-filter-key';
     const CUCKOO_FILTER = 'cuckoo-filter-key';
     const COUNT_MIN_SKETCH = 'count-min-sketch-key';
+    const TOP_K = 'top-k-key';
 }

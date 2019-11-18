@@ -113,4 +113,27 @@ trait InputValidatorTrait
             );
         }
     }
+
+    /**
+     * @param array $itemsIncrease
+     * @param string $commandName
+     * @throws ResponseException
+     */
+    public function validateIncrementByItemsIncrease(array $itemsIncrease, string $commandName)
+    {
+        $this->validateEvenArrayDimension(
+            $itemsIncrease,
+            sprintf("item/increment params for %s", $commandName)
+        );
+
+        $itemName = '';
+        foreach ($itemsIncrease as $index => $item) {
+            if ($index % 2 == 0) {
+                $this->validateScalar($item, sprintf("%s params", $commandName));
+                $itemName = $item;
+                continue;
+            }
+            $this->validateInteger($item, $itemName);
+        }
+    }
 }

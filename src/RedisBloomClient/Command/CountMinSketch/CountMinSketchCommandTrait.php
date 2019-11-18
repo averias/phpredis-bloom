@@ -55,21 +55,7 @@ trait CountMinSketchCommandTrait
      */
     public function countMinSketchIncrementBy(string $key, ...$itemsIncrease): bool
     {
-        $this->validateEvenArrayDimension(
-            $itemsIncrease,
-            sprintf("item/increment params for %s", BloomCommands::CMS_INCRBY)
-        );
-
-        $itemName = '';
-        foreach ($itemsIncrease as $index => $item) {
-            if ($index % 2 == 0) {
-                $this->validateScalar($item, sprintf("%s params", BloomCommands::CMS_INCRBY));
-                $itemName = $item;
-                continue;
-            }
-            $this->validateInteger($item, $itemName);
-        }
-
+        $this->validateIncrementByItemsIncrease($itemsIncrease, BloomCommands::CMS_INCRBY);
         return $this->executeBloomCommand(BloomCommands::CMS_INCRBY, $key, $itemsIncrease);
     }
 

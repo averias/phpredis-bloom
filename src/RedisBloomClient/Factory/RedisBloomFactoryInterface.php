@@ -17,6 +17,7 @@ use Averias\RedisBloom\Client\RedisBloomClientInterface;
 use Averias\RedisBloom\DataTypes\BloomFilterInterface;
 use Averias\RedisBloom\DataTypes\CountMinSketchInterface;
 use Averias\RedisBloom\DataTypes\CuckooFilterInterface;
+use Averias\RedisBloom\DataTypes\TopKInterface;
 use Averias\RedisBloom\Exception\RedisClientException;
 
 interface RedisBloomFactoryInterface
@@ -50,6 +51,14 @@ interface RedisBloomFactoryInterface
      * @throws RedisClientException
      */
     public function createCuckooFilter(string $filterName, ?array $config = null): CuckooFilterInterface;
+
+    /**
+     * @param string $filterName
+     * @param array|null $config
+     * @return TopKInterface
+     * @throws RedisClientException
+     */
+    public function createTopK(string $filterName, ?array $config = null): TopKInterface;
 
     /**
      * @param string $filterName

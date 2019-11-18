@@ -22,17 +22,17 @@ class CountMinSketchInfoCommandTest extends BaseTestIntegration
         static::$reBloomClient->countMinSketchInitByDim('key-info1', 10, 10);
         static::$reBloomClient->countMinSketchIncrementBy('key-info1', 'blue', 10, 'yellow', 40);
 
-        $query1 = static::$reBloomClient->countMinSketchInfo('key-info1');
-        $this->assertEquals(10, $query1['width']);
-        $this->assertEquals(10, $query1['depth']);
-        $this->assertEquals(50, $query1['count']);
+        $info1 = static::$reBloomClient->countMinSketchInfo('key-info1');
+        $this->assertEquals(10, $info1['width']);
+        $this->assertEquals(10, $info1['depth']);
+        $this->assertEquals(50, $info1['count']);
 
         static::$reBloomClient->countMinSketchIncrementBy('key-info1', 'blue', 86, 'yellow', 11);
 
-        $query2 = static::$reBloomClient->countMinSketchInfo('key-info1');
-        $this->assertEquals(10, $query2['width']);
-        $this->assertEquals(10, $query2['depth']);
-        $this->assertEquals(147, $query2['count']);
+        $info2 = static::$reBloomClient->countMinSketchInfo('key-info1');
+        $this->assertEquals(10, $info2['width']);
+        $this->assertEquals(10, $info2['depth']);
+        $this->assertEquals(147, $info2['count']);
     }
 
     public function testInfoException(): void

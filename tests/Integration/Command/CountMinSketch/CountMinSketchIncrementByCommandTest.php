@@ -41,7 +41,7 @@ class CountMinSketchIncrementByCommandTest extends BaseTestIntegration
      * @param string $key
      * @param array $arguments
      */
-    public function testInitException($key, $arguments): void
+    public function testIncrementException($key, $arguments): void
     {
         $this->expectException(ResponseException::class);
         static::$reBloomClient->countMinSketchInitByDim('key-incr2', 4, 4);

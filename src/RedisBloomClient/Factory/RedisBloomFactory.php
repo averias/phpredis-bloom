@@ -21,6 +21,8 @@ use Averias\RedisBloom\DataTypes\CountMinSketch;
 use Averias\RedisBloom\DataTypes\CountMinSketchInterface;
 use Averias\RedisBloom\DataTypes\CuckooFilter;
 use Averias\RedisBloom\DataTypes\CuckooFilterInterface;
+use Averias\RedisBloom\DataTypes\TopK;
+use Averias\RedisBloom\DataTypes\TopKInterface;
 use Averias\RedisBloom\Exception\RedisClientException;
 use Averias\RedisBloom\Validator\RedisClientValidator;
 use Averias\RedisBloom\Adapter\AdapterProvider;
@@ -94,6 +96,17 @@ class RedisBloomFactory implements RedisBloomFactoryInterface
     public function createCountMinSketch(string $filterName, ?array $config = null): CountMinSketchInterface
     {
         return new CountMinSketch($filterName, $this->getAdapter($config));
+    }
+
+    /**
+     * @param string $filterName
+     * @param array|null $config
+     * @return TopKInterface
+     * @throws RedisClientException
+     */
+    public function createTopK(string $filterName, ?array $config = null): TopKInterface
+    {
+        return new TopK($filterName, $this->getAdapter($config));
     }
 
     /**

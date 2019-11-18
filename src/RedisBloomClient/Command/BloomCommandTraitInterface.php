@@ -13,11 +13,13 @@
 namespace Averias\RedisBloom\Command;
 
 use Averias\RedisBloom\Command\BloomFilter\BloomFilterCommandTraitInterface;
+use Averias\RedisBloom\Command\CountMinSketch\CountMinSketchCommandTraitInterface;
 use Averias\RedisBloom\Command\CuckooFilter\CuckooFilterCommandTraitInterface;
 
 interface BloomCommandTraitInterface extends
     BloomFilterCommandTraitInterface,
-    CuckooFilterCommandTraitInterface
+    CuckooFilterCommandTraitInterface,
+    CountMinSketchCommandTraitInterface
 {
 
 }

@@ -17,8 +17,11 @@ use Averias\RedisBloom\Adapter\RedisClientAdapter;
 use Averias\RedisBloom\Adapter\RedisClientAdapterInterface;
 use Averias\RedisBloom\Client\RedisBloomClientInterface;
 use Averias\RedisBloom\DataTypes\BloomFilter;
+use Averias\RedisBloom\DataTypes\BloomFilterInterface;
+use Averias\RedisBloom\DataTypes\CountMinSketch;
+use Averias\RedisBloom\DataTypes\CountMinSketchInterface;
 use Averias\RedisBloom\DataTypes\CuckooFilter;
-use Averias\RedisBloom\DataTypes\DataTypeInterface;
+use Averias\RedisBloom\DataTypes\CuckooFilterInterface;
 use Averias\RedisBloom\Exception\RedisClientException;
 use Averias\RedisBloom\Factory\RedisBloomFactory;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -54,13 +57,18 @@ class RedisBloomFactoryTest extends TestCase
 
         $client = $factoryMock->createBloomFilter('bloom-filter-test');
 
-        $this->assertInstanceOf(DataTypeInterface::class, $client);
+        $this->assertInstanceOf(BloomFilterInterface::class, $client);
         $this->assertInstanceOf(BloomFilter::class, $client);
 
         $client = $factoryMock->createCuckooFilter('cuckoo-filter-test');
 
-        $this->assertInstanceOf(DataTypeInterface::class, $client);
+        $this->assertInstanceOf(CuckooFilterInterface::class, $client);
         $this->assertInstanceOf(CuckooFilter::class, $client);
+
+        $client = $factoryMock->createCountMinSketch('count-min-sketch-test');
+
+        $this->assertInstanceOf(CountMinSketchInterface::class, $client);
+        $this->assertInstanceOf(CountMinSketch::class, $client);
     }
 
     protected function getRedisBloomFactoryMock(): MockObject

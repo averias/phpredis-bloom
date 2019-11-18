@@ -33,7 +33,7 @@ trait CuckooFilterCommandTrait
      */
     public function cuckooFilterAdd(string $key, $item): bool
     {
-        $this->validateScalar($item);
+        $this->validateScalar($item, sprintf("%s params", BloomCommands::CF_ADD));
         return $this->executeBloomCommand(BloomCommands::CF_ADD, $key, [$item]);
     }
 
@@ -42,7 +42,7 @@ trait CuckooFilterCommandTrait
      */
     public function cuckooFilterAddIfNotExist(string $key, $item): bool
     {
-        $this->validateScalar($item);
+        $this->validateScalar($item, sprintf("%s params", BloomCommands::CF_ADDNX));
         return $this->executeBloomCommand(BloomCommands::CF_ADDNX, $key, [$item]);
     }
 
@@ -51,7 +51,7 @@ trait CuckooFilterCommandTrait
      */
     public function cuckooFilterInsert(string $key, array $items, array $options = []): array
     {
-        $this->validateArrayOfScalars($items);
+        $this->validateArrayOfScalars($items, sprintf("%s params", BloomCommands::CF_INSERT));
         $parsedOptions = $this->parseRequest(BloomCommands::CF_INSERT, $options);
         $items = array_merge([OptionalParams::ITEMS], $items);
         $arguments = array_merge($parsedOptions, $items);
@@ -64,7 +64,7 @@ trait CuckooFilterCommandTrait
      */
     public function cuckooFilterInsertIfNotExist(string $key, array $items, array $options = []): array
     {
-        $this->validateArrayOfScalars($items);
+        $this->validateArrayOfScalars($items, sprintf("%s params", BloomCommands::CF_INSERTNX));
         $parsedOptions = $this->parseRequest(BloomCommands::CF_INSERTNX, $options);
         $items = array_merge([OptionalParams::ITEMS], $items);
         $arguments = array_merge($parsedOptions, $items);
@@ -77,7 +77,7 @@ trait CuckooFilterCommandTrait
      */
     public function cuckooFilterExists(string $key, $item): bool
     {
-        $this->validateScalar($item);
+        $this->validateScalar($item, sprintf("%s params", BloomCommands::CF_EXISTS));
         return $this->executeBloomCommand(BloomCommands::CF_EXISTS, $key, [$item]);
     }
 
@@ -86,7 +86,7 @@ trait CuckooFilterCommandTrait
      */
     public function cuckooFilterDelete(string $key, $item): bool
     {
-        $this->validateScalar($item);
+        $this->validateScalar($item, sprintf("%s params", BloomCommands::CF_DEL));
         return $this->executeBloomCommand(BloomCommands::CF_DEL, $key, [$item]);
     }
 
@@ -95,7 +95,7 @@ trait CuckooFilterCommandTrait
      */
     public function cuckooFilterCount(string $key, $item): int
     {
-        $this->validateScalar($item);
+        $this->validateScalar($item, sprintf("%s params", BloomCommands::CF_COUNT));
         return $this->executeBloomCommand(BloomCommands::CF_COUNT, $key, [$item]);
     }
 

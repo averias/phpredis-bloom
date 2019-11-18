@@ -14,7 +14,7 @@ namespace Averias\RedisBloom\DataTypes;
 
 use Averias\RedisBloom\Exception\ResponseException;
 
-interface CuckooFilterInterface
+interface CuckooFilterInterface extends DataTypeInterface
 {
     /**
      * @param int $capacity

@@ -17,7 +17,7 @@ class Keys extends Enum
 {
     const DEFAULT_KEY = 'test-key';
     const EXTENDED_KEY = 'extended-test-key';
-    const KEY_TO_EMPTY = 'key-to-empty';
     const BLOOM_FILTER = 'boom-filter-key';
     const CUCKOO_FILTER = 'cuckoo-filter-key';
+    const COUNT_MIN_SKETCH = 'count-min-sketch-key';
 }

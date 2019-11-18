@@ -16,9 +16,10 @@ use Averias\RedisBloom\Command\CuckooFilter\CuckooFilterCommandTrait;
 use Averias\RedisBloom\Exception\ResponseException;
 use Exception;
 
-class CuckooFilter extends BaseDataType implements CuckooFilterInterface, DataTypeInterface
+class CuckooFilter extends BaseDataType implements CuckooFilterInterface
 {
     use CuckooFilterCommandTrait;
+
     /**
      * @param int $capacity
      * @param array $options

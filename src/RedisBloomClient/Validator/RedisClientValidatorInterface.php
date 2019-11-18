@@ -20,4 +20,3 @@ interface RedisClientValidatorInterface
      */
     public function isRedisBloomModuleInstalled(array $moduleListCommandResponse): bool;
 }
-

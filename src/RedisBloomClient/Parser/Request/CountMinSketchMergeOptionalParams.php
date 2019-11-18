@@ -12,11 +12,12 @@
 
 namespace Averias\RedisBloom\Parser\Request;
 
+use Averias\RedisBloom\Enum\BloomCommands;
 use Averias\RedisBloom\Enum\OptionalParams;
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Parser\ParserInterface;
 
-class BloomFilterInsertOptionalParams extends BaseRequestOptionalParams implements ParserInterface
+class CountMinSketchMergeOptionalParams extends BaseRequestOptionalParams implements ParserInterface
 {
     /**
      * @param $optionalParams
@@ -30,12 +31,10 @@ class BloomFilterInsertOptionalParams extends BaseRequestOptionalParams implemen
             return $result;
         }
 
-        $options = $this->getMergedOptionalParams(OptionalParams::OPTIONAL_PARAMS_BF_INSERT, $optionalParams);
+        foreach ($optionalParams as $param) {
+            $this->validateInteger($param, sprintf("%s WEIGHTS param", BloomCommands::CMS_MERGE));
+        }
 
-        $result = $this->appendCapacity($result, $options);
-        $result = $this->appendErrorRate($result, $options);
-        $result = $this->appendNoCreate($result, $options);
-
-        return $result;
+        return array_merge([OptionalParams::WEIGHTS], $optionalParams);
     }
 }

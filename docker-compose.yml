@@ -10,4 +10,4 @@ services:
       - .:/app
   redisbloom:
     container_name: redislab-rebloom
-    image: redislabs/rebloom:2.0.3
+    image: redislabs/rebloom:edge

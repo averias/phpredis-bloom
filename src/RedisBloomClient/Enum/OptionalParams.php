@@ -24,6 +24,7 @@ class OptionalParams extends Enum
     const BUCKET_SIZE = 'BUCKETSIZE';
     const MAX_ITERATIONS = 'MAXITERATIONS';
     const EXPANSION = 'EXPANSION';
+    const WEIGHTS = 'WEIGHTS';
 
     /** Optional Params Groups */
     const OPTIONAL_PARAMS_BF_INSERT = [

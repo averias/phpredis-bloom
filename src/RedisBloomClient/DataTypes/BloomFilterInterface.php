@@ -14,7 +14,7 @@ namespace Averias\RedisBloom\DataTypes;
 
 use Averias\RedisBloom\Exception\ResponseException;
 
-interface BloomFilterInterface
+interface BloomFilterInterface extends DataTypeInterface
 {
     /**
      * @param float $errorRate

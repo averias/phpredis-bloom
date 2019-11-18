@@ -14,8 +14,9 @@ namespace Averias\RedisBloom\Factory;
 
 use Averias\RedisBloom\Adapter\RedisClientAdapterInterface;
 use Averias\RedisBloom\Client\RedisBloomClientInterface;
-use Averias\RedisBloom\DataTypes\BloomFilter;
-use Averias\RedisBloom\DataTypes\DataTypeInterface;
+use Averias\RedisBloom\DataTypes\BloomFilterInterface;
+use Averias\RedisBloom\DataTypes\CountMinSketchInterface;
+use Averias\RedisBloom\DataTypes\CuckooFilterInterface;
 use Averias\RedisBloom\Exception\RedisClientException;
 
 interface RedisBloomFactoryInterface
@@ -37,16 +38,24 @@ interface RedisBloomFactoryInterface
     /**
      * @param string $filterName
      * @param array|null $config
-     * @return BloomFilter
+     * @return BloomFilterInterface
      * @throws RedisClientException
      */
-    public function createBloomFilter(string $filterName, ?array $config = null): DataTypeInterface;
+    public function createBloomFilter(string $filterName, ?array $config = null): BloomFilterInterface;
 
     /**
      * @param string $filterName
      * @param array|null $config
-     * @return DataTypeInterface
+     * @return CuckooFilterInterface
      * @throws RedisClientException
      */
-    public function createCuckooFilter(string $filterName, ?array $config = null): DataTypeInterface;
+    public function createCuckooFilter(string $filterName, ?array $config = null): CuckooFilterInterface;
+
+    /**
+     * @param string $filterName
+     * @param array|null $config
+     * @return CountMinSketchInterface
+     * @throws RedisClientException
+     */
+    public function createCountMinSketch(string $filterName, ?array $config = null): CountMinSketchInterface;
 }

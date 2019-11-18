@@ -16,8 +16,11 @@ use Averias\RedisBloom\Adapter\RedisClientAdapterInterface;
 use Averias\RedisBloom\Client\RedisBloomClient;
 use Averias\RedisBloom\Client\RedisBloomClientInterface;
 use Averias\RedisBloom\DataTypes\BloomFilter;
+use Averias\RedisBloom\DataTypes\BloomFilterInterface;
+use Averias\RedisBloom\DataTypes\CountMinSketch;
+use Averias\RedisBloom\DataTypes\CountMinSketchInterface;
 use Averias\RedisBloom\DataTypes\CuckooFilter;
-use Averias\RedisBloom\DataTypes\DataTypeInterface;
+use Averias\RedisBloom\DataTypes\CuckooFilterInterface;
 use Averias\RedisBloom\Exception\RedisClientException;
 use Averias\RedisBloom\Validator\RedisClientValidator;
 use Averias\RedisBloom\Adapter\AdapterProvider;
@@ -63,10 +66,10 @@ class RedisBloomFactory implements RedisBloomFactoryInterface
     /**
      * @param string $filterName
      * @param array|null $config
-     * @return BloomFilter
+     * @return BloomFilterInterface
      * @throws RedisClientException
      */
-    public function createBloomFilter(string $filterName, ?array $config = null): DataTypeInterface
+    public function createBloomFilter(string $filterName, ?array $config = null): BloomFilterInterface
     {
         return new BloomFilter($filterName, $this->getAdapter($config));
     }
@@ -74,12 +77,23 @@ class RedisBloomFactory implements RedisBloomFactoryInterface
     /**
      * @param string $filterName
      * @param array|null $config
-     * @return DataTypeInterface
+     * @return CuckooFilterInterface
      * @throws RedisClientException
      */
-    public function createCuckooFilter(string $filterName, ?array $config = null): DataTypeInterface
+    public function createCuckooFilter(string $filterName, ?array $config = null): CuckooFilterInterface
     {
         return new CuckooFilter($filterName, $this->getAdapter($config));
+    }
+
+    /**
+     * @param string $filterName
+     * @param array|null $config
+     * @return CountMinSketchInterface
+     * @throws RedisClientException
+     */
+    public function createCountMinSketch(string $filterName, ?array $config = null): CountMinSketchInterface
+    {
+        return new CountMinSketch($filterName, $this->getAdapter($config));
     }
 
     /**

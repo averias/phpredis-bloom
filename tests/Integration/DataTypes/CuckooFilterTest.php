@@ -36,13 +36,13 @@ class CuckooFilterTest extends BaseTestIntegration
         static::$reBloomClient  = self::getReBloomClient();
     }
 
-    public function testReserve()
+    public function testReserve(): void
     {
         $result = static::$cuckooFilter->reserve(50);
         $this->assertTrue($result);
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $result = static::$cuckooFilter->add(1);
         $this->assertTrue($result);
@@ -50,7 +50,7 @@ class CuckooFilterTest extends BaseTestIntegration
         $this->assertTrue($exists);
     }
 
-    public function testAddIfNotExist()
+    public function testAddIfNotExist(): void
     {
         $result = static::$cuckooFilter->addIfNotExist(1);
         $this->assertFalse($result);
@@ -58,7 +58,7 @@ class CuckooFilterTest extends BaseTestIntegration
         $this->assertTrue($exists);
     }
 
-    public function testInserts()
+    public function testInserts(): void
     {
         $values = range(3, 5);
         $result = static::$cuckooFilter->insert($values);
@@ -72,7 +72,7 @@ class CuckooFilterTest extends BaseTestIntegration
         }
     }
 
-    public function testInsertWithOptions()
+    public function testInsertWithOptions(): void
     {
         $values = range(6, 60);
         $result = static::$cuckooFilter->insert($values, [OptionalParams::CAPACITY => 100]);
@@ -86,7 +86,7 @@ class CuckooFilterTest extends BaseTestIntegration
         }
     }
 
-    public function testCount()
+    public function testCount(): void
     {
         $values = [61, 62];
         foreach ($values as $value) {
@@ -102,7 +102,7 @@ class CuckooFilterTest extends BaseTestIntegration
         }
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $values = [61, 62];
 
@@ -122,7 +122,7 @@ class CuckooFilterTest extends BaseTestIntegration
         }
     }
 
-    public function testCopy()
+    public function testCopy(): void
     {
         $result = static::$cuckooFilter->copy('other-cuckoo-filter');
         $this->assertTrue($result);
@@ -139,7 +139,7 @@ class CuckooFilterTest extends BaseTestIntegration
         }
     }
 
-    public function testCopyExceptionBecauseNoSourceFilter()
+    public function testCopyExceptionBecauseNoSourceFilter(): void
     {
         $this->expectException(ResponseException::class);
         $newCuckooFilter = static::$factory->createCuckooFilter('new-cuckoo-filter', static::getReBloomClientConfig());

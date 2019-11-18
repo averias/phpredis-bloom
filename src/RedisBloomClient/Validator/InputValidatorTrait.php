@@ -12,32 +12,75 @@
 
 namespace Averias\RedisBloom\Validator;
 
-use Averias\RedisBloom\Enum\BloomCommands;
 use Averias\RedisBloom\Exception\ResponseException;
 
 trait InputValidatorTrait
 {
     /**
      * @param $value
+     * @param string $valueName
      * @throws ResponseException
      */
-    public function validateScalar($value): void
+    public function validateScalar($value, string $valueName): void
     {
         if (!is_string($value) && !is_numeric($value)) {
-            throw new ResponseException(
-                sprintf("value for parameter item in command %s must be string or number", BloomCommands::BF_MADD)
-            );
+            throw new ResponseException(sprintf("%s value must be string or number", $valueName));
         }
     }
 
     /**
      * @param array $elements
+     * @param string $elementsName
      * @throws ResponseException
      */
-    public function validateArrayOfScalars(array $elements): void
+    public function validateArrayOfScalars(array $elements, string $elementsName): void
     {
         foreach ($elements as $element) {
-            $this->validateScalar($element);
+            $this->validateScalar($element, $elementsName);
+        }
+    }
+
+    /**
+     * @param $value
+     * @param string $valueName
+     * @throws ResponseException
+     */
+    public function validatePercentRate($value, string $valueName)
+    {
+        if (!is_float($value)) {
+            throw new ResponseException(sprintf("%s value must be float", $valueName));
+        }
+        if ($value <= 0.0 || $value > 1.0) {
+            throw new ResponseException(
+                sprintf("%s value must be > 0.0 and <= 1.0, provided value %f", $valueName, $value)
+            );
+        }
+    }
+
+    /**
+     * @param $value
+     * @param string $valueName
+     * @throws ResponseException
+     */
+    public function validateInteger($value, string $valueName)
+    {
+        if (!is_int($value)) {
+            throw new ResponseException(sprintf("%s value must be integer", $valueName));
+        }
+    }
+
+    /**
+     * @param array $value
+     * @param string $valueName
+     * @throws ResponseException
+     */
+    public function validateEvenArrayDimension(array $value, string $valueName)
+    {
+        $length = count($value);
+        if ($length % 2 != 0) {
+            throw new ResponseException(
+                sprintf("%s value must be an array with even length, length found: %d", $valueName, $length)
+            );
         }
     }
 }

@@ -13,10 +13,13 @@
 namespace Averias\RedisBloom\Parser\Request;
 
 use Averias\RedisBloom\Enum\OptionalParams;
-use InvalidArgumentException;
+use Averias\RedisBloom\Exception\ResponseException;
+use Averias\RedisBloom\Validator\InputValidatorTrait;
 
 class BaseRequestOptionalParams
 {
+    use InputValidatorTrait;
+
     /**
      * @param array $defaultOptionalParams
      * @param array $requestedOptionalParams
@@ -31,14 +34,13 @@ class BaseRequestOptionalParams
      * @param array $result
      * @param array $options
      * @return array
+     * @throws ResponseException
      */
     protected function appendCapacity(array $result, array $options): array
     {
         $capacity = $options[OptionalParams::CAPACITY];
         if (!is_null($capacity)) {
-            if (!is_int($capacity)) {
-                throw new InvalidArgumentException(sprintf("option %s must be integer", OptionalParams::CAPACITY));
-            }
+            $this->validateInteger($capacity, OptionalParams::CAPACITY);
             $result[] = OptionalParams::CAPACITY;
             $result[] = $capacity;
         }
@@ -50,20 +52,14 @@ class BaseRequestOptionalParams
      * @param array $result
      * @param array $options
      * @return array
+     * @throws ResponseException
      */
     protected function appendErrorRate(array $result, array $options): array
     {
         $error = $options[OptionalParams::ERROR];
 
         if (!is_null($error)) {
-            if (!is_float($error)) {
-                throw new InvalidArgumentException(sprintf("option %s must be float", OptionalParams::ERROR));
-            }
-            if ($error <= 0.0 || $error > 1.0) {
-                throw new InvalidArgumentException(
-                    sprintf("option %s must be >= 0.0 and >= 1.0, provided value %f", OptionalParams::ERROR, $error)
-                );
-            }
+            $this->validatePercentRate($error, OptionalParams::ERROR);
             $result[] = OptionalParams::ERROR;
             $result[] = $error;
         }

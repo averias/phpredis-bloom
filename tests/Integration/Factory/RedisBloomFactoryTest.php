@@ -26,17 +26,23 @@ class RedisBloomFactoryTest extends BaseTestIntegration
 
     public function testFactoryWithDifferentConfigurations(): void
     {
-        $factory = new RedisBloomFactory([Connection::DATABASE => 15]);
+        $config = static::getReBloomClientConfig();
+        $factory = new RedisBloomFactory(array_merge($config, [Connection::DATABASE => 15]));
         $clientDB15 = $factory->createClient();
-        $bloomFilterDB14 = $factory->createBloomFilter(Keys::EXTENDED_KEY, [Connection::DATABASE=> 14]);
-        $adapterDB13 = $factory->getAdapter([Connection::DATABASE => 13]);
+
+        $bloomFilterDB14 = $factory->createBloomFilter(
+            Keys::EXTENDED_KEY,
+            array_merge($config, [Connection::DATABASE => 14])
+        );
+
+        $adapterDB13 = $factory->getAdapter(array_merge($config, [Connection::DATABASE => 13]));
 
         $clientDB15->bloomFilterAdd(Keys::EXTENDED_KEY, 'database15');
         $bloomFilterDB14->add('database14');
         $adapterDB13->executeBloomCommand(BloomCommands::BF_ADD, Keys::EXTENDED_KEY, ['database13']);
 
-        $clientDB14 = $factory->createClient([Connection::DATABASE => 14]);
-        $clientDB13 = $factory->createClient([Connection::DATABASE => 13]);
+        $clientDB14 = $factory->createClient(array_merge($config, [Connection::DATABASE => 14]));
+        $clientDB13 = $factory->createClient(array_merge($config, [Connection::DATABASE => 13]));
 
         $this->assertTrue($clientDB15->bloomFilterExists(Keys::EXTENDED_KEY, 'database15'));
         $this->assertFalse($clientDB15->bloomFilterExists(Keys::EXTENDED_KEY, 'database14'));

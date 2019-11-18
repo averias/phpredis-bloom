@@ -16,7 +16,7 @@ use Averias\RedisBloom\Command\BloomFilter\BloomFilterCommandTrait;
 use Averias\RedisBloom\Exception\ResponseException;
 use Exception;
 
-class BloomFilter extends BaseDataType implements BloomFilterInterface, DataTypeInterface
+class BloomFilter extends BaseDataType implements BloomFilterInterface
 {
     use BloomFilterCommandTrait;
 

@@ -38,4 +38,11 @@ class BloomCommands extends Enum
     const CF_SCANDUMP = 'CF.SCANDUMP';
     const CF_LOADCHUNK = 'CF.LOADCHUNK';
 
+    /** Count-Min Sketch Commands */
+    const CMS_INITBYDIM = 'CMS.INITBYDIM';
+    const CMS_INITBYPROB = 'CMS.INITBYPROB';
+    const CMS_INCRBY = 'CMS.INCRBY';
+    const CMS_QUERY = 'CMS.QUERY';
+    const CMS_MERGE = 'CMS.MERGE';
+    const CMS_INFO = 'CMS.INFO';
 }

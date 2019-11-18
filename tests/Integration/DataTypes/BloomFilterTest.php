@@ -27,19 +27,19 @@ class BloomFilterTest extends BaseTestIntegration
     /**
      * @throws RedisClientException
      */
-    public static function setUpBeforeClass():void
+    public static function setUpBeforeClass(): void
     {
         static::$bloomFilter = static::$factory->createBloomFilter(Keys::BLOOM_FILTER, static::getReBloomClientConfig());
         static::$reBloomClient  = self::getReBloomClient();
     }
 
-    public function testReserve()
+    public function testReserve(): void
     {
         $result = static::$bloomFilter->reserve(0.1, 50);
         $this->assertTrue($result);
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $result = static::$bloomFilter->add(1);
         $this->assertTrue($result);
@@ -47,7 +47,7 @@ class BloomFilterTest extends BaseTestIntegration
         $this->assertTrue($exists);
     }
 
-    public function testMultiAdd()
+    public function testMultiAdd(): void
     {
         $values = range(2, 5);
         $result = static::$bloomFilter->multiAdd(...$values);
@@ -61,7 +61,7 @@ class BloomFilterTest extends BaseTestIntegration
         }
     }
 
-    public function testInsertWithOptions()
+    public function testInsertWithOptions(): void
     {
         $values = range(6, 20);
         $result = static::$bloomFilter->insert($values, [OptionalParams::CAPACITY => 100, OptionalParams::ERROR => 0.01]);
@@ -75,7 +75,7 @@ class BloomFilterTest extends BaseTestIntegration
         }
     }
 
-    public function testCopy()
+    public function testCopy(): void
     {
         $result = static::$bloomFilter->copy('other-bloom-filter');
         $this->assertTrue($result);
@@ -89,14 +89,14 @@ class BloomFilterTest extends BaseTestIntegration
         }
     }
 
-    public function testCopyExceptionBecauseNoSourceFilter()
+    public function testCopyExceptionBecauseNoSourceFilter(): void
     {
         $this->expectException(ResponseException::class);
         $newBloomFilter = static::$factory->createBloomFilter('new-bloom-filter', static::getReBloomClientConfig());
         $newBloomFilter->copy('other-bloom-filter');
     }
 
-    public function testDisconnection()
+    public function testDisconnection(): void
     {
         $clientsInfo = static::$reBloomClient->info('clients');
         $connectedClientsBefore = $clientsInfo['connected_clients'];

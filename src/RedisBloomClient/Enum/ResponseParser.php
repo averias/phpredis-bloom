@@ -12,6 +12,7 @@
 
 namespace Averias\RedisBloom\Enum;
 
+use Averias\RedisBloom\Parser\Response\ArrayFlatToAssociative;
 use Averias\RedisBloom\Parser\Response\ArrayOfIntegerToBool;
 use Averias\RedisBloom\Parser\Response\IntegerToBool;
 use Averias\RedisBloom\Parser\Response\OkToTrue;
@@ -35,5 +36,10 @@ class ResponseParser extends Enum
         BloomCommands::CF_EXISTS => IntegerToBool::class,
         BloomCommands::CF_DEL => IntegerToBool::class,
         BloomCommands::CF_LOADCHUNK => OkToTrue::class,
+        BloomCommands::CMS_INITBYDIM => OkToTrue::class,
+        BloomCommands::CMS_INITBYPROB => OkToTrue::class,
+        BloomCommands::CMS_INCRBY => OkToTrue::class,
+        BloomCommands::CMS_MERGE => OkToTrue::class,
+        BloomCommands::CMS_INFO => ArrayFlatToAssociative::class
     ];
 }

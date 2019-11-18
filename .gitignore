@@ -3,3 +3,4 @@
 /vendor/
 composer.lock
 .phpunit.result.cache
+/docker-tests/.phpunit.result.cache

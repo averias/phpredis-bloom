@@ -30,7 +30,7 @@ trait BloomFilterCommandTrait
      */
     public function bloomFilterAdd(string $key, $item): bool
     {
-        $this->validateScalar($item);
+        $this->validateScalar($item, sprintf("%s param", BloomCommands::BF_ADD));
         return $this->executeBloomCommand(BloomCommands::BF_ADD, $key, [$item]);
     }
 
@@ -39,7 +39,7 @@ trait BloomFilterCommandTrait
      */
     public function bloomFilterMultiAdd(string $key, ...$items): array
     {
-        $this->validateArrayOfScalars($items);
+        $this->validateArrayOfScalars($items, sprintf("%s params", BloomCommands::BF_MADD));
         return $this->executeBloomCommand(BloomCommands::BF_MADD, $key, $items);
     }
 
@@ -48,7 +48,7 @@ trait BloomFilterCommandTrait
      */
     public function bloomFilterInsert(string $key, array $items, array $options = []): array
     {
-        $this->validateArrayOfScalars($items);
+        $this->validateArrayOfScalars($items, sprintf("%s params", BloomCommands::BF_INSERT));
         $parsedOptions = $this->parseRequest(BloomCommands::BF_INSERT, $options);
         $items = array_merge([OptionalParams::ITEMS], $items);
         $arguments = array_merge($parsedOptions, $items);
@@ -61,7 +61,7 @@ trait BloomFilterCommandTrait
      */
     public function bloomFilterExists(string $key, $item): bool
     {
-        $this->validateScalar($item);
+        $this->validateScalar($item, sprintf("%s params", BloomCommands::BF_EXISTS));
         return $this->executeBloomCommand(BloomCommands::BF_EXISTS, $key, [$item]);
     }
 
@@ -70,7 +70,7 @@ trait BloomFilterCommandTrait
      */
     public function bloomFilterMultiExists(string $key, ...$items): array
     {
-        $this->validateArrayOfScalars($items);
+        $this->validateArrayOfScalars($items, sprintf("%s params", BloomCommands::BF_MEXISTS));
         return $this->executeBloomCommand(BloomCommands::BF_MEXISTS, $key, $items);
     }
 

@@ -107,8 +107,8 @@ $factory = new RedisBloomFactory();
 $client = $factory->createClient();
 $options = [OptionalParams::CAPACITY => 1000, OptionalParams::NO_CREATE => true];
 
-// it will insert 'foo', 'bar', and 18 values to filter 'test-filter' in case it already exists since NO_CREATE = true,
-// otherwise it will send and ResponseException
+// it will insert 'foo', 'bar', and 18 values to filter 'test-filter' in case it already exists 
+// since NO_CREATE = true, otherwise it will send and ResponseException
 $client->cuckooFilterInsert('test-filter', ['foo', 'bar', 18], $options);
 ```
 

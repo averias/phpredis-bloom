@@ -161,7 +161,7 @@ or
 [
    'width' => 10, // width dimension of the scketch
    'depth' => 10, // deepth dimension of the scketch
-   'count' => 4582 // total count of all elements in the sketch (that is the sum of the count of all different item in the sketch)
+   'count' => 4582 // total count of all elements in the sketch
 ]
 ```
 

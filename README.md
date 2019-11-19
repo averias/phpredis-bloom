@@ -1,10 +1,32 @@
+<img src="docs/PhpRedisBloomLogo250x300.png" alt="PhpRedisBloom" align="right" />
+
 # Phpredis-Bloom
-PHP client for RedisLab RedisBloom module
+PHP client for [RedisLab/RedisBloom Module](https://oss.redislabs.com/redisbloom/), an extension of Redis core for 
+probabilistic data structures.
+
+## Table of content
+
+- [Intro](#intro)
+- [Requirements](#requirements)
+- [Usage](#usage)
+    - [Clients](#clients)
+    - [Items](#items)
+    - [Why having a RedisBloomClient and classes for each RedisBloom data types?](#why-having-a-redisbloomclient-and-classes-for-each-redisbloom-data-types)
+    - [Automatic connection, disconnection and reconnection](#automatic-connection-disconnection-and-reconnection)
+    - [Code Sample](#code-sample)
+- [Commands](#commands)
+    - [Phpredis-Bloom commands](#phpredis-bloom-commands)
+    - [Phpredis commands](#phpredis-commands)
+    - [Raw commands](#raw-commands)
+- [Tests](#tests)
+    - [On a local Redis server 4.0+ with RedisBloom module and Redis extension 5 installed](#on-a-local-redis-server-40-with-redisbloom-module-and-redis-extension-5-installed)
+    - [Docker](#docker)
+- [Examples](#examples)
+- [License](#license)
 
 ## Intro
-Phpredis-Bloom provides the full set of commands for [RedisBloom Module](https://oss.redislabs.com/redisbloom/). 
-It's built on top of the [phpredis](https://github.com/phpredis/phpredis) and use it as Redis client, 
-so you can also take advantage of some of the features included in `phpredis` as Redis client.
+Phpredis-Bloom provides the full set of commands for `RedisBloom Module` and it's built on top of [phpredis](https://github.com/phpredis/phpredis) 
+and use it as Redis client, so you can also take advantage of some of the features included in `phpredis` as Redis client.
 
 ## Requirements
 - Redis server 4.0+ version (Redis Modules are only available from Redis 4.0+)
@@ -30,7 +52,7 @@ $result = $client->bloomFilterAdd('filter-key', 'item-15');
 
 ```
 
-**Executing commands by using RedisBloom data types classes (Bloom Filter, Cuckoo Filter, Count-Min Sketch and Top-K)`**
+**Executing commands by using RedisBloom data types classes (Bloom Filter, Cuckoo Filter, Count-Min Sketch and Top-K)**
 
 ```
 // example for BloomFilter data types class
@@ -99,7 +121,7 @@ After one successful disconnection the client or data type object will reconnect
 for sending more commands (see example below) 
 
 
-### Example
+### Code Sample
 
 The following code snippet show how to instantiate RedisBloom clients and BloomFilter data type with different 
 connection configurations
@@ -202,7 +224,7 @@ $client->executeRawCommand('hget, 'hash-key', 'foo');
 ``` 
 
 ## Tests
-#### On a local Redis server 4.0+ with RedisBloom module and Redis extension 5 installed
+### On a local Redis server 4.0+ with RedisBloom module and Redis extension 5 installed
 From console run the following command from the root directory of this project:
 
 `./vendor/bin/phpunit`
@@ -211,7 +233,7 @@ if you don't have configured your local Redis server in 127.0.0.1:6379 you can s
 and REDIS_TEST_DATABASE in `./phpunit.xml` file with your local Redis host, port and database before running the above 
 command.
   
-#### Docker
+### Docker
 Having Docker installed, run the following command in the root directory of this project:
 
 `bash run-tests-docker.sh`

@@ -1,6 +1,6 @@
 <img src="docs/PhpRedisBloomLogo250x300.png" alt="PhpRedisBloom" align="right" />
 
-# Phpredis-Bloom
+# PhpRedisBloom
 PHP client for [RedisLab/RedisBloom Module](https://oss.redislabs.com/redisbloom/), an extension of Redis core for 
 probabilistic data structures.
 
@@ -15,7 +15,7 @@ probabilistic data structures.
     - [Automatic connection, disconnection and reconnection](#automatic-connection-disconnection-and-reconnection)
     - [Code Sample](#code-sample)
 - [Commands](#commands)
-    - [Phpredis-Bloom commands](#phpredis-bloom-commands)
+    - [PhpRedisBloom commands](#phpredisbloom-commands)
     - [Phpredis commands](#phpredis-commands)
     - [Raw commands](#raw-commands)
 - [Tests](#tests)
@@ -25,7 +25,7 @@ probabilistic data structures.
 - [License](#license)
 
 ## Intro
-Phpredis-Bloom provides the full set of commands for `RedisBloom Module` and it's built on top of [phpredis](https://github.com/phpredis/phpredis) 
+PhpRedisBloom provides the full set of commands for `RedisBloom Module` and it's built on top of [phpredis](https://github.com/phpredis/phpredis) 
 and use it as Redis client, so you can also take advantage of some of the features included in `phpredis` as Redis client.
 
 ## Requirements
@@ -36,7 +36,7 @@ and use it as Redis client, so you can also take advantage of some of the featur
 ## Usage
 
 ### Clients
-There are 2 ways to execute Phpredis-bloom commands:
+There are 2 ways to execute PhpRedisBloom commands:
 
 **Executing commands by using RedisBloomClient**
 
@@ -199,7 +199,7 @@ $bloomFilterDB14->disconnect();
 ```
 
 ## Commands
-#### Phpredis-Bloom commands
+#### PhpRedisBloom commands
 
 Phpredis-bloom provides all the commands for the four RedisBloom data types, please follow the links below for a 
 detailed info for each one:
@@ -249,5 +249,5 @@ Then the tests will run inside `phpredis-bloom` docker service container and fin
 - [CMS Merge](https://github.com/averias/phpredis-bloom/blob/master/examples/count-min-sketch-merge.php)
 
 ## License
-Phpredis-Bloom code is distributed under MIT license, see [LICENSE](https://github.com/averias/phpredis-bloom/blob/master/LICENSE) 
+PhpRedisBloom code is distributed under MIT license, see [LICENSE](https://github.com/averias/phpredis-bloom/blob/master/LICENSE) 
 file

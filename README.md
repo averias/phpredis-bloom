@@ -1,5 +1,5 @@
 # Phpredis-Bloom
-PHP client for RedisBloom module
+PHP client for RedisLab RedisBloom module
 
 ## Intro
 Phpredis-Bloom provides the full set of commands for [RedisBloom Module](https://oss.redislabs.com/redisbloom/). 
@@ -16,7 +16,8 @@ so you can also take advantage of some of the features included in `phpredis` as
 ### Clients
 There are 2 ways to execute Phpredis-bloom commands:
 
-`Executing commands by using RedisBloomClient`
+**Executing commands by using RedisBloomClient**
+
 ```
 use Averias\RedisBloom\Factory\RedisBloomFactory;
 
@@ -29,7 +30,7 @@ $result = $client->bloomFilterAdd('filter-key', 'item-15');
 
 ```
 
-`Executing commands by using RedisBloom data types classes (Bloom Filter, Cuckoo Filter, Count-Min Sketch and Top-K)`
+**Executing commands by using RedisBloom data types classes (Bloom Filter, Cuckoo Filter, Count-Min Sketch and Top-K)`**
 
 ```
 // example for BloomFilter data types class
@@ -55,6 +56,8 @@ $result = $bloomFilter->add(17.2); // returns true
 // checking if a list items exist in 'filter-key' Bloom Filter
 $result = $bloomFilter->multiExists('item1', 15, 'foo'); // returns and array [true, true, false] since 'foo' doesn't exists 
 ```
+
+
 ### Items
 The only allowed item values to add or insert in the 4 data structure are string, integers, and float, but notice 
 that all items are stored as strings, so adding the integer 13 or the string `13` will end in the same result.
@@ -68,7 +71,8 @@ structures like Cuckoo Filter, Count-Min Sketch and Top-k will increase the coun
 You can take a look to [examples/inserting-numbers.php](https://github.com/averias/phpredis-bloom/blob/master/examples/inserting-numbers.php) 
 to see an example of this behavior.
 
-### Why having a RedisBloomClient and classes for each RedisBloom data types?**
+
+### Why having a RedisBloomClient and classes for each RedisBloom data types?
 
 - RedisBloomClient allows you execute whatever RedisBloom command (Bloom Filter, Cuckoo Filter, Mins-Sketch and Top-K 
 commands) over different filters and also to execute Redis commands and raw Redis commands. So it is a client for general 
@@ -76,6 +80,7 @@ purposes and it is recommended when you need to manage different filters and key
 normal Redis commands
 - RedisBloom data types classes (Bloom Filter, Cuckoo Filter, Mins-Sketch and Top-K classes) just execute commands 
 that belongs to that data type and over just one filter. They are useful when you need to manage just one filter. 
+
 
 ### Automatic connection, disconnection and reconnection
 
@@ -92,6 +97,7 @@ which will return true or false depending on the disconnection was possible.
 
 After one successful disconnection the client or data type object will reconnect automatically if you reuse the object 
 for sending more commands (see example below) 
+
 
 ### Example
 
@@ -120,17 +126,18 @@ const EXAMPLE_FILTER = 'example-filter';
  *     'database' => 0 // Redis database index [0..15]
  * ]
  *
- * you can create a factory with default connection configuration by not passing any param in the constructor
+ * you can create a factory with default connection by not passing any param in the constructor
  * $defaultFactory = new RedisBloomFactory();
  */
 
-// create a factory with default connection configuration but pointing to database 15
+// create a factory with default connection but pointing to database 15
 $factoryDB15 = new RedisBloomFactory([Connection::DATABASE => 15]);
 
 // it creates a RedisBloomClient with same default connection configuration as specified in factory above
 $clientDB15 = $factoryDB15->createClient();
 
-// using the same factory you can create a BloomFilter object pointing to database 14 and filter name = 'example-filter'
+// using the same factory you can create a BloomFilter object pointing 
+// to database 14 and filter name = 'example-filter'
 $bloomFilterDB14 = $factoryDB15->createBloomFilter(EXAMPLE_FILTER, [Connection::DATABASE => 14]);
 
 // add 'item-15' to 'example-filter' bloom filter on database 15
@@ -177,7 +184,7 @@ detailed info for each one:
 
 - [Bloom Filter](https://github.com/averias/phpredis-bloom/blob/master/docs/BLOOM-FILTER-COMMANDS.md)
 - [Cuckoo Filter](https://github.com/averias/phpredis-bloom/blob/master/docs/CUCKOO-FILTER-COMMANDS.md)
-- [Mins-Sketch](https://github.com/averias/phpredis-bloom/blob/master/docs/COUNT-MIN-SKETCH-COMMANDS.md)
+- [Count-Min-Sketch](https://github.com/averias/phpredis-bloom/blob/master/docs/COUNT-MIN-SKETCH-COMMANDS.md)
 - [Top-K](https://github.com/averias/phpredis-bloom/blob/master/docs/TOP-K-COMMANDS.md)
 
 #### Phpredis commands

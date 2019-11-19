@@ -104,11 +104,16 @@ or
 ```
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
-$options = [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 0.01, OptionalParams::NO_CREATE => true];
+$options = [
+   OptionalParams::CAPACITY => 1000,
+   OptionalParams::ERROR => 0.01, 
+   OptionalParams::NO_CREATE => true
+];
 
-// it will insert 'foo', 'bar' and 18 values to filter 'test-filter' in case it already exists since NO_CREATE = true,
-// otherwise it will send and ResponseException
+// it will insert 'foo', 'bar' and 18 values to filter 'test-filter' in case it already exists 
+// since NO_CREATE = true, otherwise it will send and ResponseException
 $client->bloomFilterInsert('test-filter', ['foo', 'bar', 18], $options);
+
 ```
 
 **Returns:** (array) of true/false values, indicating if each item (in the position which was inserted) was added to 

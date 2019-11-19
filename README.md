@@ -1,5 +1,5 @@
 # Phpredis-Bloom
-RedisBloom for PHP
+PHP client for RedisBloom module
 
 ## Intro
 Phpredis-Bloom provides the full set of commands for [RedisBloom Module](https://oss.redislabs.com/redisbloom/). 
@@ -29,7 +29,7 @@ $result = $client->bloomFilterAdd('filter-key', 'item-15');
 
 ```
 
-`Executing commands by using RedisBloom data types classes (Bloom Filter, Cuckoo Filter, Mins-Sketch and Top-K)`
+`Executing commands by using RedisBloom data types classes (Bloom Filter, Cuckoo Filter, Count-Min Sketch and Top-K)`
 
 ```
 // example for BloomFilter data types class
@@ -55,6 +55,18 @@ $result = $bloomFilter->add(17.2); // returns true
 // checking if a list items exist in 'filter-key' Bloom Filter
 $result = $bloomFilter->multiExists('item1', 15, 'foo'); // returns and array [true, true, false] since 'foo' doesn't exists 
 ```
+### Items
+The only allowed item values to add or insert in the 4 data structure are string, integers, and float, but notice 
+that all items are stored as strings, so adding the integer 13 or the string `13` will end in the same result.
+For those data structures that allow inserting repeated items (like Cuckoo Filter) it will increase the count of that 
+item or will fail in the second insertion in case of structures that do not allow inserting repeated items.
+
+Same behavior for floats, inserting first a float like 17.2 and then insert its representation as string `17.2` will 
+throw an exception in the second insertion in Bloom Filters which doesn't allow repeated items and in case of other 
+structures like Cuckoo Filter, Count-Min Sketch and Top-k will increase the counter to 2 after the second insertion.
+
+You can take a look to [examples/inserting-numbers.php](https://github.com/averias/phpredis-bloom/blob/master/examples/inserting-numbers.php) 
+to see an example of this behavior.
 
 ### Why having a RedisBloomClient and classes for each RedisBloom data types?**
 
@@ -165,8 +177,8 @@ detailed info for each one:
 
 - [Bloom Filter](https://github.com/averias/phpredis-bloom/blob/master/docs/BLOOM-FILTER-COMMANDS.md)
 - [Cuckoo Filter](https://github.com/averias/phpredis-bloom/blob/master/docs/CUCKOO-FILTER-COMMANDS.md)
-- [Mins-Sketch](https://github.com/averias/phpredis-bloom/blob/master/docs/MINS-SKETCH-COMMANDS.md)
-- [Top-K](https://github.com/averias/phpredis-bloom/blob/master/docs/TOP-K-COMMANDS.md) (still under development)
+- [Mins-Sketch](https://github.com/averias/phpredis-bloom/blob/master/docs/COUNT-MIN-SKETCH-COMMANDS.md)
+- [Top-K](https://github.com/averias/phpredis-bloom/blob/master/docs/TOP-K-COMMANDS.md)
 
 #### Phpredis commands
 

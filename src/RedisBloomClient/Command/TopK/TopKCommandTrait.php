@@ -21,6 +21,12 @@ trait TopKCommandTrait
      */
     public function topKReserve(string $key, int $topK, int $width, int $depth, float $decay): bool
     {
+        $this->validateFloatRange(
+            $decay,
+            sprintf("decay param for %s command", BloomCommands::CMS_INITBYPROB),
+            0.0,
+            true
+        );
         $arguments = [$topK, $width, $depth, $decay];
         return $this->executeBloomCommand(BloomCommands::TOPK_RESERVE, $key, $arguments);
     }

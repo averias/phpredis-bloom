@@ -22,7 +22,7 @@ commands over one key which is specified as param when you create the CountMinSk
 ```
 $factory = new RedisBloomFactory();
 $countMinSketch = $factory->createCountMinSketch('count-min-sketch-key');
-$countMinSketch->countMinSketchInitByDim(10, 10);
+$countMinSketch->initByDim(10, 10);
 ```
 
 Both RedisBloomClient and CountMinSketch object can be configured with a specific connection to Redis when they are created by providing
@@ -85,13 +85,17 @@ or
 then one pair of (`item`, `increment`)
 
 ** Example**
-Increments the count of `item1` by 13, the integer item `34` by 17 and the float `1.2` by 100
-`$redisBloomClient->countMinSketchIncrementBy('sketch-key', 'item1', 13, 34, 17, 1.2, 100);`
+Increments the count of `item1` by 13, the integer item 34 by 17, the string item `34` by 13, the float 1.2 by 100 
+and the string `1.2` by 200
+`$redisBloomClient->countMinSketchIncrementBy('sketch-key', 'item1', 13, 34, 17, '34', 13, 1.2, 100, '1.2', 200);`
 
 or  using CountMinSketch class 
 
-`$countMinSketch->incrementBy(item1', 13, 34, 17, 1.2, 100);`
+`$countMinSketch->incrementBy(item1', 13, 34, 17, 1.2, 100, 13, 34, 17, '34', 13, 1.2, 100, '1.2', 200);`
 
+At the end we will have:
+- count for item `34`: 17 + 13 = 30
+- count for item `34`: 100 + 200 = 300
 
 **Returns:** (bool) true if items were incremented successfully.`ResponseException` if some of the items is not a string 
 or number, `increment` is not an integer, `increment` is missing for the related `item` (so length of list of params, 
@@ -108,10 +112,10 @@ or
 
 **Params:**
 - key: (string) sketch name
-- items: (array) list of (string|number) scalar values representing the name items for querying
+- items: list of (string|number) scalar values representing the item names for querying
 
 **Returns:** (array) of counts for each item specified in the parameter list in the same order they were specified. If 
-one item specified s param doesn't exist in the sketch it will return a count of 0.`ResponseException` if some of the 
+one item specified as param doesn't exist in the sketch it will return a count of 0.`ResponseException` if some of the 
 items are not string or sketch doesn't exist.
 
 ### `Merge`

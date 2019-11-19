@@ -34,7 +34,6 @@ class BloomFilterInsertOptionalParamsTest extends TestCase
     /**
      * @dataProvider getExceptionDataProvider
      * @param array $requestParams
-     * @param string $exceptionClassName
      */
     public function testParseException(array $requestParams)
     {

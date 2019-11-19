@@ -1,6 +1,6 @@
 {
   "name": "averias/phpredis-bloom",
-  "description": "A PHP client for RedisBloom module using phpredis extension",
+  "description": "PHP client for RedisBloom module using phpredis extension",
   "keywords": [
     "redis",
     "redisbloom",

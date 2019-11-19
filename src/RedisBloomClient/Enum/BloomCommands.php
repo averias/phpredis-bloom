@@ -54,6 +54,4 @@ class BloomCommands extends Enum
     const TOPK_COUNT = 'TOPK.COUNT';
     const TOPK_LIST = 'TOPK.LIST';
     const TOPK_INFO = 'TOPK.INFO';
-
-
 }

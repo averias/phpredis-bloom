@@ -41,7 +41,7 @@ $targetCms->initByDim(10, 10);
 $targetCms->mergeFrom(3, ['key-merge1', 'key-merge2', 'key-merge3'], [2, 3, 4]);
 
 $result = $targetCms->query('blue', 'red', 'yellow');
-var_dump($result);
+echo json_encode($result) . PHP_EOL;
 
 /**
  * result = [90, 180, 270]

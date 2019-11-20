@@ -87,4 +87,10 @@ interface CuckooFilterCommandTraitInterface
      * @return bool
      */
     public function cuckooFilterLoadChunk(string $key, int $iterator, $data): bool;
+
+    /**
+     * @param string $key
+     * @return array
+     */
+    public function cuckooFilterInfo(string $key): array;
 }

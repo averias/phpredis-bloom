@@ -25,6 +25,7 @@ class BloomCommands extends Enum
     const BF_MEXISTS = 'BF.MEXISTS';
     const BF_SCANDUMP = 'BF.SCANDUMP';
     const BF_LOADCHUNK = 'BF.LOADCHUNK';
+    const BF_INFO = 'BF.INFO';
 
     /** Cuckoo Filter Commands */
     const CF_RESERVE = 'CF.RESERVE';
@@ -37,6 +38,7 @@ class BloomCommands extends Enum
     const CF_COUNT = 'CF.COUNT';
     const CF_SCANDUMP = 'CF.SCANDUMP';
     const CF_LOADCHUNK = 'CF.LOADCHUNK';
+    const CF_INFO = 'CF.INFO';
 
     /** Count-Min Sketch Commands */
     const CMS_INITBYDIM = 'CMS.INITBYDIM';

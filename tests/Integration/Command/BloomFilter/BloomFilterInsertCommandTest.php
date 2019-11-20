@@ -131,15 +131,20 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
                 [false],
                 [OptionalParams::ERROR => 0.1]
             ],
-            [ // fails cause ERROR must be > 0.0 and <= 1.0
+            [ // fails cause ERROR must be > 0.0 and < 1.0
                 'key-insert7',
                 [5, 6],
                 [OptionalParams::ERROR => 2]
             ],
-            [ // fails cause ERROR must be > 0.0 and <= 1.0
+            [ // fails cause ERROR must be > 0.0 and < 1.0
                 'key-insert7',
                 [5, 6],
                 [OptionalParams::ERROR => 0]
+            ],
+            [ // fails cause ERROR must be > 0.0 and < 1.0
+                'key-insert7',
+                [5, 6],
+                [OptionalParams::ERROR => 1.0]
             ],
             [ // fails cause CAPACITY is not integer
                 'key-insert7',

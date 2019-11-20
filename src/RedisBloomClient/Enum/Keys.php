@@ -21,4 +21,20 @@ class Keys extends Enum
     const CUCKOO_FILTER = 'cuckoo-filter-key';
     const COUNT_MIN_SKETCH = 'count-min-sketch-key';
     const TOP_K = 'top-k-key';
+
+    /** Info keys */
+    const WIDTH = 'width';
+    const DEPTH = 'depth';
+    const COUNT = 'count';
+    const K_SIZE = 'k';
+    const DECAY = 'decay';
+    const CAPACITY = 'Capacity';
+    const SIZE = 'Size';
+    const NUMBER_FILTERS = 'Number of filters';
+    const NUMBER_ITEMS_INSERTED = 'Number of items inserted';
+    const NUMBER_ITEMS_DELETED = 'Number of items deleted';
+    const BUCKET_SIZE = 'Bucket size';
+    const MAX_ITERATIONS = 'Max iterations';
+    const EXPANSION_RATE = 'Expansion rate';
+    const NUMBER_BUCKETS = 'Number of buckets';
 }

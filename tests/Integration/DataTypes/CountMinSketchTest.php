@@ -40,9 +40,9 @@ class CountMinSketchTest extends BaseTestIntegration
         $this->assertTrue($result);
 
         $info = static::$countMinSketch->info();
-        $this->assertEquals(10, $info['width']);
-        $this->assertEquals(10, $info['depth']);
-        $this->assertEquals(0, $info['count']);
+        $this->assertEquals(10, $info[Keys::WIDTH]);
+        $this->assertEquals(10, $info[Keys::DEPTH]);
+        $this->assertEquals(0, $info[Keys::COUNT]);
 
         $anotherCountMinSketch = static::$factory->createCountMinSketch('cms-key', static::getReBloomClientConfig());
         $result = $anotherCountMinSketch->initByProb(0.01, 0.1);

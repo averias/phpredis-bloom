@@ -12,6 +12,7 @@
 
 namespace Averias\RedisBloom\Tests\Integration\Command\TopK;
 
+use Averias\RedisBloom\Enum\Keys;
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Tests\BaseTestIntegration;
 
@@ -27,16 +28,16 @@ class TopKInfoCommandTest extends BaseTestIntegration
     public function testSuccessfulInfo(): void
     {
         $info1 = static::$reBloomClient->topKInfo('key-info1');
-        $this->assertEquals(2, $info1['k']);
-        $this->assertEquals(100, $info1['width']);
-        $this->assertEquals(3, $info1['depth']);
-        $this->assertEquals(0.95, $info1['decay']);
+        $this->assertEquals(2, $info1[Keys::K_SIZE]);
+        $this->assertEquals(100, $info1[Keys::WIDTH]);
+        $this->assertEquals(3, $info1[Keys::DEPTH]);
+        $this->assertEquals(0.95, $info1[Keys::DECAY]);
 
         $info2 = static::$reBloomClient->topKInfo('key-info2');
-        $this->assertEquals(3, $info2['k']);
-        $this->assertEquals(200, $info2['width']);
-        $this->assertEquals(5, $info2['depth']);
-        $this->assertEquals(0.91, $info2['decay']);
+        $this->assertEquals(3, $info2[Keys::K_SIZE]);
+        $this->assertEquals(200, $info2[Keys::WIDTH]);
+        $this->assertEquals(5, $info2[Keys::DEPTH]);
+        $this->assertEquals(0.91, $info2[Keys::DECAY]);
     }
 
     public function testInfoException(): void

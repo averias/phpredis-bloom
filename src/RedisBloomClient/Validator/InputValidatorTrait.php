@@ -53,9 +53,9 @@ trait InputValidatorTrait
         $value,
         string $valueName,
         $minValue = 0.0,
-        $isExclusiveMin = false,
+        $isExclusiveMin = true,
         $maxValue = 1.0,
-        $isExclusiveMax = false
+        $isExclusiveMax = true
     ): void {
         $this->validateFloat($value, $valueName);
 

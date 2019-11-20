@@ -102,9 +102,9 @@ class InputValidatorTraitTest extends TestCase
         $value,
         string $errorMessage,
         $minValue = 0.0,
-        $isExclusiveMin = false,
+        $isExclusiveMin = true,
         $maxValue = 1.0,
-        $isExclusiveMax = false
+        $isExclusiveMax = true
     ): void {
         $this->expectException(ResponseException::class);
         $this->expectExceptionMessage($errorMessage);
@@ -163,8 +163,8 @@ class InputValidatorTraitTest extends TestCase
             [[13, 12], "test param value must be float"],
             [true, "test param value must be float"],
             ['foo', "test param value must be float"],
-            [12.3, "test param value must be >= 0.0 and <= 1.0, provided value 12.3"],
-            [0.0, "test param value must be > 0.0 and <= 1.0, provided value 0.000000", 0.0, true]
+            [12.3, "test param value must be > 0.0 and < 1.0, provided value 12.300000"],
+            [1.0, "test param value must be > 0.0 and < 1.0, provided value 1.000000"]
         ];
     }
 }

@@ -75,6 +75,16 @@ class BloomFilterTest extends BaseTestIntegration
         }
     }
 
+    public function testLoadChunk(): void
+    {
+        $newBloomFilter = static::$factory->createBloomFilter('bf-load-chunk', static::getReBloomClientConfig());
+
+        list ($iterator, $data) = static::$bloomFilter->scanDump(0);
+        $result = $newBloomFilter->loadChunk($iterator, $data);
+
+        $this->assertTrue($result);
+    }
+
     public function testCopy(): void
     {
         $result = static::$bloomFilter->copy('other-bloom-filter');
@@ -94,6 +104,16 @@ class BloomFilterTest extends BaseTestIntegration
         $this->expectException(ResponseException::class);
         $newBloomFilter = static::$factory->createBloomFilter('new-bloom-filter', static::getReBloomClientConfig());
         $newBloomFilter->copy('other-bloom-filter');
+    }
+
+
+    public function testInfo(): void
+    {
+        $result = static::$bloomFilter->info();
+        $this->assertArrayHasKey(Keys::CAPACITY, $result);
+        $this->assertArrayHasKey(Keys::SIZE, $result);
+        $this->assertEquals(1, $result[Keys::NUMBER_FILTERS]);
+        $this->assertEquals(20, $result[Keys::NUMBER_ITEMS_INSERTED]);
     }
 
     public function testDisconnection(): void

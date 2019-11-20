@@ -12,6 +12,7 @@
 
 namespace Averias\RedisBloom\Tests\Integration\Command\CountMinSketch;
 
+use Averias\RedisBloom\Enum\Keys;
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Tests\BaseTestIntegration;
 
@@ -23,16 +24,16 @@ class CountMinSketchInfoCommandTest extends BaseTestIntegration
         static::$reBloomClient->countMinSketchIncrementBy('key-info1', 'blue', 10, 'yellow', 40);
 
         $info1 = static::$reBloomClient->countMinSketchInfo('key-info1');
-        $this->assertEquals(10, $info1['width']);
-        $this->assertEquals(10, $info1['depth']);
-        $this->assertEquals(50, $info1['count']);
+        $this->assertEquals(10, $info1[Keys::WIDTH]);
+        $this->assertEquals(10, $info1[Keys::DEPTH]);
+        $this->assertEquals(50, $info1[Keys::COUNT]);
 
         static::$reBloomClient->countMinSketchIncrementBy('key-info1', 'blue', 86, 'yellow', 11);
 
         $info2 = static::$reBloomClient->countMinSketchInfo('key-info1');
-        $this->assertEquals(10, $info2['width']);
-        $this->assertEquals(10, $info2['depth']);
-        $this->assertEquals(147, $info2['count']);
+        $this->assertEquals(10, $info2[Keys::WIDTH]);
+        $this->assertEquals(10, $info2[Keys::DEPTH]);
+        $this->assertEquals(147, $info2[Keys::COUNT]);
     }
 
     public function testInfoException(): void

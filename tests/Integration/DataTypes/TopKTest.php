@@ -78,10 +78,10 @@ class TopKTest extends BaseTestIntegration
         $this->assertEquals(
             $result,
             [
-                'k' => 2,
-                'width' => 20,
-                'depth' => 3,
-                'decay' => 0.999,
+                Keys::K_SIZE => 2,
+                Keys::WIDTH => 20,
+                Keys::DEPTH => 3,
+                Keys::DECAY => 0.999,
             ]
         );
     }

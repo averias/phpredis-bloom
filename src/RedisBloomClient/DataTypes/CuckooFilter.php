@@ -159,4 +159,12 @@ class CuckooFilter extends BaseDataType implements CuckooFilterInterface
 
         return $success;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function info(): array
+    {
+        return $this->cuckooFilterInfo($this->name);
+    }
 }

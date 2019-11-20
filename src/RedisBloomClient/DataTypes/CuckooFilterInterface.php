@@ -86,4 +86,9 @@ interface CuckooFilterInterface extends DataTypeInterface
      * @throws ResponseException
      */
     public function copy(string $targetFilter): bool;
+
+    /**
+     * @return array
+     */
+    public function info(): array;
 }

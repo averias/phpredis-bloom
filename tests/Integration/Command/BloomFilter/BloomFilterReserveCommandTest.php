@@ -29,10 +29,16 @@ class BloomFilterReserveCommandTest extends BaseTestIntegration
         $this->assertTrue($result);
     }
 
-    public function testReservationException(): void
+    /**
+     * @dataProvider getExceptionDataProvider
+     * @param string $key
+     * @param float $errorRate
+     * @param int $capacity
+     */
+    public function testReservationException(string $key, float $errorRate, int $capacity): void
     {
         $this->expectException(ResponseException::class);
-        static::$reBloomClient->bloomFilterReserve('key-reserve1', 0.1, 1000);
+        static::$reBloomClient->bloomFilterReserve($key, $errorRate, $capacity);
     }
 
     public function getDataProvider(): array
@@ -43,6 +49,15 @@ class BloomFilterReserveCommandTest extends BaseTestIntegration
             ['key-reserve3', 0.001, 10000000],
             ['key-reserve4', 0.0001, 100000000],
             ['key-reserve5', 0.00001, 1000000000]
+        ];
+    }
+
+    public function getExceptionDataProvider(): array
+    {
+        return [
+            ['key-reserve1', 0.1, 10000], // key already exists
+            ['key-reserve2', 0.0, 10000], // error must be > 0.0
+            ['key-reserve3', 1.0, 10000] // error must be < 1.0
         ];
     }
 }

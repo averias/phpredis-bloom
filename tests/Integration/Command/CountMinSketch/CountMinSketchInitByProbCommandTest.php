@@ -27,14 +27,14 @@ class CountMinSketchInitByProbCommandTest extends BaseTestIntegration
     /**
      * @dataProvider getExceptionDataProvider
      * @param string $key
-     * @param int $width
-     * @param int $depth
+     * @param int $error
+     * @param int $probability
      * @param $exceptionClassName
      */
-    public function testInitException($key, $width, $depth, $exceptionClassName): void
+    public function testInitException($key, $error, $probability, $exceptionClassName): void
     {
         $this->expectException($exceptionClassName);
-        static::$reBloomClient->countMinSketchInitByProb($key, $width, $depth);
+        static::$reBloomClient->countMinSketchInitByProb($key, $error, $probability);
     }
 
     public function getExceptionDataProvider(): array
@@ -43,7 +43,7 @@ class CountMinSketchInitByProbCommandTest extends BaseTestIntegration
             ['key-init2', 'foo', 44, TypeError::class], // 'foo' is not float
             ['key-init2', 4, 'bar', TypeError::class], // 'bar' is not float
             ['key-init2', 4, 0.4, ResponseException::class], // 'foo' is not float
-            ['key-init2', 0.4, 4, ResponseException::class], // 'foo' is not float
+            ['key-init2', 0.4, 4, ResponseException::class], // 4 is not < 1.0
             ['key-init2', 0.0, 0.4, ResponseException::class],  // 0.0 is not a valid value
             ['key-init2', 0.1, 1.0, ResponseException::class],  // 1.0 is not a valid value
             ['key-init1', 0.4, 0.4, ResponseException::class]  // existent key

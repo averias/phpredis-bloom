@@ -203,3 +203,27 @@ one `scanDump` with a `loadChunk` on the fly in each iteration until all data ar
 
 **Returns:** (bool) true on success. It throws a `ResponseException` in case of target `key` doesn't exist or an error or 
 a failure happens. In case of error, the command will try to delete the target `key` before throwing the exception.
+
+### `Info`
+Returns information about the filter stored in the key.
+
+`$redisBloomClient->bloomFilterInfo(string $key);`
+
+or
+
+`$bloomFilter->info();`
+
+**Params:**
+- key: (string) filter name
+
+**Returns:** (associative array) with the following structure:
+```
+[
+   'Capacity' => 106, // integer
+   'Size' => 218, // integer
+   'Number of filters' => 1, // integer
+   'Number of items inserted' => 30 // integer
+]
+```
+
+It throws a`ResponseException` if filter key doesn't exist.

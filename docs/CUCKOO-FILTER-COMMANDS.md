@@ -238,3 +238,31 @@ one `scanDump` with a `loadChunk` on the fly in each iteration until all data ar
 
 **Returns:** (bool) true on success. It throws a `ResponseException` in case of target `key` doesn't exist or an error or 
 a failure happens. In case of error, the command will try to delete the target `key` before throwing the exception.
+
+### `Info`
+Returns information about the filter stored in the key.
+
+`$redisBloomClient->cuckooFilterInfo(string $key);`
+
+or
+
+`$cuckooFilter->info();`
+
+**Params:**
+- key: (string) filter name
+
+**Returns:** (associative array) with the following structure:
+```
+[
+   'Capacity' => 156, // integer
+   'Number of buckets' => 2, // integer
+   'Number of filters' => 1, // integer
+   'Number of items inserted', => 30 // integer
+   'Number of items deleted' => 2, // integer
+   'Bucket size' => 100, // integer
+   'Expansion rate' => 16, // integer
+   'Max iterations' => 5 // integer
+]
+```
+
+It throws a`ResponseException` if filter key doesn't exist.

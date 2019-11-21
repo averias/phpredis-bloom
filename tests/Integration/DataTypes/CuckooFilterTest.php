@@ -122,6 +122,16 @@ class CuckooFilterTest extends BaseTestIntegration
         }
     }
 
+    public function testLoadChunk(): void
+    {
+        $newBloomFilter = static::$factory->createCuckooFilter('cf-load-chunk', static::getReBloomClientConfig());
+
+        list ($iterator, $data) = static::$cuckooFilter->scanDump(0);
+        $result = $newBloomFilter->loadChunk($iterator, $data);
+
+        $this->assertTrue($result);
+    }
+
     public function testCopy(): void
     {
         $result = static::$cuckooFilter->copy('other-cuckoo-filter');
@@ -144,5 +154,18 @@ class CuckooFilterTest extends BaseTestIntegration
         $this->expectException(ResponseException::class);
         $newCuckooFilter = static::$factory->createCuckooFilter('new-cuckoo-filter', static::getReBloomClientConfig());
         $newCuckooFilter->copy('other-cuckoo-filter');
+    }
+
+    public function testInfo(): void
+    {
+        $result = static::$cuckooFilter->info();
+        $this->assertArrayHasKey(Keys::SIZE, $result);
+        $this->assertArrayHasKey(Keys::NUMBER_BUCKETS, $result);
+        $this->assertArrayHasKey(Keys::EXPANSION_RATE, $result);
+        $this->assertEquals(2, $result[Keys::NUMBER_FILTERS]);
+        $this->assertEquals(60, $result[Keys::NUMBER_ITEMS_INSERTED]);
+        $this->assertEquals(2, $result[Keys::NUMBER_ITEMS_DELETED]);
+        $this->assertEquals(2, $result[Keys::BUCKET_SIZE]);
+        $this->assertEquals(20, $result[Keys::MAX_ITERATIONS]);
     }
 }

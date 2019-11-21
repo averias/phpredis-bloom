@@ -11,6 +11,7 @@
  */
 namespace Averias\RedisBloom\Tests\Integration\Command\CountMinSketch;
 
+use Averias\RedisBloom\Enum\Keys;
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Tests\BaseTestIntegration;
 use TypeError;
@@ -23,9 +24,9 @@ class CountMinSketchInitByDimCommandTest extends BaseTestIntegration
         $this->assertTrue($result);
 
         $info = static::$reBloomClient->countMinSketchInfo('key-init1');
-        $this->assertEquals(4000, $info['width']);
-        $this->assertEquals(4000, $info['depth']);
-        $this->assertEquals(0, $info['count']);
+        $this->assertEquals(4000, $info[Keys::WIDTH]);
+        $this->assertEquals(4000, $info[Keys::DEPTH]);
+        $this->assertEquals(0, $info[Keys::COUNT]);
     }
 
     /**

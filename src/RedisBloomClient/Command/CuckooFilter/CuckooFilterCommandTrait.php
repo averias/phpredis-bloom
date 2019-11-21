@@ -114,4 +114,12 @@ trait CuckooFilterCommandTrait
     {
         return $this->executeBloomCommand(BloomCommands::CF_LOADCHUNK, $key, [$iterator, $data]);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function cuckooFilterInfo(string $key): array
+    {
+        return $this->executeBloomCommand(BloomCommands::CF_INFO, $key);
+    }
 }

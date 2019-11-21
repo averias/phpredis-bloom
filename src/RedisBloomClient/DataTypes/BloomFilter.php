@@ -127,4 +127,12 @@ class BloomFilter extends BaseDataType implements BloomFilterInterface
 
         return $success;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function info(): array
+    {
+        return $this->bloomFilterInfo($this->name);
+    }
 }

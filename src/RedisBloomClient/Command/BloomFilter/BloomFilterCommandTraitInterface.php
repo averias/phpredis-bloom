@@ -12,6 +12,7 @@
 
 namespace Averias\RedisBloom\Command\BloomFilter;
 
+
 interface BloomFilterCommandTraitInterface
 {
     /**
@@ -72,4 +73,10 @@ interface BloomFilterCommandTraitInterface
      * @return bool
      */
     public function bloomFilterLoadChunk(string $key, int $iterator, $data): bool;
+
+    /**
+     * @param string $key
+     * @return array
+     */
+    public function bloomFilterInfo(string $key): array;
 }

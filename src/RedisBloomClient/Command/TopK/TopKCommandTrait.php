@@ -25,7 +25,9 @@ trait TopKCommandTrait
             $decay,
             sprintf("decay param for %s command", BloomCommands::CMS_INITBYPROB),
             0.0,
-            true
+            true,
+            1.0,
+            false
         );
         $arguments = [$topK, $width, $depth, $decay];
         return $this->executeBloomCommand(BloomCommands::TOPK_RESERVE, $key, $arguments);

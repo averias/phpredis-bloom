@@ -45,7 +45,7 @@ or
 
 **Params:**
 - key: (string) filter name
-- errorRate: (float) probability for false positives. 0.0 < errorRate <= 1.0
+- errorRate: (float) probability for false positives. 0.0 < errorRate < 1.0
 - capacity: (int) number of entries you intend to add to the filter
 
 **Returns:** (bool) true if the filter was created, otherwise `ResponseException`.
@@ -97,7 +97,7 @@ or
 - key: (string) filter name
 - items: (array) of (string|number) scalar values
 - options: (array) optional, if specified it can contain up to 3 params:
-    * errorRate: (float) if specified indicates the probability for false positives. 0.0 < errorRate <= 1.0
+    * errorRate: (float) if specified indicates the probability for false positives. 0.0 < errorRate < 1.0
     * capacity: (int) if specified set the number of entries you intend to add to the filter
     * noCreate: (bool) if specified and equal to true indicates that the filter should be not created if exists
 
@@ -203,3 +203,27 @@ one `scanDump` with a `loadChunk` on the fly in each iteration until all data ar
 
 **Returns:** (bool) true on success. It throws a `ResponseException` in case of target `key` doesn't exist or an error or 
 a failure happens. In case of error, the command will try to delete the target `key` before throwing the exception.
+
+### `Info`
+Returns information about the filter stored in the key.
+
+`$redisBloomClient->bloomFilterInfo(string $key);`
+
+or
+
+`$bloomFilter->info();`
+
+**Params:**
+- key: (string) filter name
+
+**Returns:** (associative array) with the following structure:
+```
+[
+   'Capacity' => 106, // integer
+   'Size' => 218, // integer
+   'Number of filters' => 1, // integer
+   'Number of items inserted' => 30 // integer
+]
+```
+
+It throws a`ResponseException` if filter key doesn't exist.

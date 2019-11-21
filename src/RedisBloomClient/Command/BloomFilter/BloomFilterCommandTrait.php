@@ -89,4 +89,12 @@ trait BloomFilterCommandTrait
     {
         return $this->executeBloomCommand(BloomCommands::BF_LOADCHUNK, $key, [$iterator, $data]);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function bloomFilterInfo(string $key): array
+    {
+        return $this->executeBloomCommand(BloomCommands::BF_INFO, $key);
+    }
 }

@@ -30,7 +30,12 @@ class OptionalParams extends Enum
     const OPTIONAL_PARAMS_BF_INSERT = [
         self::CAPACITY => null,
         self::ERROR => null,
+        self::EXPANSION => null,
         self::NO_CREATE => null
+    ];
+
+    const OPTIONAL_PARAMS_BF_RESERVE = [
+        self::EXPANSION => null
     ];
 
     const OPTIONAL_PARAMS_CF_RESERVE = [

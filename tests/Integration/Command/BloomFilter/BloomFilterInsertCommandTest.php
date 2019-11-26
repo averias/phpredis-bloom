@@ -22,16 +22,11 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
      * @dataProvider getSuccessWithNoOptionsDataProvider
      * @param string $key
      * @param array $items
-     * @param array $options
      * @param array $expectedResult
      */
-    public function testInsertSuccessfullyWithNoOptions(
-        string $key,
-        array $items,
-        array $options,
-        array $expectedResult
-    ): void {
-        $result = static::$reBloomClient->bloomFilterInsert($key, $items, $options);
+    public function testInsertSuccessfullyWithNoOptions(string $key, array $items, array $expectedResult): void
+    {
+        $result = static::$reBloomClient->bloomFilterInsert($key, $items);
         $this->assertSame($expectedResult, $result);
     }
 
@@ -67,12 +62,12 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
     public function getSuccessWithNoOptionsDataProvider(): array
     {
         return [
-            ['key-insert11', [12, 'bar'], [], [true, true]],
-            ['key-insert12', [7.01, 9, 89.3, 'bar'], [], [true, true, true, true]],
-            ['key-insert13', ['foo', 9], [], [true, true]],
-            ['key-insert14', [12], [], [true]],
-            ['key-insert15', [02471, 0b10100111001], [], [true, false]], // both values are converter to integer 1337
-            ['key-insert16', ['bar', 'baz', 'foo'], [], [true, true, true]]
+            ['key-insert11', [12, 'bar'], [true, true]],
+            ['key-insert12', [7.01, 9, 89.3, 'bar'], [true, true, true, true]],
+            ['key-insert13', ['foo', 9], [true, true]],
+            ['key-insert14', [12], [true]],
+            ['key-insert15', [02471, 0b10100111001], [true, false]], // both values are converter to integer 1337
+            ['key-insert16', ['bar', 'baz', 'foo'], [true, true, true]]
         ];
     }
 
@@ -96,6 +91,12 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
                 ['foo', 9],
                 [OptionalParams::CAPACITY => 10000, OptionalParams::ERROR => 0.1, OptionalParams::NO_CREATE => true],
                 [true, false]
+            ],
+            [ // CAPACITY and EXPANSION are no changed since the filter already exists
+                'key-insert3',
+                ['baz', 19],
+                [OptionalParams::CAPACITY => 10000, OptionalParams::EXPANSION => 10, OptionalParams::NO_CREATE => true],
+                [true, true]
             ],
             [
                 'key-insert4',
@@ -161,6 +162,17 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
                 'key-insert7',
                 [22, 33],
                 [OptionalParams::ERROR => 1],
+            ],
+            [ // fails EXPANSION is not integer
+                'key-insert7',
+                [22, 33],
+                [OptionalParams::EXPANSION => 'foo'],
+            ]
+            ,
+            [ // fails EXPANSION is not integer
+                'key-insert7',
+                [22, 33],
+                [OptionalParams::EXPANSION => 1.3],
             ]
         ];
     }

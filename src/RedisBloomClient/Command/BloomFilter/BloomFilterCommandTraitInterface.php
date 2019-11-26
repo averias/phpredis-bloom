@@ -19,9 +19,10 @@ interface BloomFilterCommandTraitInterface
      * @param string $key
      * @param float $errorRate
      * @param int $capacity
+     * @param array $options
      * @return bool
      */
-    public function bloomFilterReserve(string $key, float $errorRate, int $capacity): bool;
+    public function bloomFilterReserve(string $key, float $errorRate, int $capacity, array $options = []): bool;
 
     /**
      * @param string $key

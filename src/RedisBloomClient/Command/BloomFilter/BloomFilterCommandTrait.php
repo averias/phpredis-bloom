@@ -20,9 +20,11 @@ trait BloomFilterCommandTrait
     /**
      * @inheritDoc
      */
-    public function bloomFilterReserve(string $key, float $errorRate, int $capacity): bool
+    public function bloomFilterReserve(string $key, float $errorRate, int $capacity, array $options = []): bool
     {
-        return $this->executeBloomCommand(BloomCommands::BF_RESERVE, $key, [$errorRate, $capacity]);
+        $parsedOptions = $this->parseRequest(BloomCommands::BF_RESERVE, $options);
+        $arguments = array_merge([$errorRate, $capacity], $parsedOptions);
+        return $this->executeBloomCommand(BloomCommands::BF_RESERVE, $key, $arguments);
     }
 
     /**

@@ -19,9 +19,10 @@ interface BloomFilterInterface extends DataTypeInterface
     /**
      * @param float $errorRate
      * @param int $capacity
+     * @param array $options
      * @return bool
      */
-    public function reserve(float $errorRate, int $capacity): bool;
+    public function reserve(float $errorRate, int $capacity, array $options = []): bool;
 
     /**
      * @param mixed $item

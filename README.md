@@ -1,3 +1,6 @@
+![Packagist Version](https://img.shields.io/packagist/v/averias/phpredis-bloom?style=plastic)
+![GitHub](https://img.shields.io/github/license/averias/phpredis-bloom?style=plastic)
+
 <img src="docs/PhpRedisBloomLogo250x300.png" alt="PhpRedisBloom" align="right" />
 
 # PhpRedisBloom

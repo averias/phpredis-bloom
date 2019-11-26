@@ -1,3 +1,6 @@
+[![Code Coverage](https://scrutinizer-ci.com/g/averias/phpredis-bloom/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/averias/phpredis-bloom/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/averias/phpredis-bloom/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/averias/phpredis-bloom/?branch=master)
+![Travis (.org) branch](https://img.shields.io/travis/averias/phpredis-bloom/master?style=plastic)
 ![Packagist Version](https://img.shields.io/packagist/v/averias/phpredis-bloom?style=plastic)
 ![GitHub](https://img.shields.io/github/license/averias/phpredis-bloom?style=plastic)
 

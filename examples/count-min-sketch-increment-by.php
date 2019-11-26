@@ -15,7 +15,7 @@ namespace Example;
 use Averias\RedisBloom\Enum\Connection;
 use Averias\RedisBloom\Factory\RedisBloomFactory;
 
-require(dirname(__DIR__).'/vendor/autoload.php');
+require(dirname(__DIR__) . '/vendor/autoload.php');
 
 const EXAMPLE_FILTER = 'example-cms';
 

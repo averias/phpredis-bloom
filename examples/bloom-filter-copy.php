@@ -12,7 +12,7 @@
 
 namespace Example;
 
-require(dirname(__DIR__).'/vendor/autoload.php');
+require(dirname(__DIR__) . '/vendor/autoload.php');
 
 use Averias\RedisBloom\Enum\OptionalParams;
 use Averias\RedisBloom\Factory\RedisBloomFactory;

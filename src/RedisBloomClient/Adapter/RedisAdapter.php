@@ -115,7 +115,7 @@ class RedisAdapter implements RedisAdapterInterface
     public function closeConnection(): bool
     {
         try {
-            $disconnected =  $this->redis->close();
+            $disconnected = $this->redis->close();
         } catch (Exception $exception) {
             return false;
         }

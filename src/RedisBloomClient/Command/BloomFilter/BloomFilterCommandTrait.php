@@ -20,9 +20,11 @@ trait BloomFilterCommandTrait
     /**
      * @inheritDoc
      */
-    public function bloomFilterReserve(string $key, float $errorRate, int $capacity): bool
+    public function bloomFilterReserve(string $key, float $errorRate, int $capacity, array $options = []): bool
     {
-        return $this->executeBloomCommand(BloomCommands::BF_RESERVE, $key, [$errorRate, $capacity]);
+        $parsedOptions = $this->parseRequest(BloomCommands::BF_RESERVE, $options);
+        $arguments = array_merge([$errorRate, $capacity], $parsedOptions);
+        return $this->executeBloomCommand(BloomCommands::BF_RESERVE, $key, $arguments);
     }
 
     /**
@@ -97,4 +99,12 @@ trait BloomFilterCommandTrait
     {
         return $this->executeBloomCommand(BloomCommands::BF_INFO, $key);
     }
+
+    abstract protected function executeBloomCommand(string $command, string $key, array $params = []);
+
+    abstract public function validateScalar($value, string $valueName);
+
+    abstract public function validateArrayOfScalars(array $elements, string $elementsName);
+
+    abstract public function parseRequest(string $command, $input);
 }

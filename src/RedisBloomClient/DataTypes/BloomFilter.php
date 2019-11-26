@@ -23,9 +23,9 @@ class BloomFilter extends BaseDataType implements BloomFilterInterface
     /**
      * @inheritDoc
      */
-    public function reserve(float $errorRate, int $capacity): bool
+    public function reserve(float $errorRate, int $capacity, array $options = []): bool
     {
-        return $this->bloomFilterReserve($this->name, $errorRate, $capacity);
+        return $this->bloomFilterReserve($this->name, $errorRate, $capacity, $options);
     }
 
     /**

@@ -288,6 +288,67 @@ class RedisAdapterTest extends TestCase
     }
 
     /**
+     * @dataProvider getCloseConnectionDataProvider
+     * @param bool $isClose
+     * @throws ConnectionException
+     */
+    public function testCloseConnection(bool $isClose)
+    {
+        $connectionOptionsMock = $this->getConnectionOptionsMockForSuccessConnection(
+            false,
+            0,
+            $this->once(),
+            $this->once(),
+            $this->once()
+        );
+
+        $redisMock = $this->getRedisMockForSuccessConnection(
+            'connect',
+            true,
+            0,
+            $this->never(),
+            true,
+            $this->never(),
+            $this->once()
+        );
+        $redisMock->expects($this->once())
+            ->method('close')
+            ->willReturn($isClose);
+
+        $adapter = new RedisAdapter($redisMock, $connectionOptionsMock);
+        $result = $adapter->closeConnection();
+        $this->assertEquals($isClose, $result);
+    }
+
+    public function testCloseConnectionException()
+    {
+        $connectionOptionsMock = $this->getConnectionOptionsMockForSuccessConnection(
+            false,
+            0,
+            $this->once(),
+            $this->once(),
+            $this->once()
+        );
+
+        $redisMock = $this->getRedisMockForSuccessConnection(
+            'connect',
+            true,
+            0,
+            $this->never(),
+            true,
+            $this->never(),
+            $this->once()
+        );
+        $redisMock->expects($this->once())
+            ->method('close')
+            ->willThrowException(new Exception());
+
+        $adapter = new RedisAdapter($redisMock, $connectionOptionsMock);
+        $result = $adapter->closeConnection();
+        $this->assertFalse($result);
+    }
+
+    /**
      * @return MockObject|ConnectionOptions
      */
     protected function getConnectionOptionsMock(): MockObject
@@ -406,6 +467,14 @@ class RedisAdapterTest extends TestCase
         return [
             ['pconnect', true],
             ['connect', false]
+        ];
+    }
+
+    public function getCloseConnectionDataProvider(): array
+    {
+        return [
+            [true],
+            [false]
         ];
     }
 }

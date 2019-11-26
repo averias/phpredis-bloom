@@ -81,4 +81,23 @@ class BaseRequestOptionalParams
 
         return $result;
     }
+
+    /**
+     * @param array $result
+     * @param array $options
+     * @return array
+     * @throws ResponseException
+     */
+    protected function appendExpansion(array $result, array $options): array
+    {
+        $expansion = $options[OptionalParams::EXPANSION];
+
+        if (!is_null($expansion)) {
+            $this->validateInteger($expansion, OptionalParams::EXPANSION);
+            $result[] = OptionalParams::EXPANSION;
+            $result[] = $expansion;
+        }
+
+        return $result;
+    }
 }

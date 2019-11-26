@@ -116,4 +116,21 @@ trait CountMinSketchCommandTrait
     {
         return $this->executeBloomCommand(BloomCommands::CMS_INFO, $key);
     }
+
+    abstract protected function executeBloomCommand(string $command, string $key, array $params = []);
+
+    abstract public function validateFloatRange(
+        $value,
+        string $valueName,
+        $minValue = 0.0,
+        $isExclusiveMin = true,
+        $maxValue = 1.0,
+        $isExclusiveMax = true
+    );
+
+    abstract public function validateArrayOfScalars(array $elements, string $elementsName);
+
+    abstract public function parseRequest(string $command, $input);
+
+    abstract public function validateIncrementByItemsIncrease(array $itemsIncrease, string $commandName);
 }

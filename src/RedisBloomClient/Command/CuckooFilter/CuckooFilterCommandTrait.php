@@ -122,4 +122,12 @@ trait CuckooFilterCommandTrait
     {
         return $this->executeBloomCommand(BloomCommands::CF_INFO, $key);
     }
+
+    abstract protected function executeBloomCommand(string $command, string $key, array $params = []);
+
+    abstract public function validateScalar($value, string $valueName);
+
+    abstract public function validateArrayOfScalars(array $elements, string $elementsName);
+
+    abstract public function parseRequest(string $command, $input);
 }

@@ -84,7 +84,8 @@ or
 - $itemsIncrease: comma-separated list of `ìtem` (string|number) followed by its `increment` (int), you can specify more 
 then one pair of (`item`, `increment`)
 
-** Example**
+**Example**
+
 Increments the count of `item1` by 13, the integer item 34 by 17, the string item `34` by 13, the float 1.2 by 100 
 and the string `1.2` by 200
 `$redisBloomClient->countMinSketchIncrementBy('sketch-key', 'item1', 13, 34, 17, '34', 13, 1.2, 100, '1.2', 200);`

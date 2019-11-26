@@ -35,7 +35,7 @@ will be using that configuration. Please take a look at `examples/factory.php` t
 You can find a detailed description of each command in [RedisBloom - Bloom Filter Command Documentation](https://oss.redislabs.com/redisbloom/Bloom_Commands/).
 
 ### `Reserve`
-Creates an empty Bloom Filter with a given desired error ratio and initial capacity.
+Creates an empty Bloom Filter with a given desired error ratio, initial capacity and optional EXPANSION.
 
 `$redisBloomClient->bloomFilterReserve(string $key, float $errorRate, int $capacity);`
 
@@ -47,6 +47,9 @@ or
 - key: (string) filter name
 - errorRate: (float) probability for false positives. 0.0 < errorRate < 1.0
 - capacity: (int) number of entries you intend to add to the filter
+- options: (array) optional, if specified it can contain up to 3 params:
+    * expansion: (int) if a new sub-filter is created, its size will be the size of the  current filter multiplied by `expansion`. Default expansion value is 2. This means each subsequent sub-filter will be twice as large as the previous one.
+
 
 **Returns:** (bool) true if the filter was created, otherwise `ResponseException`.
 
@@ -84,8 +87,8 @@ the filter or may have existed previously.`ResponseException` if some of the ite
 
 ### `Insert`
 Adds one or more items to the Bloom Filter, creating the filter if it does not yet exist. The difference with `MultiAdd` 
-is that you can specify extra optional params for setting error rate, capacity and no creation in case of no filter 
-existence.
+is that you can specify extra optional params for setting error rate, capacity, expansion and no creation in case of no 
+filter existence.
 
 `$redisBloomClient->bloomFilterInsert(string $key, array $items, array $options = []);`
 
@@ -100,6 +103,7 @@ or
     * errorRate: (float) if specified indicates the probability for false positives. 0.0 < errorRate < 1.0
     * capacity: (int) if specified set the number of entries you intend to add to the filter
     * noCreate: (bool) if specified and equal to true indicates that the filter should be not created if exists
+    * expansion: (int) if a new sub-filter is created, its size will be the size of the  current filter multiplied by `expansion`. Default expansion value is 2. This means each subsequent sub-filter will be twice as large as the previous one.    
 
 ```
 $factory = new RedisBloomFactory();
@@ -107,6 +111,7 @@ $client = $factory->createClient();
 $options = [
    OptionalParams::CAPACITY => 1000,
    OptionalParams::ERROR => 0.01, 
+   OptionalParams::EXTENSION => 4,
    OptionalParams::NO_CREATE => true
 ];
 
@@ -223,6 +228,7 @@ or
    'Size' => 218, // integer
    'Number of filters' => 1, // integer
    'Number of items inserted' => 30 // integer
+   'eXPANSION RATE' => 4 // integer
 ]
 ```
 

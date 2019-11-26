@@ -13,6 +13,7 @@
 namespace Averias\RedisBloom\Enum;
 
 use Averias\RedisBloom\Parser\Request\BloomFilterInsertOptionalParams;
+use Averias\RedisBloom\Parser\Request\BloomFilterReserveOptionalParams;
 use Averias\RedisBloom\Parser\Request\CountMinSketchMergeOptionalParams;
 use Averias\RedisBloom\Parser\Request\CuckooFilterInsertOptionalParams;
 use Averias\RedisBloom\Parser\Request\CuckooFilterReserveOptionalParams;
@@ -21,6 +22,7 @@ use MyCLabs\Enum\Enum;
 class RequestParser extends Enum
 {
     const COMMAND_PARSERS = [
+        BloomCommands::BF_RESERVE => BloomFilterReserveOptionalParams::class,
         BloomCommands::BF_INSERT => BloomFilterInsertOptionalParams::class,
         BloomCommands::CF_RESERVE => CuckooFilterReserveOptionalParams::class,
         BloomCommands::CF_INSERT => CuckooFilterInsertOptionalParams::class,

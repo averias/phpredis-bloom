@@ -35,7 +35,7 @@ class BloomFilterTest extends BaseTestIntegration
 
     public function testReserve(): void
     {
-        $result = static::$bloomFilter->reserve(0.1, 50);
+        $result = static::$bloomFilter->reserve(0.1, 50, [OptionalParams::EXPANSION => 4]);
         $this->assertTrue($result);
     }
 

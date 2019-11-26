@@ -37,4 +37,8 @@ class Keys extends Enum
     const MAX_ITERATIONS = 'Max iterations';
     const EXPANSION_RATE = 'Expansion rate';
     const NUMBER_BUCKETS = 'Number of buckets';
+
+    /** Tests and examples keys */
+    const INCREMENT_BY_1 = 'key-incr1';
+    const INCREMENT_BY_2 = 'key-incr2';
 }

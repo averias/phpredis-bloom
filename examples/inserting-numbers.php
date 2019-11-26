@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -15,20 +15,20 @@ namespace Example;
 use Averias\RedisBloom\Enum\Connection;
 use Averias\RedisBloom\Factory\RedisBloomFactory;
 
-require(dirname(__DIR__).'/vendor/autoload.php');
+require(dirname(__DIR__) . '/vendor/autoload.php');
 
 function boolToString($value, $message)
 {
     $result = $value ? 'OK!' : 'FAILED!';
     echo sprintf("%s: %s", $message, $result) . PHP_EOL;
-};
+}
 
 $factory = new RedisBloomFactory([Connection::DATABASE => 15]);
 
 $bf = $factory->createBloomFilter('bf-key');
 $bf->reserve(0.01, 100);
 
-echo PHP_EOL.  '*** Bloom Filter' . PHP_EOL;
+echo PHP_EOL . '*** Bloom Filter' . PHP_EOL;
 boolToString($bf->add(12), "inserted 12 as integer?: ");
 boolToString($bf->add('12'), "inserted 12 as string?: ");
 boolToString($bf->exists(12), "exists 12 as integer?: ");

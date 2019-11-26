@@ -4,7 +4,7 @@
  * @author    Rafael Campoy <rafa.campoy@gmail.com>
  * @copyright 2019 Rafael Campoy <rafa.campoy@gmail.com>
  * @license   MIT
- * @link      https://github.com/averias/php-rejson
+ * @link      https://github.com/averias/phpredis-bloom
  *
  * Copyright and license information, is included in
  * the LICENSE file that is distributed with this source code.
@@ -33,8 +33,7 @@ class CuckooFilterInsertOptionalParams extends BaseRequestOptionalParams impleme
         $options = $this->getMergedOptionalParams(OptionalParams::OPTIONAL_PARAMS_CF_INSERT, $optionalParams);
 
         $result = $this->appendCapacity($result, $options);
-        $result = $this->appendNoCreate($result, $options);
 
-        return $result;
+        return $this->appendNoCreate($result, $options);
     }
 }

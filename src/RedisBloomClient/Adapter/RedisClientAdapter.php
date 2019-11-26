@@ -17,7 +17,7 @@ use Exception;
 
 class RedisClientAdapter implements RedisClientAdapterInterface
 {
-    /** @var RedisAdapter */
+    /** @var RedisAdapterInterface */
     protected $redisAdapter;
 
     /**

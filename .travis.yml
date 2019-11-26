@@ -1,0 +1,28 @@
+language: php
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+php:
+  - '7.2'
+
+services:
+  - docker
+
+install:
+  - printf "\n" | pecl install redis-5.0.1
+  - composer self-update
+  - composer clear-cache
+  - composer install --prefer-dist
+
+before_install:
+  - docker pull redislabs/rebloom:edge
+  - docker run --name redislab-rejson -it -d -p 127.0.0.1:6379:6379 redislabs/rebloom:edge
+  - docker ps -a
+
+before_script:
+  - mkdir -p build/coverage
+
+script:
+  - ./vendor/bin/phpunit

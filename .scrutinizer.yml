@@ -12,6 +12,9 @@ build:
             use_website_config: true
     coverage:
       environment:
+        php:
+          pecl_extensions:
+            - redis
       services:
         redislab-rebloom:
           image: redislabs/rebloom:edge

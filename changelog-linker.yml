@@ -1,0 +1,3 @@
+parameters:
+  repository_url: 'https://github.com/averias/phpredis-bloom'
+  authors_to_ignore: ['averias']

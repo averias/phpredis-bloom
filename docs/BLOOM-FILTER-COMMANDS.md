@@ -37,17 +37,17 @@ You can find a detailed description of each command in [RedisBloom - Bloom Filte
 ### `Reserve`
 Creates an empty Bloom Filter with a given desired error ratio, initial capacity and optional EXPANSION.
 
-`$redisBloomClient->bloomFilterReserve(string $key, float $errorRate, int $capacity);`
+`$redisBloomClient->bloomFilterReserve(string $key, float $errorRate, int $capacity, array $options = []);`
 
 or
 
-`$bloomFilter->reserve(float $errorRate, int $capacity);`
+`$bloomFilter->reserve(float $errorRate, int $capacity, array $options = []);`
 
 **Params:**
 - key: (string) filter name
 - errorRate: (float) probability for false positives. 0.0 < errorRate < 1.0
 - capacity: (int) number of entries you intend to add to the filter
-- options: (array) optional, if specified it can contain up to 3 params:
+- options: (array) optional, if specified it can contain:
     * expansion: (int) if a new sub-filter is created, its size will be the size of the  current filter multiplied by `expansion`. Default expansion value is 2. This means each subsequent sub-filter will be twice as large as the previous one.
 
 

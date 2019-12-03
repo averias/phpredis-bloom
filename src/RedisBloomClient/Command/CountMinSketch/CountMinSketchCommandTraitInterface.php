@@ -12,6 +12,8 @@
 
 namespace Averias\RedisBloom\Command\CountMinSketch;
 
+use Averias\RedisBloom\Exception\ResponseException;
+
 interface CountMinSketchCommandTraitInterface
 {
     /**
@@ -19,6 +21,7 @@ interface CountMinSketchCommandTraitInterface
      * @param int $width
      * @param int $depth
      * @return bool
+     * @throws ResponseException
      */
     public function countMinSketchInitByDim(string $key, int $width, int $depth): bool;
 
@@ -27,20 +30,23 @@ interface CountMinSketchCommandTraitInterface
      * @param float $errorRate
      * @param float $probability
      * @return bool
+     * @throws ResponseException
      */
     public function countMinSketchInitByProb(string $key, float $errorRate, float $probability): bool;
 
     /**
      * @param string $key
      * @param array $itemsIncrease
-     * @return bool
+     * @return array
+     * @throws ResponseException
      */
-    public function countMinSketchIncrementBy(string $key, ...$itemsIncrease): bool;
+    public function countMinSketchIncrementBy(string $key, ...$itemsIncrease): array;
 
     /**
      * @param string $key
      * @param array $items
      * @return array
+     * @throws ResponseException
      */
     public function countMinSketchQuery(string $key, ...$items): array;
 
@@ -50,12 +56,14 @@ interface CountMinSketchCommandTraitInterface
      * @param array $sketchKeys
      * @param array $weights
      * @return bool
+     * @throws ResponseException
      */
     public function countMinSketchMerge(string $destKey, int $numKeys, array $sketchKeys, array $weights = []): bool;
 
     /**
      * @param string $key
      * @return array
+     * @throws ResponseException
      */
     public function countMinSketchInfo(string $key): array;
 }

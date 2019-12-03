@@ -40,7 +40,6 @@ class ResponseParser extends Enum
         BloomCommands::CF_INFO => ArrayFlatToAssociative::class,
         BloomCommands::CMS_INITBYDIM => OkToTrue::class,
         BloomCommands::CMS_INITBYPROB => OkToTrue::class,
-        BloomCommands::CMS_INCRBY => OkToTrue::class,
         BloomCommands::CMS_MERGE => OkToTrue::class,
         BloomCommands::CMS_INFO => ArrayFlatToAssociative::class,
         BloomCommands::TOPK_RESERVE => OkToTrue::class,

@@ -20,6 +20,7 @@ class OptionalParams extends Enum
     const CAPACITY = 'CAPACITY';
     const ERROR = 'ERROR';
     const NO_CREATE = 'NOCREATE';
+    const NON_SCALING = 'NONSCALING';
     const ITEMS = 'ITEMS';
     const BUCKET_SIZE = 'BUCKETSIZE';
     const MAX_ITERATIONS = 'MAXITERATIONS';
@@ -31,11 +32,13 @@ class OptionalParams extends Enum
         self::CAPACITY => null,
         self::ERROR => null,
         self::EXPANSION => null,
-        self::NO_CREATE => null
+        self::NO_CREATE => null,
+        self::NON_SCALING => null
     ];
 
     const OPTIONAL_PARAMS_BF_RESERVE = [
-        self::EXPANSION => null
+        self::EXPANSION => null,
+        self::NON_SCALING => null
     ];
 
     const OPTIONAL_PARAMS_CF_RESERVE = [

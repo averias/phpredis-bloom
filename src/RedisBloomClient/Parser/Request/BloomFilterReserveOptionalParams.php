@@ -31,7 +31,8 @@ class BloomFilterReserveOptionalParams extends BaseRequestOptionalParams impleme
         }
 
         $options = $this->getMergedOptionalParams(OptionalParams::OPTIONAL_PARAMS_BF_RESERVE, $optionalParams);
+        $result = $this->appendExpansion($result, $options);
 
-        return $this->appendExpansion($result, $options);
+        return $this->appendNonScaling($result, $options);
     }
 }

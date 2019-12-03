@@ -47,9 +47,24 @@ or
 - key: (string) filter name
 - capacity: (int) estimated capacity for the filter
 - options: (array) optional, if specified it can contain up to 3 params:
-    * bucketSize: (int) number of items in each bucket. Higher bucket size value improves the fill rate but result in a higher error rate and slightly slower operation speed
-    * maxIterations: (int) Number of attempts to swap buckets before declaring filter as full and creating an additional filter. A low value is better for speed while a higher number is better for filter fill rate
-    * expansion: (int) when a new filter is created, its size will be the size of the current filter multiplied by expansion
+    * BUCKETSIZE: (int) number of items in each bucket. Higher bucket size value improves the fill rate but result in a higher error rate and slightly slower operation speed
+    * MAXITERATIONS: (int) Number of attempts to swap buckets before declaring filter as full and creating an additional filter. A low value is better for speed while a higher number is better for filter fill rate
+    * EXPANSION: (int) when a new filter is created, its size will be the size of the current filter multiplied by expansion
+
+```
+$factory = new RedisBloomFactory();
+$client = $factory->createClient();
+$options = [
+   OptionalParams::BUCKETSIZE => 300,
+   OptionalParams::MAXITERATIONS => 2,
+   OptionalParams::EXPANSION => 4
+];
+
+// it will create a Cuckoo Filter with 300 items per bucket, 2 max attempts 
+// for swapping buckets and expasion rate of 4 
+$client->cuckooFilterReserve('test-filter', 1200, $options);
+
+```
 
 **Returns:** (bool) true if the filter was created. It throws a `ResponseException` if filter already exists or optional 
 params are not integer.
@@ -99,8 +114,8 @@ or
 - key: (string) filter name
 - items: (array) of (string|number) scalar values
 - options: (array) optional, if specified it can contain up to 3 params:
-    * capacity: (int) if specified set the number of entries you intend to add to the filter, if the filter already exists this value will be ignored
-    * noCreate: (bool) if specified and equel to true, prevents automatic filter creation if the filter does not exist. Instead, an error will be returned if the filter does not already exist
+    * CAPACITY: (int) if specified set the number of entries you intend to add to the filter, if the filter already exists this value will be ignored
+    * NOCREATE: (bool) if specified and equel to true, prevents automatic filter creation if the filter does not exist. Instead, an error will be returned if the filter does not already exist
 
 ```
 $factory = new RedisBloomFactory();
@@ -129,12 +144,12 @@ or
 - key: (string) filter name
 - items: (array) of (string|number) scalar values
 - options: (array) optional, if specified it can contain up to 3 params:
-    * capacity: (int) if specified set the number of entries you intend to add to the filter, if the filter already exists this value will be ignored
-    * noCreate: (bool) if specified and equel to true, prevents automatic filter creation if the filter does not exist. Instead, an error will be returned if the filter does not already exist
+    * CAPACITY: (int) if specified set the number of entries you intend to add to the filter, if the filter already exists this value will be ignored
+    * NOCREATE: (bool) if specified and equel to true, prevents automatic filter creation if the filter does not exist. Instead, an error will be returned if the filter does not already exist
 
 **Returns:** (array) of true/false values, indicating if each item (in the position which was inserted) was inserted to 
 the filter or could not be because the item already exist.`ResponseException` if some of the items are not string or number or in case 
-we specify `NO_CREATE` = true and the filter doesn't exists.
+we specify `OptionalParams::NO_CREATE` = true and the filter doesn't exists.
 
 ### `Exists`
 Determines whether an item may exist in the Bloom Filter or not.

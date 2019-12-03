@@ -98,9 +98,10 @@ At the end we will have:
 - count for item `34`: 17 + 13 = 30
 - count for item `34`: 100 + 200 = 300
 
-**Returns:** (bool) true if items were incremented successfully.`ResponseException` if some of the items is not a string 
-or number, `increment` is not an integer, `increment` is missing for the related `item` (so length of list of params, 
-except sketch key, is not even) or sketch key doesn't exist.
+**Returns:** (array) of counts for each incremented item specified in the parameter list in the same order they were 
+specified.`ResponseException` if some of the items is not a string or number, `increment` is not an integer, 
+`increment` is missing for the related `item` (so length of list of params, except sketch key, is not even) 
+or sketch key doesn't exist.
 
 ### `Query`
 Returns the count of items specified as params, we can query more than one item.

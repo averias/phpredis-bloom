@@ -20,7 +20,7 @@ class CountMinSketchIncrementByCommandTest extends BaseTestIntegration
 {
     public function testIncrementSuccessfully(): void
     {
-        static::$reBloomClient->countMinSketchInitByDim(Keys::INCREMENT_BY_1, 4, 4);
+        static::$reBloomClient->countMinSketchInitByDim(Keys::INCREMENT_BY_1, 100, 4);
         $result = static::$reBloomClient->countMinSketchIncrementBy(
             Keys::INCREMENT_BY_1,
             'green',
@@ -30,19 +30,15 @@ class CountMinSketchIncrementByCommandTest extends BaseTestIntegration
             'orange',
             6
         );
-        $this->assertTrue($result);
 
-        $query = static::$reBloomClient->countMinSketchQuery(Keys::INCREMENT_BY_1, 'green', 'black', 'orange');
-        $this->assertEquals(40, $query[0]);
-        $this->assertEquals(90, $query[1]);
-        $this->assertEquals(6, $query[2]);
+        $this->assertEquals(40, $result[0]);
+        $this->assertEquals(90, $result[1]);
+        $this->assertEquals(6, $result[2]);
 
         $result = static::$reBloomClient->countMinSketchIncrementBy(Keys::INCREMENT_BY_1, 12, 31, 13.4, 32);
-        $this->assertTrue($result);
 
-        $query = static::$reBloomClient->countMinSketchQuery(Keys::INCREMENT_BY_1, 12, 13.4);
-        $this->assertEquals(31, $query[0]);
-        $this->assertEquals(32, $query[1]);
+        $this->assertEquals(31, $result[0]);
+        $this->assertEquals(32, $result[1]);
     }
 
     /**

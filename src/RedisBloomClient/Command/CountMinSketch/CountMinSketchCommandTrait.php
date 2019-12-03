@@ -18,10 +18,7 @@ use Averias\RedisBloom\Exception\ResponseException;
 trait CountMinSketchCommandTrait
 {
     /**
-     * @param string $key
-     * @param int $width
-     * @param int $depth
-     * @return bool
+     * @inheritDoc
      */
     public function countMinSketchInitByDim(string $key, int $width, int $depth): bool
     {
@@ -29,10 +26,7 @@ trait CountMinSketchCommandTrait
     }
 
     /**
-     * @param string $key
-     * @param float $errorRate
-     * @param float $probability
-     * @return bool
+     * @inheritDoc
      */
     public function countMinSketchInitByProb(string $key, float $errorRate, float $probability): bool
     {
@@ -49,20 +43,16 @@ trait CountMinSketchCommandTrait
     }
 
     /**
-     * @param string $key
-     * @param array $itemsIncrease
-     * @return bool
+     * @inheritDoc
      */
-    public function countMinSketchIncrementBy(string $key, ...$itemsIncrease): bool
+    public function countMinSketchIncrementBy(string $key, ...$itemsIncrease): array
     {
         $this->validateIncrementByItemsIncrease($itemsIncrease, BloomCommands::CMS_INCRBY);
         return $this->executeBloomCommand(BloomCommands::CMS_INCRBY, $key, $itemsIncrease);
     }
 
     /**
-     * @param string $key
-     * @param array $items
-     * @return array
+     * @inheritDoc
      */
     public function countMinSketchQuery(string $key, ...$items): array
     {
@@ -71,12 +61,7 @@ trait CountMinSketchCommandTrait
     }
 
     /**
-     * @param string $destKey
-     * @param int $numKeys
-     * @param array $sketchKeys
-     * @param array $weights
-     * @return bool
-     * @throws ResponseException
+     * @inheritDoc
      */
     public function countMinSketchMerge(string $destKey, int $numKeys, array $sketchKeys, array $weights = []): bool
     {
@@ -109,8 +94,7 @@ trait CountMinSketchCommandTrait
     }
 
     /**
-     * @param string $key
-     * @return array
+     * @inheritDoc
      */
     public function countMinSketchInfo(string $key): array
     {

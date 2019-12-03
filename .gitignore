@@ -4,4 +4,3 @@
 composer.lock
 .phpunit.result.cache
 /docker-tests/.phpunit.result.cache
-changelog-linker.yml

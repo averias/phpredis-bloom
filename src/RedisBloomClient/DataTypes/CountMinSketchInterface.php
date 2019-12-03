@@ -12,12 +12,15 @@
 
 namespace Averias\RedisBloom\DataTypes;
 
+use Averias\RedisBloom\Exception\ResponseException;
+
 interface CountMinSketchInterface extends DataTypeInterface
 {
     /**
      * @param int $width
      * @param int $depth
      * @return bool
+     * @throws ResponseException
      */
     public function initByDim(int $width, int $depth): bool;
 
@@ -25,18 +28,21 @@ interface CountMinSketchInterface extends DataTypeInterface
      * @param float $errorRate
      * @param float $probability
      * @return bool
+     * @throws ResponseException
      */
     public function initByProb(float $errorRate, float $probability): bool;
 
     /**
      * @param array $itemsIncrease
-     * @return bool
+     * @return array
+     * @throws ResponseException
      */
-    public function incrementBy(...$itemsIncrease): bool;
+    public function incrementBy(...$itemsIncrease): array;
 
     /**
      * @param array $items
      * @return array
+     * @throws ResponseException
      */
     public function query(...$items): array;
 
@@ -45,11 +51,13 @@ interface CountMinSketchInterface extends DataTypeInterface
      * @param array $sketchKeys
      * @param array $weights
      * @return bool
+     * @throws ResponseException
      */
     public function mergeFrom(int $numKeys, array $sketchKeys, array $weights = []): bool;
 
     /**
      * @return array
+     * @throws ResponseException
      */
     public function info(): array;
 }

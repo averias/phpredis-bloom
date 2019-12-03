@@ -48,8 +48,23 @@ or
 - errorRate: (float) probability for false positives. 0.0 < errorRate < 1.0
 - capacity: (int) number of entries you intend to add to the filter
 - options: (array) optional, if specified it can contain:
-    * expansion: (int) if a new sub-filter is created, its size will be the size of the  current filter multiplied by `expansion`. Default expansion value is 2. This means each subsequent sub-filter will be twice as large as the previous one.
+    * EXPANSION: (int) if a new sub-filter is created, its size will be the size of the  current filter multiplied by `expansion`. Default expansion value is 2. This means each subsequent sub-filter will be twice as large as the previous one.
+    * NONSCALING:(bool), if specified and equal to true it prevents the filter from creating additional sub-filters if initial capacity is reached. Non-scaling filters requires slightly less memory than their scaling counterparts.
 
+```
+$factory = new RedisBloomFactory();
+$client = $factory->createClient();
+$options = [
+   OptionalParams::EXPANSION => 4,
+   OptionalParams::NON_SCALING => true
+];
+
+// it will create a Bloom Filter with 0.1 error rate and 100 of capacity 
+// since NON_SCALING = true, EXPANSION will be ignored since no sub-filters
+//  will be created
+$client->bloomFilterReserve('test-filter', 0.1, 1000, $options);
+
+```
 
 **Returns:** (bool) true if the filter was created, otherwise `ResponseException`.
 
@@ -100,10 +115,11 @@ or
 - key: (string) filter name
 - items: (array) of (string|number) scalar values
 - options: (array) optional, if specified it can contain up to 3 params:
-    * errorRate: (float) if specified indicates the probability for false positives. 0.0 < errorRate < 1.0
-    * capacity: (int) if specified set the number of entries you intend to add to the filter
-    * noCreate: (bool) if specified and equal to true indicates that the filter should be not created if exists
-    * expansion: (int) if a new sub-filter is created, its size will be the size of the  current filter multiplied by `expansion`. Default expansion value is 2. This means each subsequent sub-filter will be twice as large as the previous one.    
+    * ERROR: (float) if specified indicates the probability for false positives. 0.0 < errorRate < 1.0
+    * CAPACITY: (int) if specified set the number of entries you intend to add to the filter
+    * NOCREATE: (bool) if specified and equal to true indicates that the filter should be not created if exists
+    * EXPANSION: (int) if a new sub-filter is created, its size will be the size of the  current filter multiplied by `expansion`. Default expansion value is 2. This means each subsequent sub-filter will be twice as large as the previous one.
+    * NONSCALING:(bool),if specified and equal to true it prevents the filter from creating additional sub-filters if initial capacity is reached. Non-scaling filters requires slightly less memory than their scaling counterparts.    
 
 ```
 $factory = new RedisBloomFactory();
@@ -111,7 +127,7 @@ $client = $factory->createClient();
 $options = [
    OptionalParams::CAPACITY => 1000,
    OptionalParams::ERROR => 0.01, 
-   OptionalParams::EXTENSION => 4,
+   OptionalParams::EXPANSION => 4,
    OptionalParams::NO_CREATE => true
 ];
 
@@ -228,7 +244,7 @@ or
    'Size' => 218, // integer
    'Number of filters' => 1, // integer
    'Number of items inserted' => 30 // integer
-   'eXPANSION RATE' => 4 // integer
+   'Expansion rate' => 4 // integer
 ]
 ```
 

@@ -100,4 +100,14 @@ class BaseRequestOptionalParams
 
         return $result;
     }
+
+    protected function appendNonScaling(array $result, array $options): array
+    {
+        $nonScaling = $options[OptionalParams::NON_SCALING];
+        if (!is_null($nonScaling) && true === $nonScaling) {
+            $result[] = OptionalParams::NON_SCALING;
+        }
+
+        return $result;
+    }
 }

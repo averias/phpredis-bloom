@@ -110,6 +110,13 @@ class BloomFilterInsertCommandTest extends BaseTestIntegration
                 ['foo', 9],
                 [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 0.01, OptionalParams::NO_CREATE => false],
                 [true, true]
+            ],
+            // doesn't fail even when NON_SCALING is a wrong value, NON_SCALING it is ignored if not true
+            [
+                'key-insert6',
+                ['foo', 9],
+                [OptionalParams::CAPACITY => 1000, OptionalParams::ERROR => 0.01, OptionalParams::NON_SCALING => 3],
+                [true, true]
             ]
         ];
     }

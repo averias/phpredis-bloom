@@ -35,7 +35,8 @@ class BloomFilterInsertOptionalParams extends BaseRequestOptionalParams implemen
         $result = $this->appendCapacity($result, $options);
         $result = $this->appendErrorRate($result, $options);
         $result = $this->appendExpansion($result, $options);
+        $result = $this->appendNoCreate($result, $options);
 
-        return $this->appendNoCreate($result, $options);
+        return $this->appendNonScaling($result, $options);
     }
 }

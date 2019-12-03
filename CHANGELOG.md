@@ -1,30 +1,31 @@
-<!-- changelog-linker -->
+## 1.0.0 . 2019-12-03
+- Counter-Min Sketch IncrementBy command returns now a array of counters for each incremented item, before returned a boolean
+- Added NON_SCALING optional param to Bloom Filter Reserve and IncrementBy commands
 
-<!-- dumped content start -->
+## 0.5.0 . 2019-12-01
+- Added CHANGELOG.md
 
-## [0.4.0]
-- [#6] Feature/bloom expansion config
+## 0.4.0 - 2019-11-26
+- Added EXPANSION option to Bloom Filter Reserve and Insert commands
 
-## [0.3.0] - 2019-11-26
+## 0.3.0 - 2019-11-26
 
-- [#3] Feature/last changes in rebloom 2 0 3
-- [#4] Feature/ci
+- Small refactoring
+- Travis and Scrutinizer config files
 
-## [0.2.0] - 2019-11-21
+## 0.2.0 - 2019-11-21
 
-- [#2] Feature/documentation changes
+- BF Insert command doesn't accept now error rate = 1, it has to be < 1
+- BF and CF Info commands implementation, tests and documentation
 
-## [0.1.2] - 2019-11-19
+## 0.1.2 - 2019-11-19
 
-- [#1] small changes in documentation
+- More changes in documentation
 
-<!-- dumped content end -->
+## 0.1.1 - 2019-11-18
 
-[#6]: https://github.com/averias/phpredis-bloom/pull/6
-[#4]: https://github.com/averias/phpredis-bloom/pull/4
-[#3]: https://github.com/averias/phpredis-bloom/pull/3
-[#2]: https://github.com/averias/phpredis-bloom/pull/2
-[#1]: https://github.com/averias/phpredis-bloom/pull/1
-[0.4.0]: https://github.com/averias/phpredis-bloom/compare/0.3.0...0.4.0
-[0.3.0]: https://github.com/averias/phpredis-bloom/compare/0.2.0...0.3.0
-[0.2.0]: https://github.com/averias/phpredis-bloom/compare/0.1.2...0.2.0
+- Small changes in documentation
+
+## 0.1.0 - 2019-11-18
+
+- First implementation

@@ -36,11 +36,11 @@ class CountMinSketchTest extends BaseTestIntegration
 
     public function testInit(): void
     {
-        $result = static::$countMinSketch->initByDim(10, 10);
+        $result = static::$countMinSketch->initByDim(100, 10);
         $this->assertTrue($result);
 
         $info = static::$countMinSketch->info();
-        $this->assertEquals(10, $info[Keys::WIDTH]);
+        $this->assertEquals(100, $info[Keys::WIDTH]);
         $this->assertEquals(10, $info[Keys::DEPTH]);
         $this->assertEquals(0, $info[Keys::COUNT]);
 
@@ -52,21 +52,19 @@ class CountMinSketchTest extends BaseTestIntegration
     public function testIncrement(): void
     {
         $result = static::$countMinSketch->incrementBy('green', 321, 'red', 123);
-        $this->assertTrue($result);
 
-        $query = static::$countMinSketch->query('green', 'red');
-        $this->assertEquals(321, $query[0]);
-        $this->assertEquals(123, $query[1]);
+        $this->assertEquals(321, $result[0]);
+        $this->assertEquals(123, $result[1]);
     }
 
     public function testMerge(): void
     {
         $cms1 = static::$factory->createCountMinSketch('cms1-key', static::getReBloomClientConfig());
-        $cms1->initByDim(10, 10);
+        $cms1->initByDim(100, 10);
         $cms1->incrementBy('purple', 111, 'yellow', 222);
 
         $mergedCms = static::$factory->createCountMinSketch('merged-key', static::getReBloomClientConfig());
-        $mergedCms->initByDim(10, 10);
+        $mergedCms->initByDim(100, 10);
         $mergedCms->mergeFrom(2, [Keys::COUNT_MIN_SKETCH, 'cms1-key'], [10, 100]);
 
         $query = $mergedCms->query('green', 'red', 'purple', 'yellow');

@@ -13,16 +13,13 @@
 namespace Averias\RedisBloom\DataTypes;
 
 use Averias\RedisBloom\Command\CountMinSketch\CountMinSketchCommandTrait;
-use Averias\RedisBloom\Exception\ResponseException;
 
 class CountMinSketch extends BaseDataType implements CountMinSketchInterface
 {
     use CountMinSketchCommandTrait;
 
     /**
-     * @param int $width
-     * @param int $depth
-     * @return bool
+     * @inheritDoc
      */
     public function initByDim(int $width, int $depth): bool
     {
@@ -30,9 +27,7 @@ class CountMinSketch extends BaseDataType implements CountMinSketchInterface
     }
 
     /**
-     * @param float $errorRate
-     * @param float $probability
-     * @return bool
+     * @inheritDoc
      */
     public function initByProb(float $errorRate, float $probability): bool
     {
@@ -40,17 +35,15 @@ class CountMinSketch extends BaseDataType implements CountMinSketchInterface
     }
 
     /**
-     * @param array $itemsIncrease
-     * @return bool
+     * @inheritDoc
      */
-    public function incrementBy(...$itemsIncrease): bool
+    public function incrementBy(...$itemsIncrease): array
     {
         return $this->countMinSketchIncrementBy($this->name, ...$itemsIncrease);
     }
 
     /**
-     * @param array $items
-     * @return array
+     * @inheritDoc
      */
     public function query(...$items): array
     {
@@ -58,11 +51,7 @@ class CountMinSketch extends BaseDataType implements CountMinSketchInterface
     }
 
     /**
-     * @param int $numKeys
-     * @param array $sketchKeys
-     * @param array $weights
-     * @return bool
-     * @throws ResponseException
+     * @inheritDoc
      */
     public function mergeFrom(int $numKeys, array $sketchKeys, array $weights = []): bool
     {
@@ -70,7 +59,7 @@ class CountMinSketch extends BaseDataType implements CountMinSketchInterface
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
     public function info(): array
     {

@@ -32,10 +32,11 @@ RedisBloomFactory, `RedisBloomFactory(array $config)`, and all clients and Cucko
 will be using that configuration. Please take a look at `examples/factory.php` to know how to provide configuration options.
 
 ## Commands
-You can find a detailed description of each command in [RedisBloom - Cuckoo Filter Command Documentation](https://oss.redislabs.com/redisbloom/Cuckoo_Commands/).
+It is highly recommended you read the full documentation of the commands in [RedisBloom - Cuckoo Filter Command Documentation](https://oss.redislabs.com/redisbloom/Cuckoo_Commands/) 
+for a better understanding of how Cuckoo Filters work.
 
 ### `Reserve`
-Creates an empty Cuckoo Filter with a given desired initial capacity and some optional params.
+Creates an empty Cuckoo Filter with a single sub-filter for the initial amount of `capacity` for items.
 
 `$redisBloomClient->cuckooFilterReserve(string $key, int $capacity, array $options = []);`
 
@@ -45,11 +46,11 @@ or
 
 **Params:**
 - key: (string) filter name
-- capacity: (int) estimated capacity for the filter
+- capacity: (int) estimated capacity for the filter. Capacity is rounded to the next `2^n` number. The filter will likely not fill up to 100% of it's capacity. Make sure to reserve extra capacity if you want to avoid expansions.
 - options: (array) optional, if specified it can contain up to 3 params:
-    * BUCKETSIZE: (int) number of items in each bucket. Higher bucket size value improves the fill rate but result in a higher error rate and slightly slower operation speed
-    * MAXITERATIONS: (int) Number of attempts to swap buckets before declaring filter as full and creating an additional filter. A low value is better for speed while a higher number is better for filter fill rate
-    * EXPANSION: (int) when a new filter is created, its size will be the size of the current filter multiplied by expansion
+    * BUCKETSIZE: (int) number of items in each bucket. A higher bucket size value improves the fill rate but also causes a higher error rate and slightly slower performance.
+    * MAXITERATIONS: (int) number of attempts to swap items between buckets before declaring filter as full and creating an additional filter. A low value is better for performance and a higher number is better for filter fill rate.
+    * EXPANSION: (int) when a new filter is created, its size is the size of the current filter multiplied by `expansion`. Expansion is rounded to the next `2^n` number.
 
 ```
 $factory = new RedisBloomFactory();
@@ -85,7 +86,10 @@ or
 **Returns:** (bool) true if the item was added to the filter, `ResponseException` if item is not string or number.
 
 ### `Add if not exist`
-Similar to `Add` but just adds the item if it does not exist previously.
+Similar to `Add` but just adds the item if it does not exist previously. It does not insert an element  
+if its fingerprint already exists in order to use the available capacity more efficiently. However, deleting 
+elements can introduce **false negative** error rate! Note that this command is slower than `Add` because it first 
+checks whether the item exists. It is an advanced command that might have implications if used incorrectly.
 
 `$redisBloomClient->cuckooFilterAddIfNotExist(string $key, ...$items);`
 
@@ -132,7 +136,10 @@ the filter or an error happened.`ResponseException` if some of the items are not
 we specify `NO_CREATE` = true and the filter doesn't exists.
 
 ### `Insert if not exist`
-Similar to `Insert` but just inserts the item if it does not exist previously.
+Similar to `Insert` but just inserts the item if it does not exist previously. It does not insert an element if its 
+fingerprint already exists and therefore better utilizes the available capacity. However, if you delete elements 
+it might introduce **false negative** error rate! These commands offers more flexibility over the `Add` and 
+`AddIfNotExist` commands, at the cost of more verbosity.
 
 `$redisBloomClient->cuckooFilterInsertIfNotExist(string $key, array $items, array $options = []);`
 
@@ -145,7 +152,7 @@ or
 - items: (array) of (string|number) scalar values
 - options: (array) optional, if specified it can contain up to 3 params:
     * CAPACITY: (int) if specified set the number of entries you intend to add to the filter, if the filter already exists this value will be ignored
-    * NOCREATE: (bool) if specified and equel to true, prevents automatic filter creation if the filter does not exist. Instead, an error will be returned if the filter does not already exist
+    * NOCREATE: (bool) if specified and equal to true, prevents automatic filter creation if the filter does not exist. Instead, an error is returned if the filter does not already exist. This option is mutually exclusive with `CAPACITY`
 
 **Returns:** (array) of true/false values, indicating if each item (in the position which was inserted) was inserted to 
 the filter or could not be because the item already exist.`ResponseException` if some of the items are not string or number or in case 
@@ -169,7 +176,8 @@ the filter doesn't exist. `ResponseException` if item is not string or number
 
 ### `Count`
 Returns the number of times an item may be in the filter. Because this is a probabilistic data structure, this may not 
-necessarily be accurate..
+necessarily be accurate. If you just want to know if an item exists in the filter, use `Exists` since it's more 
+efficient for that purpose.
 
 `$redisBloomClient->cuckooFilterCount(string $key, $item);`
 
@@ -222,8 +230,8 @@ If the iterator is 0, it means iteration has completed. The iterator-data pair s
 `LoadChunk` when restoring the filter. It throws a `ResponseException` in case `key` doesn't exist
 
 ### `LoadChunk`
-Restores a filter previously saved using `ScanDump`. This command will overwrite any bloom filter stored under `key`. 
-Ensure that the bloom filter will not be modified between invocations.
+Restores a filter previously saved using `ScanDump`. This command overwrites any bloom filter stored under `key`. 
+Make sure that the bloom filter is not modified between invocations.
 
 
 `$redisBloomClient->cuckooFilterLoadChunk(string $key, int $iterator, $data);`

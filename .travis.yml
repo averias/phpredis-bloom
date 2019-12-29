@@ -32,9 +32,4 @@ script:
   - ./vendor/bin/phpunit
 
 after_script:
-  - vendor/bin/test-reporter
-
-addons:
-  code_climate:
-    repo_token:
-      secure: "qKyqT5WBGhB3Ok4FN8HTLlorlNfH/wtARW3WSydOlCw3JC/qW3W56vtqhqVAuF9Tin2DqFNJDCD+Y5kxSKx8c7SEKp3wX5Fh4z+EqSPIfhzbQkk28eDEdSnZ1EZC6v2mpSUs9/4djKlsCRT5u7qJ7kHM3PTFnzuFiw2BOe5zvDrBSUHH8jdtAQMwA4VGEj0VaeiVSe8dJP69JyHAmimuBboK2YfEMQzMVVmSVWwNZhYRT2RHjAtTqp8+AS28SgMH0G/gacultXB0e9EaN9O2zD939to6wPOHsF4+kaURJzija0O+FKGelMB2UcNPPzjdz7ph6j94yBtRxqK8MsCP6Bjrh6ZbNzehzMBuuLzKAK6tkB8eW9j6ydJ7MlUxhoAWwWJUFNwOqgoKylClnULGsmW1QbG4Kpm/opg+MHcNh8OH3G3PRiYjcS5W2IBxHbmQuY4KPtfTFzwWVOslDYOd/7NMe4PjeyizKEuqBDSWM6WIuMMiY6W4adbKTMPRnBSpbzduycSKXB8ID9VM3VuvYNv0Khn06OPVjqtFAo2SewabCm/uIeMBUF0cuF3lFRhfsFWLTheyC2PKsgWFv3MXQeS5lqf1XFpSvh7cm630qSGSx7io7x7XoFWgTEg2o1hxnaKYvwkG1pK9LMMGIDVOmE+vY0xoCByngcxhsmouKaA="
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

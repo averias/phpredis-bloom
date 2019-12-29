@@ -1,5 +1,5 @@
-[![Code Coverage](https://scrutinizer-ci.com/g/averias/phpredis-bloom/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/averias/phpredis-bloom/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/averias/phpredis-bloom/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/averias/phpredis-bloom/?branch=master)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/63a3119e2bbbd693b63a/test_coverage)](https://codeclimate.com/github/averias/phpredis-bloom/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/63a3119e2bbbd693b63a/maintainability)](https://codeclimate.com/github/averias/phpredis-bloom/maintainability)
 ![Travis (.org) branch](https://img.shields.io/travis/averias/phpredis-bloom/master?style=plastic)
 ![Packagist Version](https://img.shields.io/packagist/v/averias/phpredis-bloom?style=plastic)
 ![GitHub](https://img.shields.io/github/license/averias/phpredis-bloom?style=plastic)

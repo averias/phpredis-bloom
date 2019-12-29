@@ -15,6 +15,7 @@ build:
         php:
           pecl_extensions:
             - redis
+            - xdebug
       services:
         redislab-rebloom:
           image: redislabs/rebloom:edge

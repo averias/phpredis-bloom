@@ -22,8 +22,11 @@ before_install:
   - docker ps -a
 
 before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
   - mkdir -p build/coverage
-  - mkdir -p build/coverage/logs
+  - mkdir -p build/logs
 
 script:
   - ./vendor/bin/phpunit

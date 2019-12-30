@@ -43,39 +43,31 @@ trait InputValidatorTrait
     /**
      * @param $value
      * @param string $valueName
-     * @param float $minValue
-     * @param float $maxValue
-     * @param bool $isExclusiveMin
-     * @param bool $isExclusiveMax
+     * @param float $min
+     * @param float $max
      * @throws ResponseException
      */
-    public function validateFloatRange(
-        $value,
-        string $valueName,
-        $minValue = 0.0,
-        $isExclusiveMin = true,
-        $maxValue = 1.0,
-        $isExclusiveMax = true
-    ): void {
-        $this->validateFloat($value, $valueName);
-
-        $minCondition = $isExclusiveMin ? ($value <= $minValue) : ($value < $minValue);
-        $minConditionOperator = $isExclusiveMin ? '>' : '>=';
-
-        $maxCondition = $isExclusiveMax ? ($value >= $maxValue) : ($value > $maxValue);
-        $maxConditionOperator = $isExclusiveMax ? '<' : '<=';
-
-        if ($minCondition || $maxCondition) {
+    public function validateRange($value, string $valueName, float $min = 0.0, float $max = 1.0): void
+    {
+        if (!($min < $value && $value < $max)) {
             throw new ResponseException(
-                sprintf(
-                    "%s value must be %s %.1f and %s %.1f, provided value %f",
-                    $valueName,
-                    $minConditionOperator,
-                    $minValue,
-                    $maxConditionOperator,
-                    $maxValue,
-                    $value
-                )
+                sprintf("%s value must be > %.1f and < %.1f, provided value %f", $valueName, $min, $max, $value)
+            );
+        }
+    }
+
+    /**
+     * @param $value
+     * @param string $valueName
+     * @param float $min
+     * @param float $max
+     * @throws ResponseException
+     */
+    public function validateRangeInclusiveMax($value, string $valueName, float $min = 0.0, float $max = 1.0): void
+    {
+        if (!($min < $value && $value <= $max)) {
+            throw new ResponseException(
+                sprintf("%s value must be > %.1f and <= %.1f, provided value %f", $valueName, $min, $max, $value)
             );
         }
     }

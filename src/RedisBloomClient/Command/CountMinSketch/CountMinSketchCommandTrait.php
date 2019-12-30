@@ -30,14 +30,8 @@ trait CountMinSketchCommandTrait
      */
     public function countMinSketchInitByProb(string $key, float $errorRate, float $probability): bool
     {
-        $this->validateFloatRange(
-            $errorRate,
-            sprintf("error param for %s command", BloomCommands::CMS_INITBYPROB)
-        );
-        $this->validateFloatRange(
-            $probability,
-            sprintf("probability param for %s command", BloomCommands::CMS_INITBYPROB)
-        );
+        $this->validateRange($errorRate, sprintf("error param for %s command", BloomCommands::CMS_INITBYPROB));
+        $this->validateRange($probability, sprintf("probability param for %s command", BloomCommands::CMS_INITBYPROB));
 
         return $this->executeBloomCommand(BloomCommands::CMS_INITBYPROB, $key, [$errorRate, $probability]);
     }
@@ -103,14 +97,7 @@ trait CountMinSketchCommandTrait
 
     abstract protected function executeBloomCommand(string $command, string $key, array $params = []);
 
-    abstract public function validateFloatRange(
-        $value,
-        string $valueName,
-        $minValue = 0.0,
-        $isExclusiveMin = true,
-        $maxValue = 1.0,
-        $isExclusiveMax = true
-    );
+    abstract public function validateRange($value, string $valueName, float $minValue = 0.0, float $maxValue = 1.0);
 
     abstract public function validateArrayOfScalars(array $elements, string $elementsName);
 

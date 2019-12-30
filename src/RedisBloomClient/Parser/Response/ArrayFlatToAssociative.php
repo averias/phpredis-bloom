@@ -39,31 +39,44 @@ class ArrayFlatToAssociative extends BaseResponseParser implements ParserInterfa
         $this->validateEvenArrayDimension($response, 'response');
 
         // get elements in odd indexes which will be the keys in the returned array
-        $odd = array_filter(
+        $odd = $this->getElementsInOddIndexes($response);
+        $odd = $this->convertArrayKeysToString($odd);
+
+        // get elements in even indexes which will be the values in the returned array
+        $even = $this->getElementsInEvenIndexes($response);
+
+        return array_combine($odd, $even);
+    }
+
+    protected function getElementsInOddIndexes($response): array
+    {
+        return array_filter(
             $response,
             function ($key) {
-                return ($key % 2 == 0) ? true : false;
+                return $key % 2 == 0;
             },
             ARRAY_FILTER_USE_KEY
         );
+    }
 
-        // convert keys to string
-        $odd = array_map(
+    protected function getElementsInEvenIndexes($response): array
+    {
+        return array_filter(
+            $response,
+            function ($key) {
+                return $key % 2 == 1;
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+    }
+
+    protected function convertArrayKeysToString(array $array): array
+    {
+        return array_map(
             function ($value) {
                 return (string) $value;
             },
-            $odd
+            $array
         );
-
-        // get elements in even indexes which will be the values in the returned array
-        $even = array_filter(
-            $response,
-            function ($key) {
-                return ($key % 2 == 1) ? true : false;
-            },
-            ARRAY_FILTER_USE_KEY
-        );
-
-        return array_combine($odd, $even);
     }
 }

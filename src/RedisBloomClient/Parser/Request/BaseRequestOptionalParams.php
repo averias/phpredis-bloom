@@ -59,7 +59,8 @@ class BaseRequestOptionalParams
         $error = $options[OptionalParams::ERROR];
 
         if (!is_null($error)) {
-            $this->validateFloatRange($error, OptionalParams::ERROR, 0.0, true, 1.0, true);
+            $this->validateFloat($error, OptionalParams::ERROR);
+            $this->validateRange($error, OptionalParams::ERROR);
             $result[] = OptionalParams::ERROR;
             $result[] = $error;
         }

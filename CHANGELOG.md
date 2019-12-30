@@ -1,5 +1,6 @@
 ## 1.1.0 . 2019-12-29
 - Updated documentation for Bloom and Cuckoo filters
+- Moved test coverage from scrutinizer to code climate
 
 ## 1.0.0 . 2019-12-03
 - Counter-Min Sketch IncrementBy command returns now a array of counters for each incremented item, before returned a boolean

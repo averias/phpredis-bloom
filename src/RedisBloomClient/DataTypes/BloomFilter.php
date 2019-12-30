@@ -13,7 +13,6 @@
 namespace Averias\RedisBloom\DataTypes;
 
 use Averias\RedisBloom\Command\BloomFilter\BloomFilterCommandTrait;
-use Averias\RedisBloom\Exception\ResponseException;
 use Exception;
 
 class BloomFilter extends BaseDataType implements BloomFilterInterface
@@ -89,8 +88,6 @@ class BloomFilter extends BaseDataType implements BloomFilterInterface
      */
     public function copy(string $targetFilter): bool
     {
-        $message = '';
-
         try {
             $iterator = 0;
             while (true) {
@@ -100,32 +97,11 @@ class BloomFilter extends BaseDataType implements BloomFilterInterface
                 }
                 $this->bloomFilterLoadChunk($targetFilter, $iterator, $data);
             }
-            $success = true;
         } catch (Exception $e) {
-            $success = false;
-            $message = sprintf(
-                "copying data to '%s' target filter failed, reason %s",
-                $targetFilter,
-                $e->getMessage()
-            );
+            $this->copyFailedException($targetFilter, $e->getMessage());
         }
 
-        if (!$success) {
-            try {
-                $this->redisClientAdapter->executeCommandByName('del', [$targetFilter]);
-            } catch (Exception $exception) {
-                throw new ResponseException(
-                    sprintf(
-                        "%s, '%s' target filter could NOT be deleted, please delete it manually.",
-                        $message,
-                        $targetFilter
-                    )
-                );
-            }
-            throw new ResponseException(sprintf("%s, '%s' target filter was deleted.", $message, $targetFilter));
-        }
-
-        return $success;
+        return true;
     }
 
     /**

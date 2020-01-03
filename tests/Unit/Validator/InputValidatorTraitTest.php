@@ -71,20 +71,27 @@ class InputValidatorTraitTest extends TestCase
      * @dataProvider getValidateFloatRangeDataProvider
      * @param $value
      * @param float $minValue
-     * @param bool $isExclusiveMin
      * @param float $maxValue
-     * @param bool $isExclusiveMax
      * @throws ResponseException
      */
-    public function testValidateFloatRange(
-        $value,
-        $minValue = 0.0,
-        $isExclusiveMin = false,
-        $maxValue = 1.0,
-        $isExclusiveMax = false
-    ): void {
+    public function testValidateRange($value, $minValue = 0.0, $maxValue = 1.0): void
+    {
         $mock = $this->getInputValidatorTraitMock();
-        $mock->validateFloatRange($value, 'test param', $minValue, $isExclusiveMin, $maxValue, $isExclusiveMax);
+        $mock->validateRange($value, 'test param', $minValue, $maxValue);
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @dataProvider getValidateFloatRangeInclusiveMaxDataProvider
+     * @param $value
+     * @param float $minValue
+     * @param float $maxValue
+     * @throws ResponseException
+     */
+    public function testValidateRangeInclusiveMax($value, $minValue = 0.0, $maxValue = 1.0): void
+    {
+        $mock = $this->getInputValidatorTraitMock();
+        $mock->validateRangeInclusiveMax($value, 'test param', $minValue, $maxValue);
         $this->assertTrue(true);
     }
 
@@ -92,24 +99,40 @@ class InputValidatorTraitTest extends TestCase
      * @dataProvider getValidateFloatRangeExceptionDataProvider
      * @param $value
      * @param string $errorMessage
-     * @param float $minValue
-     * @param bool $isExclusiveMin
-     * @param float $maxValue
-     * @param bool $isExclusiveMax
+     * @param $minValue
+     * @param $maxValue
      * @throws ResponseException
      */
-    public function testValidateFloatRangeException(
+    public function testValidateRangeException(
         $value,
         string $errorMessage,
         $minValue = 0.0,
-        $isExclusiveMin = true,
-        $maxValue = 1.0,
-        $isExclusiveMax = true
+        $maxValue = 1.0
     ): void {
         $this->expectException(ResponseException::class);
         $this->expectExceptionMessage($errorMessage);
         $mock = $this->getInputValidatorTraitMock();
-        $mock->validateFloatRange($value, 'test param', $minValue, $isExclusiveMin, $maxValue, $isExclusiveMax);
+        $mock->validateRange($value, 'test param', $minValue, $maxValue);
+    }
+
+    /**
+     * @dataProvider getValidateFloatRangeInclusiveMaxExceptionDataProvider
+     * @param $value
+     * @param string $errorMessage
+     * @param $minValue
+     * @param $maxValue
+     * @throws ResponseException
+     */
+    public function testValidateRangeInclusiveMaxException(
+        $value,
+        string $errorMessage,
+        $minValue = 0.0,
+        $maxValue = 1.0
+    ): void {
+        $this->expectException(ResponseException::class);
+        $this->expectExceptionMessage($errorMessage);
+        $mock = $this->getInputValidatorTraitMock();
+        $mock->validateRangeInclusiveMax($value, 'test param', $minValue, $maxValue);
     }
 
     /**
@@ -152,19 +175,38 @@ class InputValidatorTraitTest extends TestCase
     {
         return [
             [0.0001],
-            [1.0, 0.9, true, 1.0, false],
-            [1.235698, 1.235698, false, 7.23, true]
+            [1.0, 0.9, 1.01],
+            [10, 9, 11],
+            [1.235699, 1.235698, 7.23]
         ];
     }
 
     public function getValidateFloatRangeExceptionDataProvider(): array
     {
         return [
-            [[13, 12], "test param value must be float"],
-            [true, "test param value must be float"],
-            ['foo', "test param value must be float"],
             [12.3, "test param value must be > 0.0 and < 1.0, provided value 12.300000"],
-            [1.0, "test param value must be > 0.0 and < 1.0, provided value 1.000000"]
+            [1.0, "test param value must be > 0.0 and < 1.0, provided value 1.000000"],
+            [10, "test param value must be > 10.0 and < 20.0, provided value 10.000000", 10, 20]
+        ];
+    }
+
+
+    public function getValidateFloatRangeInclusiveMaxDataProvider(): array
+    {
+        return [
+            [1.0],
+            [1.01, 0.9, 1.01],
+            [11, 9, 11],
+            [1.235699, 1.235698, 7.23]
+        ];
+    }
+
+    public function getValidateFloatRangeInclusiveMaxExceptionDataProvider(): array
+    {
+        return [
+            [12.3, "test param value must be > 0.0 and <= 1.0, provided value 12.300000"],
+            [1.01, "test param value must be > 0.0 and <= 1.0, provided value 1.010000"],
+            [10, "test param value must be > 10.0 and <= 20.0, provided value 10.000000", 10, 20]
         ];
     }
 }

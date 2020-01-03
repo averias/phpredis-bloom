@@ -21,15 +21,9 @@ trait TopKCommandTrait
      */
     public function topKReserve(string $key, int $topK, int $width, int $depth, float $decay): bool
     {
-        $this->validateFloatRange(
-            $decay,
-            sprintf("decay param for %s command", BloomCommands::CMS_INITBYPROB),
-            0.0,
-            true,
-            1.0,
-            false
-        );
+        $this->validateRangeInclusiveMax($decay, sprintf("decay param for %s command", BloomCommands::CMS_INITBYPROB));
         $arguments = [$topK, $width, $depth, $decay];
+
         return $this->executeBloomCommand(BloomCommands::TOPK_RESERVE, $key, $arguments);
     }
 
@@ -87,13 +81,11 @@ trait TopKCommandTrait
 
     abstract protected function executeBloomCommand(string $command, string $key, array $params = []);
 
-    abstract public function validateFloatRange(
+    abstract public function validateRangeInclusiveMax(
         $value,
         string $valueName,
-        $minValue = 0.0,
-        $isExclusiveMin = true,
-        $maxValue = 1.0,
-        $isExclusiveMax = true
+        float $minValue = 0.0,
+        float $maxValue = 1.0
     );
 
     abstract public function validateArrayOfScalars(array $elements, string $elementsName);

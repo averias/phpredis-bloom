@@ -31,17 +31,16 @@ class CuckooFilterReserveOptionalParams implements ParserInterface
         }
 
         $options = array_merge(OptionalParams::OPTIONAL_PARAMS_CF_RESERVE, $optionalParams);
-        $optionsKeys = array_keys(OptionalParams::OPTIONAL_PARAMS_CF_RESERVE);
 
-        foreach ($optionsKeys as $optionsKey) {
-            $optionValue = $options[$optionsKey];
-            if (!is_null($optionValue)) {
-                if (!is_int($optionValue)) {
-                    throw new ResponseException(sprintf("option %s must be integer", $optionsKey));
-                }
-                $result[] = $optionsKey;
-                $result[] = $optionValue;
+        foreach ($options as $optionKey => $optionValue) {
+            if (is_null($optionValue)) {
+                continue;
             }
+            if (!is_int($optionValue)) {
+                throw new ResponseException(sprintf("option %s must be integer", $optionKey));
+            }
+            $result[] = $optionKey;
+            $result[] = $optionValue;
         }
 
         return $result;

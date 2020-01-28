@@ -12,6 +12,7 @@
 
 namespace Averias\RedisBloom\Validator;
 
+use Averias\RedisBloom\Enum\OptionalParams;
 use Averias\RedisBloom\Exception\ResponseException;
 
 trait InputValidatorTrait
@@ -126,6 +127,14 @@ trait InputValidatorTrait
                 continue;
             }
             $this->validateInteger($item, $itemName);
+        }
+    }
+
+    public function validateNonScalingWithoutExpansion(array $options)
+    {
+        $optionsKeys = array_keys($options);
+        if (in_array(OptionalParams::EXPANSION, $optionsKeys) && in_array(OptionalParams::NON_SCALING, $optionsKeys)) {
+            throw new ResponseException("NONSCALING option is not allowed together with EXPANSION");
         }
     }
 }

@@ -54,6 +54,8 @@ or
     * EXPANSION: (int) when `capacity` is reached, an additional sub-filter is created. The size of the new sub-filter is the size of the last sub-filter multiplied by `expansion`. If the number of elements to be stored in the filter is unknown, we recommend that you use an `expansion` of 2 or more to reduce the number of sub-filters. Otherwise, we recommend that you use an `expansion` of 1 to reduce memory consumption. The default expansion value is 2.
     * NONSCALING:(bool), if specified and equal to true it prevents the filter from creating additional sub-filters if initial capacity is reached. Non-scaling filters requires slightly less memory than their scaling counterparts. The filter returns an error when `capacity` is reached.
 
+**NONSCALING and EXPANSION combination is not allowed**
+
 ```
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
@@ -122,6 +124,8 @@ or
     * NOCREATE: (bool) if specified and equal to true indicates that the filter should not be created if it doesn't already exist. If the filter does not exist yet, an error is returned rather than creating it automatically. This may be used where a strict separation between filter creation and filter addition is desired. It is an error to specify `NOCREATE` together with either `CAPACITY` or `ERROR`
     * EXPANSION: (int) if specified, when `capacity` is reached, an additional sub-filter is created. The size of the new sub-filter is the size of the last sub-filter multiplied by `expansion`. If the number of elements to be stored in the filter is unknown, we recommend that you use an `expansion` of 2 or more to reduce the number of sub-filters. Otherwise, we recommend that you use an `expansion` of 1 to reduce memory consumption. The default expansion value is 2
     * NONSCALING:(bool) if specified and equal to true it prevents the filter from creating additional sub-filters if initial capacity is reached. Non-scaling filters requires slightly less memory than their scaling counterparts. The filter returns an error when `capacity` is reached
+
+**NONSCALING and EXPANSION combination is not allowed**
 
 ```
 $factory = new RedisBloomFactory();

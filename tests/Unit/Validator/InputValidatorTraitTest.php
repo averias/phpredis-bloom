@@ -12,6 +12,7 @@
 
 namespace Averias\RedisBloom\Tests\Unit\Validator;
 
+use Averias\RedisBloom\Enum\OptionalParams;
 use Averias\RedisBloom\Exception\ResponseException;
 use Averias\RedisBloom\Validator\InputValidatorTrait;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -136,6 +137,30 @@ class InputValidatorTraitTest extends TestCase
     }
 
     /**
+     * @dataProvider getValidateNonScalingWithoutExpansionDataProvider
+     * @param array $options
+     * @throws ResponseException
+     */
+    public function testValidateNonScalingWithoutExpansion(array $options): void
+    {
+        $mock = $this->getInputValidatorTraitMock();
+        $mock->validateNonScalingWithoutExpansion($options);
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @throws ResponseException
+     */
+    public function testValidateNonScalingWithoutExpansionException(): void
+    {
+        $options = [OptionalParams::NON_SCALING => true, OptionalParams::EXPANSION => 2];
+        $this->expectException(ResponseException::class);
+        $this->expectExceptionMessage("NONSCALING option is not allowed together with EXPANSION");
+        $mock = $this->getInputValidatorTraitMock();
+        $mock->validateNonScalingWithoutExpansion($options);
+    }
+
+    /**
      * @return MockObject|InputValidatorTrait
      */
     protected function getInputValidatorTraitMock(): MockObject
@@ -207,6 +232,14 @@ class InputValidatorTraitTest extends TestCase
             [12.3, "test param value must be > 0.0 and <= 1.0, provided value 12.300000"],
             [1.01, "test param value must be > 0.0 and <= 1.0, provided value 1.010000"],
             [10, "test param value must be > 10.0 and <= 20.0, provided value 10.000000", 10, 20]
+        ];
+    }
+
+    public function getValidateNonScalingWithoutExpansionDataProvider(): array
+    {
+        return [
+          [[OptionalParams::NON_SCALING => true]],
+          [[OptionalParams::EXPANSION => 2]]
         ];
     }
 }

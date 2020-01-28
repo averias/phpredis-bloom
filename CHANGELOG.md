@@ -1,17 +1,17 @@
-## 1.2.0 . 2020-01-28
+## 1.2.0 - 2020-01-28
 - Changes compatible with RedisLabs RedisBloom v 2.2.1
 - NON_SCALING and EXPANSION combination is not allowed in Bloom Filter Reserve and Insert commands 
 
-## 1.1.0 . 2019-12-29
+## 1.1.0 - 2019-12-29
 - Updated documentation for Bloom and Cuckoo filters
 - Moved test coverage from scrutinizer to code climate
 
-## 1.0.0 . 2019-12-03
+## 1.0.0 - 2019-12-03
 - Changes compatible with RedisLabs RedisBloom v 2.2.0
 - Counter-Min Sketch IncrementBy command returns now a array of counters for each incremented item, before returned a boolean
 - Added NON_SCALING optional param to Bloom Filter Reserve and Insert commands
 
-## 0.5.0 . 2019-12-01
+## 0.5.0 - 2019-12-01
 - Added CHANGELOG.md
 
 ## 0.4.0 - 2019-11-26

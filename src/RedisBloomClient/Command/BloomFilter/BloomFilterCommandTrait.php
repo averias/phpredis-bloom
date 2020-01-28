@@ -22,6 +22,7 @@ trait BloomFilterCommandTrait
      */
     public function bloomFilterReserve(string $key, float $errorRate, int $capacity, array $options = []): bool
     {
+        $this->validateNonScalingWithoutExpansion($options);
         $parsedOptions = $this->parseRequest(BloomCommands::BF_RESERVE, $options);
         $arguments = array_merge([$errorRate, $capacity], $parsedOptions);
         return $this->executeBloomCommand(BloomCommands::BF_RESERVE, $key, $arguments);
@@ -51,6 +52,7 @@ trait BloomFilterCommandTrait
     public function bloomFilterInsert(string $key, array $items, array $options = []): array
     {
         $this->validateArrayOfScalars($items, sprintf("%s params", BloomCommands::BF_INSERT));
+        $this->validateNonScalingWithoutExpansion($options);
         $parsedOptions = $this->parseRequest(BloomCommands::BF_INSERT, $options);
         $items = array_merge([OptionalParams::ITEMS], $items);
         $arguments = array_merge($parsedOptions, $items);

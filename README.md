@@ -46,7 +46,7 @@ There are 2 ways to execute PhpRedisBloom commands:
 
 **Executing commands by using RedisBloomClient**
 
-```
+```php
 use Averias\RedisBloom\Factory\RedisBloomFactory;
 
 // instantiate a RedisBloomClient from RedisBloomFactory with default connection options
@@ -60,7 +60,7 @@ $result = $client->bloomFilterAdd('filter-key', 'item-15');
 
 **Executing commands by using RedisBloom data types classes (Bloom Filter, Cuckoo Filter, Count-Min Sketch and Top-K)**
 
-```
+```php
 // example for BloomFilter data types class
 use Averias\RedisBloom\Factory\RedisBloomFactory;
 
@@ -132,7 +132,7 @@ for sending more commands (see example below)
 The following code snippet show how to instantiate RedisBloom clients and BloomFilter data type with different 
 connection configurations
  
-```
+```php
 <?php
 
 use Averias\RedisBloom\Enum\Connection;
@@ -221,12 +221,15 @@ You can send Redis commands as specified in [phpredis documentation](https://git
 
 #### Raw commands
 You can send whatever you want to Redis by using `RedisBloomClient::executeRawCommand`:
-```
+
+```php
+use Averias\RedisBloom\Enum\BloomCommands;
+
 // raw Redis Bloom command
 $client->executeRawCommand(BloomCommands::BF_ADD, 'filter-name', 'value');
 
 // raw Redis command
-$client->executeRawCommand('hget, 'hash-key', 'foo');
+$client->executeRawCommand('hget', 'hash-key', 'foo');
 ``` 
 
 ## Tests

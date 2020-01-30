@@ -8,7 +8,9 @@ You have to specify the name of the filter, as key param, in each command. You c
 different keys using RedisBloomClient. All Top-K commands signatures in RedisBloomClient are prefixed 
 with `topK`, like `topkList` or `topKQuery`.
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
 $client->topKQuery('top-k-key', 'item1', 'item2');
@@ -19,7 +21,9 @@ $client->topKQuery('top-k-key', 'item1', 'item2');
 You can create TopK objects by instantiating them from RedisBloomFactory and then execute all TopK commands over one 
 key which is specified as param when you create the TopK object.
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+
 $factory = new RedisBloomFactory();
 $topK = $factory->createTopK('top-k-key');
 $topK->reserve(4, 300, 10, 0.95);
@@ -191,13 +195,14 @@ or
 - key: (string) top-k name
 
 **Returns:** (associative array) with the following structure:
-```
+
+```php
 [
    'k' => 3, // size of the top-k list
    'width' => 100, // width dimension of the top-k structure
    'depth' => 7, // deepth dimension of the top-k structure
    'decay' => 0.98 // decay value
-]
+];
 ```
 
 It throws a`ResponseException` in case of top-k key doesn't exist.

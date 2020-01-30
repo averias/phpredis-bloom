@@ -8,7 +8,9 @@ You need to specify the name of the filter, as key param, in each command. You c
 different filters (keys) using RedisBloomClient. All Count-Min Sketch commands signatures in RedisBloomClient are prefixed 
 with `countMinSketch`, like `countMinSketchIncrementBy` or `countMinSketchQuery`.
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
 $client->countMinSketchQuery('count-min-sketch-key', 'item1', 'item2');
@@ -19,7 +21,9 @@ $client->countMinSketchQuery('count-min-sketch-key', 'item1', 'item2');
 You can create a CountMinSketch object by instantiating it from RedisBloomFactory and then execute all CountMinSketch 
 commands over one key which is specified as param when you create the CountMinSketch object.
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+
 $factory = new RedisBloomFactory();
 $countMinSketch = $factory->createCountMinSketch('count-min-sketch-key');
 $countMinSketch->initByDim(10, 10);
@@ -159,12 +163,13 @@ or
 - key: (string) sketch name
 
 **Returns:** (associative array) with the following structure:
-```
+
+```php
 [
    'width' => 10, // width dimension of the scketch
    'depth' => 10, // deepth dimension of the scketch
    'count' => 4582 // total count of all elements in the sketch
-]
+];
 ```
 
 It throws a`ResponseException` in case of sketch key doesn't exist.

@@ -1,3 +1,6 @@
+## 1.2.1 - 2020-01-30
+- Added code highlights in docs and fixed some typos in examples
+
 ## 1.2.0 - 2020-01-28
 - Changes compatible with RedisLabs RedisBloom v 2.2.1
 - NON_SCALING and EXPANSION combination is not allowed in Bloom Filter Reserve and Insert commands 

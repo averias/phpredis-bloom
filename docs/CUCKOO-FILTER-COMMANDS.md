@@ -8,7 +8,9 @@ You need to specify the name of the filter, as key param, in each command. You c
 different filters (keys) using RedisBloomClient. All CuckooFilter commands signatures in RedisBloomClient are prefixed 
 with `cuckooFilter`, like `cuckooFilterDelete` or `cuckooFilterCount`.
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
 $client->cuckooFilterAdd('filter-key', 'item');
@@ -19,7 +21,9 @@ $client->cuckooFilterAdd('filter-key', 'item');
 You can create a CuckooFilter object by instantiating it from RedisBloomFactory and then execute all CuckooFilter commands
 over one filter which is specified as key param when you create the BloomFilter object.
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+
 $factory = new RedisBloomFactory();
 $cuckooFilter = $factory->createCuckooFilter('filter-key');
 $cuckooFilter->add('item');
@@ -52,12 +56,15 @@ or
     * MAXITERATIONS: (int) number of attempts to swap items between buckets before declaring filter as full and creating an additional filter. A low value is better for performance and a higher number is better for filter fill rate.
     * EXPANSION: (int) when a new filter is created, its size is the size of the current filter multiplied by `expansion`. Expansion is rounded to the next `2^n` number.
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+use Averias\RedisBloom\Enum\OptionalParams;
+
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
 $options = [
-   OptionalParams::BUCKETSIZE => 300,
-   OptionalParams::MAXITERATIONS => 2,
+   OptionalParams::BUCKET_SIZE => 300,
+   OptionalParams::MAX_ITERATIONS => 2,
    OptionalParams::EXPANSION => 4
 ];
 
@@ -121,7 +128,10 @@ or
     * CAPACITY: (int) if specified set the number of entries you intend to add to the filter, if the filter already exists this value will be ignored
     * NOCREATE: (bool) if specified and equel to true, prevents automatic filter creation if the filter does not exist. Instead, an error will be returned if the filter does not already exist
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+use Averias\RedisBloom\Enum\OptionalParams;
+
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
 $options = [OptionalParams::CAPACITY => 1000, OptionalParams::NO_CREATE => true];
@@ -275,17 +285,18 @@ or
 - key: (string) filter name
 
 **Returns:** (associative array) with the following structure:
-```
+
+```php
 [
    'Capacity' => 156, // integer
    'Number of buckets' => 2, // integer
    'Number of filters' => 1, // integer
-   'Number of items inserted', => 30 // integer
+   'Number of items inserted' => 30, // integer
    'Number of items deleted' => 2, // integer
    'Bucket size' => 100, // integer
    'Expansion rate' => 16, // integer
    'Max iterations' => 5 // integer
-]
+];
 ```
 
 It throws a`ResponseException` if filter key doesn't exist.

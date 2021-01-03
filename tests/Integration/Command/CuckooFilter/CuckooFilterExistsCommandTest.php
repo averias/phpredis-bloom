@@ -14,7 +14,7 @@ namespace Averias\RedisBloom\Tests\Integration\Command\CuckooFilter;
 
 use Averias\RedisBloom\Enum\Keys;
 use Averias\RedisBloom\Exception\ResponseException;
-use Averias\RedisBloom\Tests\BaseTestIntegration;
+use Averias\RedisBloom\Tests\Integration\BaseTestIntegration;
 
 class CuckooFilterExistsCommandTest extends BaseTestIntegration
 {

@@ -8,7 +8,9 @@ You need to specify the name of the filter, as key param, in each command. You c
 different filters (keys) using RedisBloomClient. All BloomFilter commands signatures in RedisBloomClient are prefixed 
 with `bloomFilter`, like `bloomFilterAdd` or `bloomFilterMultiExists`.
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
 $client->bloomFilterAdd('filter-key', 'item');
@@ -19,7 +21,9 @@ $client->bloomFilterAdd('filter-key', 'item');
 You can create a BloomFilter object by instantiating it from RedisBloomFactory and then execute all BloomFilter commands
 over one filter which is specified as key param when you create the BloomFilter object.
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+
 $factory = new RedisBloomFactory();
 $bloomFilter = $factory->createBloomFilter('filter-key');
 $bloomFilter->add('item');
@@ -56,7 +60,10 @@ or
 
 **NONSCALING and EXPANSION combination is not allowed**
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+use Averias\RedisBloom\Enum\OptionalParams;
+
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
 $options = [
@@ -127,7 +134,10 @@ or
 
 **NONSCALING and EXPANSION combination is not allowed**
 
-```
+```php
+use Averias\RedisBloom\Factory\RedisBloomFactory;
+use Averias\RedisBloom\Enum\OptionalParams;
+
 $factory = new RedisBloomFactory();
 $client = $factory->createClient();
 $options = [
@@ -244,14 +254,15 @@ or
 - key: (string) filter name
 
 **Returns:** (associative array) with the following structure:
-```
+
+```php
 [
    'Capacity' => 106, // integer
    'Size' => 218, // integer
    'Number of filters' => 1, // integer
-   'Number of items inserted' => 30 // integer
+   'Number of items inserted' => 30, // integer
    'Expansion rate' => 4 // integer
-]
+];
 ```
 
 It throws a`ResponseException` if filter key doesn't exist.

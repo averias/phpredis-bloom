@@ -10,7 +10,7 @@
  * the LICENSE file that is distributed with this source code.
  */
 
-namespace Averias\RedisBloom\Tests;
+namespace Averias\RedisBloom\Tests\Integration;
 
 use Averias\RedisBloom\Client\RedisBloomClientInterface;
 use Averias\RedisBloom\Enum\Connection;

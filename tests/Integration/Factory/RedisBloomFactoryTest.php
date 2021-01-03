@@ -16,7 +16,7 @@ use Averias\RedisBloom\Enum\BloomCommands;
 use Averias\RedisBloom\Enum\Connection;
 use Averias\RedisBloom\Enum\Keys;
 use Averias\RedisBloom\Factory\RedisBloomFactory;
-use Averias\RedisBloom\Tests\BaseTestIntegration;
+use Averias\RedisBloom\Tests\Integration\BaseTestIntegration;
 
 class RedisBloomFactoryTest extends BaseTestIntegration
 {

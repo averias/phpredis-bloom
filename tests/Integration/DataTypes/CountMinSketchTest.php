@@ -15,7 +15,7 @@ namespace Averias\RedisBloom\Tests\Integration\DataTypes;
 use Averias\RedisBloom\DataTypes\CountMinSketch;
 use Averias\RedisBloom\Enum\Keys;
 use Averias\RedisBloom\Exception\RedisClientException;
-use Averias\RedisBloom\Tests\BaseTestIntegration;
+use Averias\RedisBloom\Tests\Integration\BaseTestIntegration;
 
 class CountMinSketchTest extends BaseTestIntegration
 {

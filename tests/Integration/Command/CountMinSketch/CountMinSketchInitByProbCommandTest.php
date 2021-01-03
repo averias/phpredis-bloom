@@ -13,7 +13,7 @@
 namespace Averias\RedisBloom\Tests\Integration\Command\CountMinSketch;
 
 use Averias\RedisBloom\Exception\ResponseException;
-use Averias\RedisBloom\Tests\BaseTestIntegration;
+use Averias\RedisBloom\Tests\Integration\BaseTestIntegration;
 use TypeError;
 
 class CountMinSketchInitByProbCommandTest extends BaseTestIntegration

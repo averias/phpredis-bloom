@@ -1,3 +1,6 @@
+## 1.2.2 - 2021-01-03
+- Fixed bug in namespace for BaseTestIntegration class
+
 ## 1.2.1 - 2020-01-30
 - Added code highlights in docs and fixed some typos in examples
 

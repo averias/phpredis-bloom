@@ -15,7 +15,7 @@ namespace Averias\RedisBloom\Tests\Integration\Command\BloomFilter;
 use Averias\RedisBloom\Enum\Keys;
 use Averias\RedisBloom\Enum\OptionalParams;
 use Averias\RedisBloom\Exception\ResponseException;
-use Averias\RedisBloom\Tests\BaseTestIntegration;
+use Averias\RedisBloom\Tests\Integration\BaseTestIntegration;
 
 class BloomFilterInfoCommandTest extends BaseTestIntegration
 {

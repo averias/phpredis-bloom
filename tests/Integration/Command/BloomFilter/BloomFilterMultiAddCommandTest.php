@@ -13,7 +13,7 @@
 namespace Averias\RedisBloom\Tests\Integration\Command\BloomFilter;
 
 use Averias\RedisBloom\Exception\ResponseException;
-use Averias\RedisBloom\Tests\BaseTestIntegration;
+use Averias\RedisBloom\Tests\Integration\BaseTestIntegration;
 
 class BloomFilterMultiAddCommandTest extends BaseTestIntegration
 {
